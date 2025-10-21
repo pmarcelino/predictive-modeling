@@ -227,6 +227,25 @@ https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/mai
 ---
 
 module-04
+lecture-09-programming-example
+https://github.com/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-programming-example.ipynb
+https://nbviewer.org/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-programming-example.ipynb
+https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-programming-example.ipynb
+<iframe src="https://nbviewer.org/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-programming-example.ipynb"
+        width="100%" height="600px" frameborder="0"></iframe>
+<!-- Open in Colab button -->
+<div style="text-align:center; margin:8px 0 24px;">
+  <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-programming-example.ipynb"
+     target="_blank" rel="noopener"
+     style="display:inline-block; padding:12px 20px; text-decoration:none; font-weight:600;
+            border:1px solid #1a73e8; border-radius:6px;">
+    <span style="vertical-align:middle; margin-right:8px;">▶</span> Open in Colab
+  </a>
+</div>
+
+---
+
+module-04
 lecture-09-text
 https://github.com/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-text.ipynb
 https://nbviewer.org/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-text.ipynb
@@ -236,6 +255,25 @@ https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/mai
 <!-- Open in Colab button -->
 <div style="text-align:center; margin:8px 0 24px;">
   <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/module-04/lecture-09-text.ipynb"
+     target="_blank" rel="noopener"
+     style="display:inline-block; padding:12px 20px; text-decoration:none; font-weight:600;
+            border:1px solid #1a73e8; border-radius:6px;">
+    <span style="vertical-align:middle; margin-right:8px;">▶</span> Open in Colab
+  </a>
+</div>
+
+---
+
+module-05
+lecture-10-text
+https://github.com/pmarcelino/predictive-modeling/blob/main/module-05/lecture-10-text.ipynb
+https://nbviewer.org/github/pmarcelino/predictive-modeling/blob/main/module-05/lecture-10-text.ipynb
+https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/module-05/lecture-10-text.ipynb
+<iframe src="https://nbviewer.org/github/pmarcelino/predictive-modeling/blob/main/module-05/lecture-10-text.ipynb"
+        width="100%" height="600px" frameborder="0"></iframe>
+<!-- Open in Colab button -->
+<div style="text-align:center; margin:8px 0 24px;">
+  <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/module-05/lecture-10-text.ipynb"
      target="_blank" rel="noopener"
      style="display:inline-block; padding:12px 20px; text-decoration:none; font-weight:600;
             border:1px solid #1a73e8; border-radius:6px;">
