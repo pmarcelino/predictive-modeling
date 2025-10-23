@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 03: Text - Predictive Modeling MOOC</title>
+    
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 30px -30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .nav-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-colab {
+        background-color: #f9ab00;
+        color: #1a1a1a;
+        border: 2px solid #f9ab00;
+    }
+
+    .btn-colab:hover {
+        background-color: #ff9900;
+        border-color: #ff9900;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
+    }
+
+    .btn-github {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-github:hover {
+        background-color: white;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .jupyter-content {
+        margin-top: 20px;
+    }
+
+    /* Notebook cell styling */
+    div.cell {
+        margin-bottom: 1.5rem;
+    }
+
+    div.input_area {
+        border-left: 3px solid #667eea;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    div.output_area {
+        padding: 10px;
+        border-left: 3px solid #28a745;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    /* Code highlighting */
+    .highlight {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .nav-header {
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+        }
+
+        .nav-header h1 {
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>Lecture 03: Text</h1>
+            <div class="nav-buttons">
+                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-03-text.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
+                    ▶ Open in Colab
+                </a>
+                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-03-text.ipynb" target="_blank" rel="noopener" class="btn btn-github">
+                    📂 View on GitHub
+                </a>
+            </div>
+        </div>
+        <div class="jupyter-content">
+
+<main>
+<div class="border-box-sizing" id="notebook" tabindex="-1">
+<div class="container" id="notebook-container">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=aad4a8ea"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Lecture-3:-Introduction-to-Pandas-&amp;-Data-Structures---Building-Your-Foundation">Lecture 3: Introduction to Pandas &amp; Data Structures - Building Your Foundation<a class="anchor-link" href="#Lecture-3:-Introduction-to-Pandas-&amp;-Data-Structures---Building-Your-Foundation">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ed90651a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Learning-Objectives">Learning Objectives<a class="anchor-link" href="#Learning-Objectives">¶</a></h2><p>By the end of this lecture, you will be able to:</p>
+<ul>
+<li>Import and understand the pandas library for data manipulation</li>
+<li>Work with pandas Series and DataFrame structures effectively</li>
+<li>Load and inspect the Washington D.C. bike-sharing dataset</li>
+<li>Understand basic data types and structures in Python data analysis</li>
+<li>Apply fundamental pandas operations for basic data exploration</li>
+</ul>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ee13cef7"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Your-Journey-as-a-Data-Consultant-Begins">1. Your Journey as a Data Consultant Begins<a class="anchor-link" href="#1.-Your-Journey-as-a-Data-Consultant-Begins">¶</a></h2><p>Welcome to your first day as a junior data consultant! Your client, a growing bike-sharing startup, has asked you to help them understand their data and build better demand forecasting capabilities. Like any professional consultant, you need to start with the fundamentals - understanding your tools and your data.</p>
+<p>Think of this like learning to be a craftsperson. Before a carpenter builds a house, they master their tools: saws, hammers, measuring devices. As a data consultant, your primary tools are programming languages and libraries - and pandas is the most essential tool for data work in Python.</p>
+<p>Today, you'll learn <strong>pandas</strong> not as an abstract programming concept, but as the foundation that will enable you to help your client make better business decisions. Every technique you master here will directly contribute to solving real transportation challenges.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=68600935"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-The-Pandas-Library:-Your-Data-Manipulation-Powerhouse">2. The Pandas Library: Your Data Manipulation Powerhouse<a class="anchor-link" href="#2.-The-Pandas-Library:-Your-Data-Manipulation-Powerhouse">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c57db502"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.1.-What-is-Pandas-and-Why-Do-You-Need-It?">2.1. What is Pandas and Why Do You Need It?<a class="anchor-link" href="#2.1.-What-is-Pandas-and-Why-Do-You-Need-It?">¶</a></h3><p>Pandas is like having a powerful Swiss Army knife for working with data. Just as a mechanic wouldn't try to fix a car with just their bare hands, you wouldn't want to analyze data without pandas. It provides the tools you need to load, clean, and manipulate data efficiently.</p>
+<p>For your bike-sharing client, this means pandas will help you in tasks such as:</p>
+<ul>
+<li>Load their historical rental data from files</li>
+<li>Clean and prepare messy real-world data</li>
+<li>Transform raw operational data into actionable insights</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=cf6637e5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="2.2.-Understanding-Your-Data-Toolkit-Components">2.2. Understanding Your Data Toolkit Components<a class="anchor-link" href="#2.2.-Understanding-Your-Data-Toolkit-Components">¶</a></h3><p>Pandas provides two fundamental structures for organizing data, much like how a workshop has different types of containers for different purposes:</p>
+<ol>
+<li><strong>Series</strong>: Like a single column of a spreadsheet. Perfect for storing one type of information (like all the temperatures recorded).</li>
+<li><strong>DataFrame</strong>: Like a complete spreadsheet with rows and columns. This is where you'll store your full bike-sharing dataset with all variables together.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e591d653"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Importing-Pandas:-Setting-Up-Your-Workshop">Importing Pandas: Setting Up Your Workshop<a class="anchor-link" href="#Importing-Pandas:-Setting-Up-Your-Workshop">¶</a></h3><p>Before you can use any tool, you need to make it available in your workspace. In Python, this means importing pandas:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=0c4f7a9f">
+<div class="input">
+<div class="prompt input_prompt">In [33]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0513d690"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p><strong>Note:</strong> This is your first chance to try out Google Colab. Click <strong>"Open in Colab"</strong>, select this cell, and press <strong>Shift+Enter</strong> to run it. Nothing visible will happen yet—that’s normal! This step simply loads the <strong>pandas</strong> library. The notebook already shows executed results, but we encourage you to run the code yourself.</p>
+</blockquote>
+<p>This simple line does several important things:</p>
+<ul>
+<li>Makes all pandas functions available to use</li>
+<li>Creates the shorthand <code>pd</code> so you don't have to type <code>pandas</code> every time</li>
+<li>Follows the standard convention that all Python data analysts use</li>
+</ul>
+<p>The <code>as pd</code> part is like giving pandas a nickname that everyone in the data science community recognizes. When you see <code>pd.</code> in code, you immediately know you're working with pandas operations.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=abbe81da"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Series:-Your-First-Data-Structure">3. Series: Your First Data Structure<a class="anchor-link" href="#3.-Series:-Your-First-Data-Structure">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2b07f60a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.1.-Understanding-Series-Through-Bike-Sharing-Examples">3.1. Understanding Series Through Bike-Sharing Examples<a class="anchor-link" href="#3.1.-Understanding-Series-Through-Bike-Sharing-Examples">¶</a></h3><p>A Series is like a single column of data with labels for each value. Imagine you're tracking the number of bikes rented each hour during a typical Monday morning:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=0184ab17">
+<div class="input">
+<div class="prompt input_prompt">In [34]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="n">hourly_rentals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">287</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hourly_rentals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0     15
+1     23
+2     45
+3     67
+4     89
+5    156
+6    234
+7    287
+dtype: int64
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=80c84bbc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Explanation of the code:</p>
+<ul>
+<li><code>pd.Series([15, 23, 45, 67, 89, 156, 234, 287])</code> creates a pandas Series and saves it to the variable <code>hourly_rentals</code>. The numbers inside the list represent the bike rentals for each hour in sequence. For example, the first value <code>15</code> represents the number of bikes rented at the first hour.</li>
+<li>By default, pandas automatically assigns an <strong>index</strong> to each value, starting at 0. So the first value <code>15</code> gets index 0, the second value <code>23</code> gets index 1, and so on.</li>
+<li><code>print(hourly_rentals)</code> displays the Series, showing both the index and the values side by side, as you can see in the presented output below the code.</li>
+</ul>
+<p>Now let’s make the example more realistic by using actual time labels instead of default numeric indexes:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ec129a30">
+<div class="input">
+<div class="prompt input_prompt">In [35]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="n">morning_hours</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">]</span>
+<span class="n">morning_rentals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">23</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">45</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">morning_hours</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">morning_rentals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6 AM      23
+7 AM      67
+8 AM     156
+9 AM      89
+10 AM     45
+dtype: int64
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0c377301"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What’s new here:</p>
+<ul>
+<li>We added a custom index using the list <code>morning_hours = ['6 AM', '7 AM', '8 AM', '9 AM', '10 AM']</code>.</li>
+<li>By passing this list as the <code>index</code> argument, each rental value is now linked to a specific time label (e.g., <code>8 AM → 156</code>).</li>
+</ul>
+<p>This makes the Series easier to interpret. For example, you can instantly see that <strong>8 AM has the highest rental count (156 bikes)</strong>, which matches the expected morning commute peak.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2e047e4d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="3.2.-Why-Series-Matter-for-Your-Consulting-Work">3.2. Why Series Matter for Your Consulting Work<a class="anchor-link" href="#3.2.-Why-Series-Matter-for-Your-Consulting-Work">¶</a></h3><p>Series are more than just lists - they're intelligent containers that:</p>
+<ul>
+<li>Keep related information together (values and their meanings)</li>
+<li>Enable mathematical operations (calculating averages, totals, trends)</li>
+<li>Support easy filtering and selection (finding peak hours, low-demand periods)</li>
+</ul>
+<p>For transportation consulting, Series help you organize time-based patterns, station-specific metrics, and categorical data like weather conditions or user types.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=421e53ef"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-DataFrame:-Your-Complete-Data-Laboratory">4. DataFrame: Your Complete Data Laboratory<a class="anchor-link" href="#4.-DataFrame:-Your-Complete-Data-Laboratory">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2a9dd356"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="4.1.-Understanding-DataFrames-as-Digital-Spreadsheets">4.1. Understanding DataFrames as Digital Spreadsheets<a class="anchor-link" href="#4.1.-Understanding-DataFrames-as-Digital-Spreadsheets">¶</a></h3><p>If Series are like single columns, DataFrames are like complete spreadsheets with multiple columns and rows. For your bike-sharing client, a DataFrame would contain all the information about each rental period: time, weather, bike counts, user types, and more.</p>
+<p>Think of a DataFrame as a comprehensive record where each row represents one time period (like one hour) and each column represents one type of measurement (like temperature, humidity, bike count).</p>
+<p>Let's build a small DataFrame that represents what your client's data looks like:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ace893b9">
+<div class="input">
+<div class="prompt input_prompt">In [36]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="n">bike_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'hour'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">],</span>
+    <span class="s1">'temperature'</span><span class="p">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">55</span><span class="p">],</span>
+    <span class="s1">'rentals'</span><span class="p">:</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>
+    <span class="s1">'weather'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Partly Cloudy'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bike_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   hour  temperature  rentals        weather
+0  6 AM           45       23          Clear
+1  7 AM           47       67          Clear
+2  8 AM           52      156  Partly Cloudy
+3  9 AM           55       89          Clear
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f276bd9f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Explanation of the code:</p>
+<ul>
+<li><code>bike_data = pd.DataFrame({...})</code> This line creates a pandas <code>DataFrame</code> with the name <code>bike_data</code>.</li>
+<li>Inside the curly braces <code>{ ... }</code>, we define the DataFrame as a dictionary:<ul>
+<li>Each <strong>key</strong> (e.g., <code>hour</code>, <code>temperature</code>, <code>rentals</code>, <code>weather</code>) becomes a <strong>column name</strong>.</li>
+<li>Each <strong>list of values</strong> associated with the key (e.g., <code>[45, 47, 52, 55]</code> for temperature) becomes the <strong>column data</strong>.</li>
+<li>All lists must be the <strong>same length</strong>, because each position across the lists corresponds to one row in the table.</li>
+</ul>
+</li>
+<li>In this example:<ul>
+<li><code>'hour'</code> marks the time of day.</li>
+<li><code>'temperature'</code> gives the measured temperature (we used Fahrenheit in this example).</li>
+<li><code>'rentals'</code> shows the number of bikes rented.</li>
+<li><code>'weather'</code> describes conditions during that hour.</li>
+</ul>
+</li>
+<li><code>print(bike_data)</code> displays the DataFrame in a structured, tabular format - as  you can see in the presented output below the code - where each row represents one observation (an hour of operations), and each column represents one variable being tracked.</li>
+</ul>
+<p>This DataFrame builds on what you just learned about Series. Instead of working with a single column of data, you now have <strong>multiple Series combined side by side</strong> in one structured table. Each row corresponds to a specific hour, while each column captures a different type of measurement (time, temperature, rentals, weather). This way, all the related information for each hour stays neatly aligned.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=cee21519"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="4.2.-Why-DataFrame-Matter-for-Your-Consulting-Work">4.2. Why DataFrame Matter for Your Consulting Work<a class="anchor-link" href="#4.2.-Why-DataFrame-Matter-for-Your-Consulting-Work">¶</a></h3><p>Every DataFrame has key components that make it powerful for business analysis:</p>
+<ul>
+<li><strong>Columns</strong>: Each variable you're tracking (temperature, rentals, weather conditions). These become the factors you'll analyze to understand demand patterns.</li>
+<li><strong>Rows</strong>: Each observation or time period. In transportation, this is usually time-based (hourly, daily) but could be trip-based or station-based.</li>
+<li><strong>Index</strong>: The row identifiers. By default, these are numbers (0, 1, 2), but you can use dates, station IDs, or other meaningful identifiers.</li>
+<li><strong>Values</strong>: The actual data inside the table. This is the business information you'll analyze to generate insights and predictions.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5793b3cd"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.-Loading-Real-World-Data:-Working-with-the-Washington-D.C.-Dataset">5. Loading Real-World Data: Working with the Washington D.C. Dataset<a class="anchor-link" href="#5.-Loading-Real-World-Data:-Working-with-the-Washington-D.C.-Dataset">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=eb11c8d1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.1.-Understanding-Your-Client's-Data-Source">5.1. Understanding Your Client's Data Source<a class="anchor-link" href="#5.1.-Understanding-Your-Client's-Data-Source">¶</a></h3><p>Now that you’re familiar with Series and DataFrame structures, it’s time to put them into action. Your bike-sharing startup client has provided you with historical data from the Washington D.C. bike-sharing system. This dataset will serve as the foundation for your consulting work throughout the course.</p>
+<p>What makes this dataset valuable is that it mirrors the complexity of real consulting projects:</p>
+<ul>
+<li><strong>Multiple variables</strong> capturing different aspects of the system (e.g., temperature, weather conditions, user types)</li>
+<li><strong>Mixed data types</strong> that require careful handling</li>
+<li><strong>Time series information</strong> essential for demand prediction</li>
+<li>And, of course, the <strong>messiness of real-world operations</strong></li>
+</ul>
+<p>By working with this data, you’ll gain hands-on experience tackling the same challenges professionals face when preparing transportation datasets for machine learning.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c3885db1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.2.-The-Data-Loading-Process">5.2. The Data Loading Process<a class="anchor-link" href="#5.2.-The-Data-Loading-Process">¶</a></h3><p>Loading data from files is the first step of the consulting process. In this case, your client's data is stored in CSV (Comma-Separated Values) format, a standard way of sharing tabular data between systems:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=2f0d2ae7">
+<div class="input">
+<div class="prompt input_prompt">In [37]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="c1"># Define the path to your data file</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+
+<span class="c1"># Load the data into a DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=cd314ba1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The command <code>pd.read_csv()</code> tells pandas to:</p>
+<ol>
+<li><strong>Read</strong> the file located at the given path (<code>data_path</code> in this case), line by line.</li>
+<li><strong>Break</strong> each row of text into separate pieces of information whenever it finds a comma (each piece becomes a column value).</li>
+<li><strong>Store</strong> the resulting table in a <strong>DataFrame</strong>, pandas’ main data structure for tabular data.</li>
+</ol>
+<p>In other words, this function converts raw CSV text into a structured DataFrame you can immediately start analyzing.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7e62c6ca"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="6.-Essential-DataFrame-Operations-for-Transportation-Analysis">6. Essential DataFrame Operations for Transportation Analysis<a class="anchor-link" href="#6.-Essential-DataFrame-Operations-for-Transportation-Analysis">¶</a></h2><p>Once your data is loaded, the next step is to get familiar with it. As a consultant, you don’t dive straight into modeling — you first <strong>inspect and summarize</strong> the dataset. This quick overview not only builds your own understanding but also helps you explain the data’s scope and quality to your client.</p>
+<p>Let's go through some of the most important operations to start with.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7eb95fc2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.1.-Shape-of-the-Dataset">6.1. Shape of the Dataset<a class="anchor-link" href="#6.1.-Shape-of-the-Dataset">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=bda09cdc">
+<div class="input">
+<div class="prompt input_prompt">In [38]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset contains </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Dataset contains 10886 rows and 12 columns
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=174a839f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tells us that the dataset contains <strong>10,886 hourly records</strong> and <strong>12 variables</strong>. For your client, this means there is a solid amount of historical data available — enough to build models that can capture patterns across different times and conditions.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0b10a5e0"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.2.-Column-Information-and-Data-Types">6.2. Column Information and Data Types<a class="anchor-link" href="#6.2.-Column-Information-and-Data-Types">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7843580d">
+<div class="input">
+<div class="prompt input_prompt">In [39]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 10886 entries, 0 to 10885
+Data columns (total 12 columns):
+ #   Column      Non-Null Count  Dtype  
+---  ------      --------------  -----  
+ 0   datetime    10886 non-null  object 
+ 1   season      10886 non-null  int64  
+ 2   holiday     10886 non-null  int64  
+ 3   workingday  10886 non-null  int64  
+ 4   weather     10886 non-null  int64  
+ 5   temp        10886 non-null  float64
+ 6   atemp       10886 non-null  float64
+ 7   humidity    10886 non-null  int64  
+ 8   windspeed   10886 non-null  float64
+ 9   casual      10886 non-null  int64  
+ 10  registered  10886 non-null  int64  
+ 11  count       10886 non-null  int64  
+dtypes: float64(3), int64(8), object(1)
+memory usage: 1020.7+ KB
+None
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c47f276d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>.info()</code> method shows all the variables, their data types, and whether they contain missing values.</p>
+<ul>
+<li>We see that every column has <strong>10,886 non-null entries</strong>, meaning no missing data — excellent news for reliability.</li>
+<li>Variables like season, holiday, and count are stored as integers, while temperature-related variables are floats.</li>
+<li>The datetime column is still an object (text), which we’ll later convert to a proper date-time format for time-based analysis.</li>
+</ul>
+<p>This overview helps you spot potential issues early, such as incorrect data types or missing values that could affect modeling.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=98e670dc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.3.-Previewing-the-Data">6.3. Previewing the Data<a class="anchor-link" href="#6.3.-Previewing-the-Data">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=de380fb2">
+<div class="input">
+<div class="prompt input_prompt">In [40]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>              datetime  season  holiday  workingday  weather  temp   atemp  \
+0  2011-01-01 00:00:00       1        0           0        1  9.84  14.395   
+1  2011-01-01 01:00:00       1        0           0        1  9.02  13.635   
+2  2011-01-01 02:00:00       1        0           0        1  9.02  13.635   
+3  2011-01-01 03:00:00       1        0           0        1  9.84  14.395   
+4  2011-01-01 04:00:00       1        0           0        1  9.84  14.395   
+
+   humidity  windspeed  casual  registered  count  
+0        81        0.0       3          13     16  
+1        80        0.0       8          32     40  
+2        80        0.0       5          27     32  
+3        75        0.0       3          10     13  
+4        75        0.0       0           1      1  
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=560e7ec8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>.head()</code> command lets you <strong>peek at the first rows</strong> of the dataset. Here you can immediately recognize the structure: a datetime stamp, contextual variables (season, weather), and usage metrics (casual, registered, and total count). This helps you explain to your client what kind of data is being tracked.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=66a92176"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="6.4.-Quick-Statistical-Summary">6.4. Quick Statistical Summary<a class="anchor-link" href="#6.4.-Quick-Statistical-Summary">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=c8c7dc3e">
+<div class="input">
+<div class="prompt input_prompt">In [41]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>             season       holiday    workingday       weather         temp  \
+count  10886.000000  10886.000000  10886.000000  10886.000000  10886.00000   
+mean       2.506614      0.028569      0.680875      1.418427     20.23086   
+std        1.116174      0.166599      0.466159      0.633839      7.79159   
+min        1.000000      0.000000      0.000000      1.000000      0.82000   
+25%        2.000000      0.000000      0.000000      1.000000     13.94000   
+50%        3.000000      0.000000      1.000000      1.000000     20.50000   
+75%        4.000000      0.000000      1.000000      2.000000     26.24000   
+max        4.000000      1.000000      1.000000      4.000000     41.00000   
+
+              atemp      humidity     windspeed        casual    registered  \
+count  10886.000000  10886.000000  10886.000000  10886.000000  10886.000000   
+mean      23.655084     61.886460     12.799395     36.021955    155.552177   
+std        8.474601     19.245033      8.164537     49.960477    151.039033   
+min        0.760000      0.000000      0.000000      0.000000      0.000000   
+25%       16.665000     47.000000      7.001500      4.000000     36.000000   
+50%       24.240000     62.000000     12.998000     17.000000    118.000000   
+75%       31.060000     77.000000     16.997900     49.000000    222.000000   
+max       45.455000    100.000000     56.996900    367.000000    886.000000   
+
+              count  
+count  10886.000000  
+mean     191.574132  
+std      181.144454  
+min        1.000000  
+25%       42.000000  
+50%      145.000000  
+75%      284.000000  
+max      977.000000  
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5e7b5d85"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>.describe()</code> method provides summary statistics for each numeric column.</p>
+<ul>
+<li>Bike demand (count) ranges from <strong>1 to 977 bikes/hour</strong>, with an average of ~192.</li>
+<li>The distribution is skewed: the median is 145, but the maximum is over 6× higher.</li>
+<li>Weather variables look realistic too — temperatures span from near freezing (0.8°C) to hot summer levels (41°C).</li>
+</ul>
+<p>This quick check reassures both you and your client that the dataset is complete and values are plausible.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=6c43ff6f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="7.-Data-Types-and-Their-Business-Implications">7. Data Types and Their Business Implications<a class="anchor-link" href="#7.-Data-Types-and-Their-Business-Implications">¶</a></h2><p>In the previous section, you learned how to take a <strong>first snapshot of the dataset</strong> using commands like <code>.shape</code>, <code>.info()</code>, <code>.head()</code>, and <code>.describe()</code>. One of the key things you might have noticed in the <code>.info()</code> output is that each column has a data type — for example, integers for <code>season</code>, floats for <code>temperature</code>, and text (object) for <code>datetime</code>.</p>
+<p>Data types are not just technical details. They define <strong>what kind of analysis you can perform</strong> and <strong>what kind of business questions you can answer</strong>. Misinterpreting them can lead to misleading results — for instance, treating a categorical variable like <code>season</code> as if it were a continuous number would distort any trend analysis.</p>
+<p>In transportation datasets, we usually encounter three main types of data: numerical, categorical, and temporal. Let’s look more closely at each of them.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=852c04cc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.1.-Numerical-Data">7.1. Numerical Data<a class="anchor-link" href="#7.1.-Numerical-Data">¶</a></h3><p>Numerical data represents information that can be measured or counted. In our dataset, examples include <code>temp</code>, <code>humidity</code>, and <code>count</code>.</p>
+<ul>
+<li><strong>Continuous variables</strong> like temperature or humidity can take on any value within a range. These are useful for finding patterns such as <em>“bike usage increases gradually as temperature rises up to 25°C, but then falls in very hot conditions.”</em></li>
+<li><strong>Discrete variables</strong> like the <code>count</code> of bikes or the number of <code>casual</code> users can only take whole numbers. These are central to forecasting business outcomes, for example, <em>“predicting how many bikes will be rented in the next hour.”</em></li>
+</ul>
+<p>Because numerical variables support arithmetic, they allow for statistical summaries (means, correlations) and predictive modeling that directly inform demand forecasting.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8cbaf6db"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.2.-Categorical-Data">7.2. Categorical Data<a class="anchor-link" href="#7.2.-Categorical-Data">¶</a></h3><p>Categorical data represents <strong>groups or categories</strong> rather than numeric scales. In our dataset, examples include <code>season</code>, <code>weather</code>, and <code>holiday</code>.</p>
+<ul>
+<li><strong>Nominal categories</strong> like <code>season</code> (spring, summer, fall, winter) have no inherent order. They are ideal for comparing performance across conditions, for example, <em>“Does bike demand differ between summer and winter, or are spring and fall similar in usage patterns?”</em></li>
+<li><strong>Ordinal categories</strong> have a natural order, such as the weather severity codes (1 = clear, 2 = misty, 3 = light rain, 4 = heavy rain). These allow for ordered comparisons, like <em>“demand decreases steadily as weather severity worsens.”</em></li>
+</ul>
+<p>Categorical variables are crucial for <strong>segmentation</strong> — helping your client understand different user groups or conditions that influence demand.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d3b308c2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.3.-Temporal-Data">7.3. Temporal Data<a class="anchor-link" href="#7.3.-Temporal-Data">¶</a></h3><p>Temporal data captures the <strong>dimension of time</strong>, such as the <code>datetime</code> column in our dataset. This type of data enables consultants to uncover trends and seasonality that are invisible in static snapshots.</p>
+<p>For example:</p>
+<ul>
+<li>Hourly patterns can reveal peak commuting periods.</li>
+<li>Monthly or seasonal trends can guide capacity planning.</li>
+<li>Long-term patterns help forecast growth and support strategic decisions, such as when to expand the fleet.</li>
+</ul>
+<p>Unlike other data types, temporal variables connect the dataset into a <strong>time series</strong>, allowing you to move from descriptive statistics toward forecasting future demand.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9eef3efb"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="7.4.-Why-Data-Types-Matter-for-Consultants">7.4. Why Data Types Matter for Consultants<a class="anchor-link" href="#7.4.-Why-Data-Types-Matter-for-Consultants">¶</a></h3><p>By recognizing the role of each data type, you can match business questions with the right analytical tools:</p>
+<ul>
+<li>Numerical data supports <strong>measurement, comparison, and prediction</strong>.</li>
+<li>Categorical data enables <strong>segmentation and condition-based insights</strong>.</li>
+<li>Temporal data allows <strong>trend analysis and forecasting</strong>.</li>
+</ul>
+<p>Together, these categories transform the dataset from raw information into a structured foundation for business recommendations.</p>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=cebc6df4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary-and-Transition-to-Data-Quality-Implementation">Summary and Transition to Data Quality Implementation<a class="anchor-link" href="#Summary-and-Transition-to-Data-Quality-Implementation">¶</a></h2><p>Your mastery of pandas fundamentals establishes the technical foundation essential for professional transportation consulting. Understanding Series and DataFrame structures, data loading procedures, data operations, and data types provides the analytical infrastructure necessary for sophisticated business applications.</p>
+<p>The ability to load the Washington D.C. bike-sharing dataset, navigate DataFrame operations, and understand data types creates the operational foundation for all advanced analysis you'll perform as a transportation consultant in this course.</p>
+<p>In our next lecture, we'll build on this foundation by learning how to clean and prepare messy real-world data for analysis, turning the raw information into reliable insights your clients can act upon.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+    </div>
+</body>
+</html>

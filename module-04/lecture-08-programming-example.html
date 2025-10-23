@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 08: Programming Example - Predictive Modeling MOOC</title>
+    
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 30px -30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .nav-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-colab {
+        background-color: #f9ab00;
+        color: #1a1a1a;
+        border: 2px solid #f9ab00;
+    }
+
+    .btn-colab:hover {
+        background-color: #ff9900;
+        border-color: #ff9900;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
+    }
+
+    .btn-github {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-github:hover {
+        background-color: white;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .jupyter-content {
+        margin-top: 20px;
+    }
+
+    /* Notebook cell styling */
+    div.cell {
+        margin-bottom: 1.5rem;
+    }
+
+    div.input_area {
+        border-left: 3px solid #667eea;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    div.output_area {
+        padding: 10px;
+        border-left: 3px solid #28a745;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    /* Code highlighting */
+    .highlight {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .nav-header {
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+        }
+
+        .nav-header h1 {
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>Lecture 08: Programming Example</h1>
+            <div class="nav-buttons">
+                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-04/lecture-08-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
+                    ▶ Open in Colab
+                </a>
+                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-04/lecture-08-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
+                    📂 View on GitHub
+                </a>
+            </div>
+        </div>
+        <div class="jupyter-content">
+
+<main>
+<div class="border-box-sizing" id="notebook" tabindex="-1">
+<div class="container" id="notebook-container">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5c6bf21c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Lecture-8:-Programming-Example---Linear-Models-for-Prediction">Lecture 8: Programming Example - Linear Models for Prediction<a class="anchor-link" href="#Lecture-8:-Programming-Example---Linear-Models-for-Prediction">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9ed6f255"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction:-Building-Your-First-Predictive-Model-for-Transportation-Demand">Introduction: Building Your First Predictive Model for Transportation Demand<a class="anchor-link" href="#Introduction:-Building-Your-First-Predictive-Model-for-Transportation-Demand">¶</a></h2><p>Welcome back, junior data consultant! Your Capital Bikes Washington D.C. client has been impressed with your statistical analysis and visualization work. Now they're ready for the defining moment: building a predictive model that forecasts hourly bike demand. The CEO has just approved your recommendation to develop a demand forecasting system that will transform their operations from reactive to predictive.</p>
+<p>Think of predictive modeling as the ultimate consulting deliverable. While statistics reveal patterns and visualizations communicate insights, predictive models operationalize intelligence - they generate actionable forecasts that drive real-time business decisions. You'll master linear regression, the foundational algorithm that quantifies relationships between variables and produces interpretable predictions executives can trust and act upon.</p>
+<p>Your task: build a linear regression model that predicts hourly bike demand using weather conditions and temporal patterns. You'll learn to calculate correlation coefficients that measure relationship strength, engineer time-based features that capture demand cycles, implement scikit-learn models with proper train-test splits, and apply cross-validation for robust performance estimates. Every technique ensures your forecasts are accurate, reliable, and operationally actionable.</p>
+<blockquote>
+<p><strong>🚀 Interactive Learning Alert</strong></p>
+<p>This is a hands-on predictive modeling tutorial with real forecasting challenges. For the best experience:</p>
+<ul>
+<li><strong>Click "Open in Colab"</strong> at the bottom to run code interactively</li>
+<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong></li>
+<li><strong>Complete the challenges</strong> to practice your predictive modeling skills</li>
+<li><strong>Think like a consultant</strong> - model accuracy directly impacts operational planning</li>
+</ul>
+</blockquote>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e8623427"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-1:-Calculate-Correlations-and-Visualize-Relationships">Step 1: Calculate Correlations and Visualize Relationships<a class="anchor-link" href="#Step-1:-Calculate-Correlations-and-Visualize-Relationships">¶</a></h2><p>Let's analyze which variables have linear relationships with bike demand by calculating correlations and creating visualizations.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7df56b1a">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+
+<span class="c1"># Calculate correlation and regression for temperature vs demand (using raw data)</span>
+<span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+
+<span class="c1"># Chart 1: Raw scatter plot (all individual observations)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Raw Data Points'</span><span class="p">)</span>
+
+<span class="c1"># Add regression line (calculated from raw data)</span>
+<span class="n">temp_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+<span class="n">demand_trend</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">temp_range</span> <span class="o">+</span> <span class="n">intercept</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temp_range</span><span class="p">,</span> <span class="n">demand_trend</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'Regression Line (r=</span><span class="si">{</span><span class="n">r_value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Temperature (°C)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Hourly Bike Rentals'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Raw Data: Temperature vs Demand (All Observations)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== VISUALIZATION NOTE ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The scatter plot above shows all 10,886 hourly observations."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"While this represents the complete data, the density makes it hard to see"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"the underlying pattern clearly. Let's create a cleaner visualization...</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Chart 2: Binned visualization (for pedagogical clarity)</span>
+<span class="c1"># Create temperature bins and calculate mean demand for each bin</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'temp_bin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">binned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'temp_bin'</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span>
+<span class="n">binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span> <span class="o">=</span> <span class="n">binned</span><span class="p">[</span><span class="s1">'std'</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">binned</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+<span class="n">binned</span><span class="p">[</span><span class="s1">'temp_center'</span><span class="p">]</span> <span class="o">=</span> <span class="n">binned</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">binned</span><span class="p">[</span><span class="s1">'temp_center'</span><span class="p">],</span> <span class="n">binned</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="n">binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span><span class="o">*</span><span class="mf">1.96</span><span class="p">,</span>  <span class="c1"># 95% confidence interval</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">capthick</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">'#2ECC71'</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">'#2ECC71'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">'Binned Mean Demand (95% CI)'</span><span class="p">)</span>
+
+<span class="c1"># Add the SAME regression line (still from raw data)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temp_range</span><span class="p">,</span> <span class="n">demand_trend</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'Regression Line (r=</span><span class="si">{</span><span class="n">r_value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Temperature (°C)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Hourly Bike Rentals'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Clean Visualization: Temperature vs Demand (Binned Averages)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print correlation statistics</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== CORRELATION ANALYSIS ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Correlation (r): </span><span class="si">{</span><span class="n">r_value</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R-squared: </span><span class="si">{</span><span class="n">r_value</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="p">(</span><span class="n">r_value</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% variance explained)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Slope: </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bikes per °C"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== IMPORTANT CLARIFICATION ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Both charts show the SAME regression line calculated from the raw data."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The binned visualization groups observations into temperature ranges and shows"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"their average demand - this is purely for pedagogical purposes to help you see"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"the pattern more clearly. However, the regression analysis always uses the"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"complete raw data (all 10,886 observations), not the binned averages."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"This is the correct approach: bin for visualization clarity, but analyze raw data."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=1f556e04"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li>Loads data and calculates correlation between temperature and demand using raw data</li>
+<li>Shows two visualizations: raw scatter (complete but messy) and binned averages (clean and clear)</li>
+<li>Both charts display the same regression line calculated from the raw data</li>
+<li>Clarifies that binning is a visualization technique, not part of the statistical analysis</li>
+<li>Prints correlation statistics (r ≈ 0.39 shows moderate positive relationship)</li>
+<li>R² of ~15% means temperature alone explains only 15% of demand variation</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=812250f6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-1:-Explore-Humidity-Demand-Relationship">Challenge 1: Explore Humidity-Demand Relationship<a class="anchor-link" href="#Challenge-1:-Explore-Humidity-Demand-Relationship">¶</a></h3><p>Your client asks: "Does humidity affect bike demand like temperature does?" Investigate the humidity-demand relationship and compare it to the temperature relationship.</p>
+<p><strong>Your Task:</strong> Calculate correlation statistics and create a clean binned visualization for humidity vs demand.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=4a63849b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - analyze humidity-demand relationship</span>
+
+<span class="c1"># Step 1: Calculate regression statistics for humidity (using raw data)</span>
+<span class="n">slope_hum</span><span class="p">,</span> <span class="n">intercept_hum</span><span class="p">,</span> <span class="n">r_value_hum</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">])</span>
+
+<span class="c1"># Step 2: Create binned visualization for clarity</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'humidity_bin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">humidity_binned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'humidity_bin'</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span>
+<span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span> <span class="o">=</span> <span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'std'</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+<span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'humidity_center'</span><span class="p">]</span> <span class="o">=</span> <span class="n">humidity_binned</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">],</span> <span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span><span class="o">*</span><span class="mf">1.96</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">capthick</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">'#E74C3C'</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">'#E74C3C'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">'Binned Mean Demand (95% CI)'</span><span class="p">)</span>
+
+<span class="c1"># Add regression line (from raw data)</span>
+<span class="n">humidity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+<span class="n">demand_trend_hum</span> <span class="o">=</span> <span class="n">_____</span> <span class="o">*</span> <span class="n">humidity_range</span> <span class="o">+</span> <span class="n">_____</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">humidity_range</span><span class="p">,</span> <span class="n">demand_trend_hum</span><span class="p">,</span> <span class="s1">'b-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'Regression Line (r=</span><span class="si">{</span><span class="n">r_value_hum</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Humidity (%)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Hourly Bike Rentals'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Humidity-Demand Relationship Analysis'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Step 3: Compare correlations</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== CORRELATION COMPARISON ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature correlation: r = </span><span class="si">{</span><span class="n">r_value</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (explains </span><span class="si">{</span><span class="p">(</span><span class="n">r_value</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Humidity correlation: r = </span><span class="si">{</span><span class="n">r_value_hum</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (explains </span><span class="si">{</span><span class="p">(</span><span class="n">r_value_hum</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a20b4ac8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Calculate regression using raw data: <code>stats.linregress(df['humidity'], df['count'])</code> extracts all 5 return values (use underscore _ for unused values like <code>slope_hum, intercept_hum, r_value_hum, _, _ = ...</code>). For the binned visualization, use <code>humidity_binned['humidity_center']</code> and <code>humidity_binned['mean']</code> in the errorbar plot. The regression line uses slope_hum and intercept_hum: demand = slope_hum × humidity + intercept_hum. Remember: regression is calculated from raw data, binning is just for visualization clarity. Humidity typically shows a negative correlation (higher humidity = uncomfortable = fewer riders), so compare the R² values to determine which weather factor matters more. Negative correlation means humid days reduce demand (discomfort effect), and this insight helps Capital City Bikes plan for different weather conditions.</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8d5c2fa7"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Step 1: Calculate regression statistics for humidity (using raw data)</span>
+<span class="n">slope_hum</span><span class="p">,</span> <span class="n">intercept_hum</span><span class="p">,</span> <span class="n">r_value_hum</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+
+<span class="c1"># Step 2: Create binned visualization for clarity</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'humidity_bin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">humidity_binned</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'humidity_bin'</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span>
+<span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span> <span class="o">=</span> <span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'std'</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+<span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'humidity_center'</span><span class="p">]</span> <span class="o">=</span> <span class="n">humidity_binned</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'humidity_center'</span><span class="p">],</span> <span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">],</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="n">humidity_binned</span><span class="p">[</span><span class="s1">'se'</span><span class="p">]</span><span class="o">*</span><span class="mf">1.96</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">capthick</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">'#E74C3C'</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">'#E74C3C'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">'Binned Mean Demand (95% CI)'</span><span class="p">)</span>
+
+<span class="c1"># Add regression line (from raw data)</span>
+<span class="n">humidity_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+<span class="n">demand_trend_hum</span> <span class="o">=</span> <span class="n">slope_hum</span> <span class="o">*</span> <span class="n">humidity_range</span> <span class="o">+</span> <span class="n">intercept_hum</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">humidity_range</span><span class="p">,</span> <span class="n">demand_trend_hum</span><span class="p">,</span> <span class="s1">'b-'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'Regression Line (r=</span><span class="si">{</span><span class="n">r_value_hum</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Humidity (%)'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Hourly Bike Rentals'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Humidity-Demand Relationship Analysis'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Step 3: Compare correlations</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== CORRELATION COMPARISON ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature correlation: r = </span><span class="si">{</span><span class="n">r_value</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (explains </span><span class="si">{</span><span class="p">(</span><span class="n">r_value</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Humidity correlation: r = </span><span class="si">{</span><span class="n">r_value_hum</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (explains </span><span class="si">{</span><span class="p">(</span><span class="n">r_value_hum</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Insight: </span><span class="si">{</span><span class="s1">'Temperature'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">r_value</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">abs</span><span class="p">(</span><span class="n">r_value_hum</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Humidity'</span><span class="si">}</span><span class="s2"> shows stronger correlation with demand"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Remember: Regression calculated from raw data, binning used only for clear visualization"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0d212150"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=def19bc3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-2:-Engineer-Time-Based-Features">Step 2: Engineer Time-Based Features<a class="anchor-link" href="#Step-2:-Engineer-Time-Based-Features">¶</a></h2><p>Weather alone can't capture temporal patterns like rush hours and daily cycles. Let's create time-based features that capture these patterns.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=474887f1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+
+<span class="c1"># Sort by datetime for proper temporal ordering</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Extract hour and create cyclical encoding</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+
+<span class="c1"># Create lag features (demand from previous hours)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_24h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="c1"># Extract day of week and month</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'dayofweek'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Remove rows with NaN values from lag features</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">])</span>
+
+<span class="c1"># Visualize hourly pattern</span>
+<span class="n">hourly_avg</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'hour'</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hourly_avg</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">hourly_avg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Hour of Day'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Average Bike Rentals'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Daily Demand Pattern Shows Rush Hours'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== ENGINEERED FEATURES ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total features created: hour, hour_sin, hour_cos, lag_1h, lag_24h, dayofweek, month"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset size after cleaning: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> observations"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak hours: </span><span class="si">{</span><span class="n">hourly_avg</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c88cd68d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li>Extracts hour from datetime and creates cyclical sin/cos encoding</li>
+<li>Creates lag features (demand from 1 hour and 24 hours ago)</li>
+<li>Extracts day of week and month for weekly/seasonal patterns</li>
+<li>Removes rows with NaN values from lag features</li>
+<li>Visualizes daily demand pattern showing morning and evening peaks</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5051dad9"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-2:-Visualize-Weekly-Demand-Patterns">Challenge 2: Visualize Weekly Demand Patterns<a class="anchor-link" href="#Challenge-2:-Visualize-Weekly-Demand-Patterns">¶</a></h3><p>Your client asks: "Do we see different demand patterns on different days of the week?" Analyze and visualize weekly patterns.</p>
+<p><strong>Your Task:</strong> Calculate and visualize average demand by day of week.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=84f6a4b5">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - analyze weekly patterns</span>
+
+<span class="c1"># Calculate average demand by day of week</span>
+<span class="n">day_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Monday'</span><span class="p">,</span> <span class="s1">'Tuesday'</span><span class="p">,</span> <span class="s1">'Wednesday'</span><span class="p">,</span> <span class="s1">'Thursday'</span><span class="p">,</span> <span class="s1">'Friday'</span><span class="p">,</span> <span class="s1">'Saturday'</span><span class="p">,</span> <span class="s1">'Sunday'</span><span class="p">]</span>
+<span class="n">weekly_pattern</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">_____</span><span class="p">)[</span><span class="s1">'_____'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>
+
+<span class="c1"># Visualize weekly pattern</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">_____</span><span class="p">,</span> <span class="n">weekly_pattern</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'teal'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Day of Week'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Average Hourly Demand'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Weekly Demand Pattern'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print insights</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== WEEKLY DEMAND PATTERN ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">day_names</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">day</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes per hour"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bbf697c3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>The dayofweek feature was already created in Step 2 (0=Monday through 6=Sunday). Use <code>.groupby('dayofweek')['count'].mean()</code> to calculate average demand for each day. Pass day_names to plt.bar() along with the values to get readable labels. Weekdays show relatively stable commuting patterns, Saturday typically peaks with leisure riding, while Sunday often drops (rest/preparation day).</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=40b62a17"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Calculate average demand by day of week</span>
+<span class="n">day_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Monday'</span><span class="p">,</span> <span class="s1">'Tuesday'</span><span class="p">,</span> <span class="s1">'Wednesday'</span><span class="p">,</span> <span class="s1">'Thursday'</span><span class="p">,</span> <span class="s1">'Friday'</span><span class="p">,</span> <span class="s1">'Saturday'</span><span class="p">,</span> <span class="s1">'Sunday'</span><span class="p">]</span>
+<span class="n">weekly_pattern</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'dayofweek'</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Visualize weekly pattern</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">day_names</span><span class="p">,</span> <span class="n">weekly_pattern</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'teal'</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Day of Week'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Average Hourly Demand'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Weekly Demand Pattern'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print insights</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== WEEKLY DEMAND PATTERN ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">day_names</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">day</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes per hour"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Best day: </span><span class="si">{</span><span class="n">day_names</span><span class="p">[</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weakest day: </span><span class="si">{</span><span class="n">day_names</span><span class="p">[</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">weekly_pattern</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes)"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8fa92e38"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=3cfe8fcf"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-3:-Train-a-Linear-Regression-Model">Step 3: Train a Linear Regression Model<a class="anchor-link" href="#Step-3:-Train-a-Linear-Regression-Model">¶</a></h2><p>Let's train a linear regression model using scikit-learn to predict bike demand from our engineered features.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ed04dd89">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load/prepare data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
+
+<span class="c1"># Load and prepare data (same as Step 2)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create features</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_24h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'dayofweek'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">])</span>
+
+<span class="c1"># Prepare feature matrix and target</span>
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'hour_sin'</span><span class="p">,</span> <span class="s1">'hour_cos'</span><span class="p">,</span>
+                   <span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">,</span> <span class="s1">'dayofweek'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span>
+
+<span class="c1"># Create and train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Make predictions and evaluate</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== MODEL TRAINING COMPLETE ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Features used: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_columns</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Model Coefficients:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">coef</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_columns</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">feature</span><span class="si">:</span><span class="s2">20s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">coef</span><span class="si">:</span><span class="s2">+8.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== PERFORMANCE (all data) ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R²:   </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">r2</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% variance explained)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RMSE: </span><span class="si">{</span><span class="n">rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bikes per hour"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MAE:  </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bikes per hour"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Note: These metrics are optimistic - we need train-test split!"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=220956dc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li>Prepares feature matrix X (9 features) and target y (bike demand)</li>
+<li>Trains LinearRegression model with .fit(X, y)</li>
+<li>Makes predictions with .predict(X) and calculates performance metrics</li>
+<li>Shows coefficients revealing which features increase/decrease demand</li>
+<li>R² of ~81% means model explains 81% of demand variation</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b6e6bdac"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-3:-Train-Model-with-Different-Feature-Combinations">Challenge 3: Train Model with Different Feature Combinations<a class="anchor-link" href="#Challenge-3:-Train-Model-with-Different-Feature-Combinations">¶</a></h3><p>Your client asks: "Which features matter most? Can we get similar performance with fewer features?" Compare models using different feature sets.</p>
+<p><strong>Your Task:</strong> Train three models with different feature combinations and compare their performance.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=d40fddeb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - compare models with different feature sets</span>
+
+<span class="c1"># Model 1: Weather-only features</span>
+<span class="n">weather_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]</span>
+<span class="n">X_weather</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+<span class="n">model_weather</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_weather</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_weather</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_weather</span> <span class="o">=</span> <span class="n">model_weather</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_weather</span><span class="p">)</span>
+<span class="n">r2_weather</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_weather</span><span class="p">)</span>
+
+<span class="c1"># Model 2: Time-only features</span>
+<span class="n">time_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">,</span> <span class="s1">'hour_cos'</span><span class="p">,</span> <span class="s1">'dayofweek'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">]</span>
+<span class="n">X_time</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+<span class="n">model_time</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_time</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_time</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_time</span> <span class="o">=</span> <span class="n">model_time</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_time</span><span class="p">)</span>
+<span class="n">r2_time</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_time</span><span class="p">)</span>
+
+<span class="c1"># Model 3: Complete model (weather + time + lags)</span>
+<span class="n">complete_features</span> <span class="o">=</span> <span class="n">feature_columns</span>  <span class="c1"># Already defined above</span>
+<span class="n">X_complete</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">complete_features</span><span class="p">]</span>
+<span class="n">model_complete</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_complete</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_complete</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_complete</span> <span class="o">=</span> <span class="n">model_complete</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_complete</span><span class="p">)</span>
+<span class="n">r2_complete</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_complete</span><span class="p">)</span>
+
+<span class="c1"># Compare results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== MODEL COMPARISON ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weather-only model:  R² = </span><span class="si">{</span><span class="n">r2_weather</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Time-only model:     R² = </span><span class="si">{</span><span class="n">r2_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Complete model:      R² = </span><span class="si">{</span><span class="n">r2_complete</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Best model: </span><span class="si">{</span><span class="s1">'Weather'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">r2_weather</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nb">max</span><span class="p">(</span><span class="n">r2_time</span><span class="p">,</span><span class="w"> </span><span class="n">r2_complete</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Time'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">r2_time</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">r2_complete</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Complete'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7381df60"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Follow the same pattern for each model: create X subset using <code>df_clean[feature_list]</code> → fit model with <code>LinearRegression().fit(X, y)</code> → predict with <code>model.predict(X)</code> → calculate R² with <code>r2_score(y_true, y_pred)</code>. Weather features (temp, humidity, windspeed) capture environmental conditions, while time features (hour_sin, hour_cos, dayofweek, month) capture temporal patterns, and the complete model uses all 9 features including lag variables. Don't forget to fit each model separately (don't reuse the previous model object), and use <code>len(feature_list)</code> to count features correctly. The weather-only model is useful when you have weather forecasts but no historical demand, the time-only model works for seasonal planning independent of weather, and the complete model delivers best performance by combining all signals - this comparison shows which features contribute most value to your client's forecasting accuracy.</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=66108c7b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Model 1: Weather-only features</span>
+<span class="n">weather_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]</span>
+<span class="n">X_weather</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">weather_features</span><span class="p">]</span>
+<span class="n">model_weather</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_weather</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_weather</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_weather</span> <span class="o">=</span> <span class="n">model_weather</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_weather</span><span class="p">)</span>
+<span class="n">r2_weather</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_weather</span><span class="p">)</span>
+
+<span class="c1"># Model 2: Time-only features</span>
+<span class="n">time_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">,</span> <span class="s1">'hour_cos'</span><span class="p">,</span> <span class="s1">'dayofweek'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">]</span>
+<span class="n">X_time</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">time_features</span><span class="p">]</span>
+<span class="n">model_time</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_time</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_time</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_time</span> <span class="o">=</span> <span class="n">model_time</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_time</span><span class="p">)</span>
+<span class="n">r2_time</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_time</span><span class="p">)</span>
+
+<span class="c1"># Model 3: Complete model (weather + time + lags)</span>
+<span class="n">complete_features</span> <span class="o">=</span> <span class="n">feature_columns</span>
+<span class="n">X_complete</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">complete_features</span><span class="p">]</span>
+<span class="n">model_complete</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model_complete</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_complete</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_pred_complete</span> <span class="o">=</span> <span class="n">model_complete</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_complete</span><span class="p">)</span>
+<span class="n">r2_complete</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred_complete</span><span class="p">)</span>
+
+<span class="c1"># Compare results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== MODEL COMPARISON ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weather-only model:  R² = </span><span class="si">{</span><span class="n">r2_weather</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">weather_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Time-only model:     R² = </span><span class="si">{</span><span class="n">r2_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">time_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Complete model:      R² = </span><span class="si">{</span><span class="n">r2_complete</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">complete_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> features)"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Insights:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- Time features alone explain </span><span class="si">{</span><span class="n">r2_time</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of variation (temporal patterns dominate)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- Weather + lag features add </span><span class="si">{</span><span class="p">(</span><span class="n">r2_complete</span><span class="o">-</span><span class="n">r2_time</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% additional explanation"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- Lag features are crucial: they capture sequential dependencies"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Recommendation: Use complete model for best forecasting accuracy"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9fef0fca"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=03ecf4e2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-4:-Create-Chronological-Train-Test-Split">Step 4: Create Chronological Train-Test Split<a class="anchor-link" href="#Step-4:-Create-Chronological-Train-Test-Split">¶</a></h2><p>Let's evaluate model performance honestly by splitting data chronologically: train on past, test on future.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=3bad7d61">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and prepare data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Load and prepare data (same as previous steps)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create features</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_24h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'dayofweek'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">])</span>
+
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'hour_sin'</span><span class="p">,</span> <span class="s1">'hour_cos'</span><span class="p">,</span>
+                   <span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">,</span> <span class="s1">'dayofweek'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span>
+
+<span class="c1"># Create chronological split: 80% train, 20% test</span>
+<span class="n">split_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">split_index</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split_index</span><span class="p">:]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">split_index</span><span class="p">]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split_index</span><span class="p">:]</span>
+
+<span class="c1"># Train model on training data only</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluate on both training and testing sets</span>
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">train_r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+<span class="n">train_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">))</span>
+<span class="n">test_r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+<span class="n">test_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== CHRONOLOGICAL TRAIN-TEST SPLIT ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Training set: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2"> obs (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Testing set:  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2"> obs (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== PERFORMANCE COMPARISON ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Training:  R² = </span><span class="si">{</span><span class="n">train_r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, RMSE = </span><span class="si">{</span><span class="n">train_rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Testing:   R² = </span><span class="si">{</span><span class="n">test_r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, RMSE = </span><span class="si">{</span><span class="n">test_rmse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Gap:       </span><span class="si">{</span><span class="n">train_r2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">test_r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">train_r2</span> <span class="o">-</span> <span class="n">test_r2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Small gap - model generalizes well to future data"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">⚠ Moderate gap - some overfitting present"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7f499d89"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li>Splits data chronologically using .iloc[] (first 80% = train, last 20% = test)</li>
+<li>Trains model only on historical data (training set)</li>
+<li>Evaluates on both sets to compare training vs testing performance</li>
+<li>Performance gap shows how well model generalizes to unseen future data</li>
+<li>Test R² and RMSE reveal realistic forecasting accuracy</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ad320819"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-4:-Experiment-with-Different-Split-Ratios">Challenge 4: Experiment with Different Split Ratios<a class="anchor-link" href="#Challenge-4:-Experiment-with-Different-Split-Ratios">¶</a></h3><p>Your client asks: "What if we used more data for training? Would that improve test performance?" Compare 70/30, 80/20, and 90/10 splits.</p>
+<p><strong>Your Task:</strong> Train models with three different split ratios and compare their test performance.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=6c94e63b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - compare different split ratios</span>
+
+<span class="n">split_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ratio</span> <span class="ow">in</span> <span class="n">split_ratios</span><span class="p">:</span>
+    <span class="c1"># Calculate split index for this ratio</span>
+    <span class="n">split_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span> <span class="o">*</span> <span class="n">_____</span><span class="p">)</span>
+
+    <span class="c1"># Split data chronologically</span>
+    <span class="n">X_train_temp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">_____</span><span class="p">]</span>
+    <span class="n">X_test_temp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">:]</span>
+    <span class="n">y_train_temp</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">_____</span><span class="p">]</span>
+    <span class="n">y_test_temp</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">:]</span>
+
+    <span class="c1"># Train model</span>
+    <span class="n">model_temp</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model_temp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_temp</span><span class="p">,</span> <span class="n">y_train_temp</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate on test set</span>
+    <span class="n">y_test_pred_temp</span> <span class="o">=</span> <span class="n">model_temp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_temp</span><span class="p">)</span>
+    <span class="n">test_r2_temp</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_temp</span><span class="p">,</span> <span class="n">y_test_pred_temp</span><span class="p">)</span>
+    <span class="n">test_rmse_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_temp</span><span class="p">,</span> <span class="n">y_test_pred_temp</span><span class="p">))</span>
+
+    <span class="c1"># Store results</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">'ratio'</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">ratio</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">int</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">ratio</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'train_size'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_temp</span><span class="p">),</span>
+        <span class="s1">'test_size'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test_temp</span><span class="p">),</span>
+        <span class="s1">'test_r2'</span><span class="p">:</span> <span class="n">test_r2_temp</span><span class="p">,</span>
+        <span class="s1">'test_rmse'</span><span class="p">:</span> <span class="n">test_rmse_temp</span>
+    <span class="p">})</span>
+
+<span class="c1"># Display comparison</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== SPLIT RATIO COMPARISON ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'ratio'</span><span class="p">]</span><span class="si">}</span><span class="s2"> split:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Training: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'train_size'</span><span class="p">]</span><span class="si">}</span><span class="s2"> obs  |  Testing: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_size'</span><span class="p">]</span><span class="si">}</span><span class="s2"> obs"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Test R²: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  |  Test RMSE: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_rmse'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=87414fa2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Loop through each ratio (0.7, 0.8, 0.9) and calculate <code>split_index = int(len(df_clean) * ratio)</code> for each iteration - don't reuse the same split_idx for all ratios. For each ratio, use <code>.iloc[:split_idx]</code> for training and <code>.iloc[split_idx:]</code> for testing, making sure to use chronological splitting (not random sampling). Train a fresh LinearRegression model for each split to ensure fair comparison, then store test R² and RMSE in the results list. Larger training sets (90/10) provide more data for learning patterns but leave less data for reliable testing evaluation, while larger test sets (70/30) give more reliable performance estimates but less training data. The 70/30 split maximizes test data reliability, 80/20 provides standard balance, and 90/10 maximizes learning capacity - your client should understand this trade-off between learning and evaluation reliability when choosing their validation strategy.</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5bffda32"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="n">split_ratios</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">ratio</span> <span class="ow">in</span> <span class="n">split_ratios</span><span class="p">:</span>
+    <span class="c1"># Calculate split index for this ratio</span>
+    <span class="n">split_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">)</span>
+
+    <span class="c1"># Split data chronologically</span>
+    <span class="n">X_train_temp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">split_idx</span><span class="p">]</span>
+    <span class="n">X_test_temp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split_idx</span><span class="p">:]</span>
+    <span class="n">y_train_temp</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">split_idx</span><span class="p">]</span>
+    <span class="n">y_test_temp</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">split_idx</span><span class="p">:]</span>
+
+    <span class="c1"># Train model</span>
+    <span class="n">model_temp</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model_temp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_temp</span><span class="p">,</span> <span class="n">y_train_temp</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate on test set</span>
+    <span class="n">y_test_pred_temp</span> <span class="o">=</span> <span class="n">model_temp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_temp</span><span class="p">)</span>
+    <span class="n">test_r2_temp</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_temp</span><span class="p">,</span> <span class="n">y_test_pred_temp</span><span class="p">)</span>
+    <span class="n">test_rmse_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_temp</span><span class="p">,</span> <span class="n">y_test_pred_temp</span><span class="p">))</span>
+
+    <span class="c1"># Store results</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">'ratio'</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">ratio</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">int</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">ratio</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="s1">'train_size'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_temp</span><span class="p">),</span>
+        <span class="s1">'test_size'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test_temp</span><span class="p">),</span>
+        <span class="s1">'test_r2'</span><span class="p">:</span> <span class="n">test_r2_temp</span><span class="p">,</span>
+        <span class="s1">'test_rmse'</span><span class="p">:</span> <span class="n">test_rmse_temp</span>
+    <span class="p">})</span>
+
+<span class="c1"># Display comparison</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== SPLIT RATIO COMPARISON ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'ratio'</span><span class="p">]</span><span class="si">}</span><span class="s2"> split:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Training: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'train_size'</span><span class="p">]</span><span class="si">}</span><span class="s2"> obs  |  Testing: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_size'</span><span class="p">]</span><span class="si">}</span><span class="s2"> obs"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Test R²: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  |  Test RMSE: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_rmse'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Insight: Larger training sets provide more learning data, but smaller test sets reduce evaluation reliability."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Recommendation: 80/20 split balances learning and evaluation needs for most applications."</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c13a2ac4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=51705c6b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-5:-Apply-Cross-Validation-for-Robust-Evaluation">Step 5: Apply Cross-Validation for Robust Evaluation<a class="anchor-link" href="#Step-5:-Apply-Cross-Validation-for-Robust-Evaluation">¶</a></h2><p>A single train-test split gives one performance estimate. Cross-validation provides multiple estimates for more reliable evaluation.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=59e6eb13">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and prepare data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="c1"># Load and prepare data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create features</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'demand_lag_24h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'dayofweek'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">])</span>
+
+<span class="n">feature_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'hour_sin'</span><span class="p">,</span> <span class="s1">'hour_cos'</span><span class="p">,</span>
+                   <span class="s1">'demand_lag_1h'</span><span class="p">,</span> <span class="s1">'demand_lag_24h'</span><span class="p">,</span> <span class="s1">'dayofweek'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span>
+
+<span class="c1"># Create TimeSeriesSplit with 5 folds</span>
+<span class="n">tscv</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Show fold structure</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== TIME SERIES CROSS-VALIDATION ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Fold structure (expanding window):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">fold_num</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tscv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">train_dates</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">][</span><span class="s1">'datetime'</span><span class="p">]</span>
+    <span class="n">test_dates</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'datetime'</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fold </span><span class="si">{</span><span class="n">fold_num</span><span class="si">}</span><span class="s2">: Train </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">train_idx</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> obs, Test </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_idx</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> obs"</span><span class="p">)</span>
+
+<span class="c1"># Run cross-validation</span>
+<span class="n">cv_scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">LinearRegression</span><span class="p">(),</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">tscv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">'r2'</span><span class="p">)</span>
+
+<span class="c1"># Show results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== CROSS-VALIDATION RESULTS ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_scores</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fold </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: R² = </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">cv_mean</span> <span class="o">=</span> <span class="n">cv_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">cv_std</span> <span class="o">=</span> <span class="n">cv_scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Mean R²: </span><span class="si">{</span><span class="n">cv_mean</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (±</span><span class="si">{</span><span class="n">cv_std</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Range:   </span><span class="si">{</span><span class="n">cv_scores</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">cv_scores</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">cv_std</span> <span class="o">&lt;</span> <span class="mf">0.03</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Low variability - consistent performance across time"</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">cv_std</span> <span class="o">&lt;</span> <span class="mf">0.06</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">⚠ Moderate variability - performance varies somewhat"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✗ High variability - unstable across time periods"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ab9448d6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li>Creates TimeSeriesSplit with 5 folds (expanding window approach)</li>
+<li>Each fold trains on past data and tests on next time period</li>
+<li>cross_val_score() automates training and evaluation across all folds</li>
+<li>Mean R² provides robust performance estimate</li>
+<li>Standard deviation shows performance consistency across time</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bcfc720c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-5:-Analyze-Performance-Variability-Across-Folds">Challenge 5: Analyze Performance Variability Across Folds<a class="anchor-link" href="#Challenge-5:-Analyze-Performance-Variability-Across-Folds">¶</a></h3><p>Your client asks: "Which time periods are hardest to predict? Why does performance vary?" Investigate which folds show best and worst performance.</p>
+<p><strong>Your Task:</strong> Calculate detailed metrics for each fold and analyze what makes some periods easier to predict.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=d3eef3a6">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - detailed fold analysis</span>
+
+<span class="n">fold_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">fold_num</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tscv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Split data for this fold</span>
+    <span class="n">X_train_fold</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+    <span class="n">X_test_fold</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+    <span class="n">y_train_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+    <span class="n">y_test_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>
+
+    <span class="c1"># Train model on this fold</span>
+    <span class="n">model_fold</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model_fold</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_fold</span><span class="p">,</span> <span class="n">y_train_fold</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate on test set</span>
+    <span class="n">y_pred_fold</span> <span class="o">=</span> <span class="n">model_fold</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_fold</span><span class="p">)</span>
+    <span class="n">r2_fold</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_fold</span><span class="p">,</span> <span class="n">y_pred_fold</span><span class="p">)</span>
+    <span class="n">rmse_fold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_fold</span><span class="p">,</span> <span class="n">y_pred_fold</span><span class="p">))</span>
+
+    <span class="c1"># Get test period dates and characteristics</span>
+    <span class="n">test_dates_fold</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'datetime'</span><span class="p">]</span>
+    <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_demand</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Store results</span>
+    <span class="n">fold_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">'fold'</span><span class="p">:</span> <span class="n">fold_num</span><span class="p">,</span>
+        <span class="s1">'test_start'</span><span class="p">:</span> <span class="n">test_dates_fold</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+        <span class="s1">'test_end'</span><span class="p">:</span> <span class="n">test_dates_fold</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+        <span class="s1">'r2'</span><span class="p">:</span> <span class="n">r2_fold</span><span class="p">,</span>
+        <span class="s1">'rmse'</span><span class="p">:</span> <span class="n">rmse_fold</span><span class="p">,</span>
+        <span class="s1">'avg_temp'</span><span class="p">:</span> <span class="n">avg_temp</span><span class="p">,</span>
+        <span class="s1">'avg_demand'</span><span class="p">:</span> <span class="n">avg_demand</span>
+    <span class="p">})</span>
+
+<span class="c1"># Display results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== FOLD-BY-FOLD ANALYSIS ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">fold_results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Fold </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  R²: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  |  RMSE: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'rmse'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Avg temp: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'avg_temp'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C  |  Avg demand: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'avg_demand'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
+
+<span class="c1"># Identify best and worst folds</span>
+<span class="n">best_fold</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">fold_results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">])</span>
+<span class="n">worst_fold</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">fold_results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== PERFORMANCE INSIGHTS ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Best fold: Fold </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (R² = </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Period: </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Worst fold: Fold </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (R² = </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Period: </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=410252d3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Loop through <code>enumerate(tscv.split(X), 1)</code> to iterate through folds with numbering, using train_idx and test_idx with <code>.iloc[]</code> to split features and target for each fold. Don't reuse the same model across folds - create a fresh LinearRegression instance each time to ensure fair comparison. Use train_idx for training and test_idx for testing (remember to calculate metrics on the test set using y_test_fold vs y_pred_fold). Calculate both R² and RMSE to understand performance completely, and extract test period characteristics like dates (using <code>df_clean.iloc[test_idx]['datetime']</code>), average temperature, and average demand. Use <code>max(list, key=lambda x: x['r2'])</code> to find the fold with best performance. Seasonal effects mean winter folds might show different patterns than summer, growth trends mean later folds include newer data with potentially different patterns, and holidays or special events in the test period affect predictability - understanding this variation helps your client identify when models need updating.</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=94c3e4b1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="n">fold_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">fold_num</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tscv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># Split data for this fold</span>
+    <span class="n">X_train_fold</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+    <span class="n">X_test_fold</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
+    <span class="n">y_train_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+    <span class="n">y_test_fold</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
+
+    <span class="c1"># Train model on this fold</span>
+    <span class="n">model_fold</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model_fold</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_fold</span><span class="p">,</span> <span class="n">y_train_fold</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate on test set</span>
+    <span class="n">y_pred_fold</span> <span class="o">=</span> <span class="n">model_fold</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_fold</span><span class="p">)</span>
+    <span class="n">r2_fold</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_fold</span><span class="p">,</span> <span class="n">y_pred_fold</span><span class="p">)</span>
+    <span class="n">rmse_fold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_fold</span><span class="p">,</span> <span class="n">y_pred_fold</span><span class="p">))</span>
+
+    <span class="c1"># Get test period dates and characteristics</span>
+    <span class="n">test_dates_fold</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'datetime'</span><span class="p">]</span>
+    <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">avg_demand</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">][</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Store results</span>
+    <span class="n">fold_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">'fold'</span><span class="p">:</span> <span class="n">fold_num</span><span class="p">,</span>
+        <span class="s1">'test_start'</span><span class="p">:</span> <span class="n">test_dates_fold</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+        <span class="s1">'test_end'</span><span class="p">:</span> <span class="n">test_dates_fold</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+        <span class="s1">'r2'</span><span class="p">:</span> <span class="n">r2_fold</span><span class="p">,</span>
+        <span class="s1">'rmse'</span><span class="p">:</span> <span class="n">rmse_fold</span><span class="p">,</span>
+        <span class="s1">'avg_temp'</span><span class="p">:</span> <span class="n">avg_temp</span><span class="p">,</span>
+        <span class="s1">'avg_demand'</span><span class="p">:</span> <span class="n">avg_demand</span>
+    <span class="p">})</span>
+
+<span class="c1"># Display results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== FOLD-BY-FOLD ANALYSIS ==="</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">fold_results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Fold </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  R²: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  |  RMSE: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'rmse'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Avg temp: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'avg_temp'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C  |  Avg demand: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'avg_demand'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
+
+<span class="c1"># Identify best and worst folds</span>
+<span class="n">best_fold</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">fold_results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">])</span>
+<span class="n">worst_fold</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">fold_results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== PERFORMANCE INSIGHTS ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Best fold: Fold </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (R² = </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Period: </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Characteristics: </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'avg_temp'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C avg, </span><span class="si">{</span><span class="n">best_fold</span><span class="p">[</span><span class="s1">'avg_demand'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> bikes avg"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Worst fold: Fold </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'fold'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (R² = </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'r2'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Period: </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'test_start'</span><span class="p">]</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'test_end'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Characteristics: </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'avg_temp'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C avg, </span><span class="si">{</span><span class="n">worst_fold</span><span class="p">[</span><span class="s1">'avg_demand'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> bikes avg"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Note: Differences in performance across folds may indicate changes in demand patterns"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"over time (business growth, operational changes) or varying seasonal predictability."</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ee52c0cc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=318ce325"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary:-Professional-Linear-Regression-Modeling-for-Transportation-Demand">Summary: Professional Linear Regression Modeling for Transportation Demand<a class="anchor-link" href="#Summary:-Professional-Linear-Regression-Modeling-for-Transportation-Demand">¶</a></h2><p><strong>What We've Accomplished:</strong></p>
+<ul>
+<li><strong>Analyzed linear relationships</strong> using correlation analysis and scipy.stats.linregress to understand which variables drive bike demand</li>
+<li><strong>Engineered time-based features</strong> including cyclical encoding (hour_sin/cos), lag features (demand history), and temporal components (day, month)</li>
+<li><strong>Trained predictive models</strong> using scikit-learn's LinearRegression with multiple feature combinations to forecast hourly bike demand</li>
+<li><strong>Implemented chronological train-test splits</strong> that preserve time series integrity and provide honest performance estimates for forecasting</li>
+<li><strong>Applied cross-validation</strong> with TimeSeriesSplit to obtain robust performance estimates across multiple temporal windows</li>
+</ul>
+<p><strong>Key Technical Skills Mastered:</strong></p>
+<ul>
+<li><strong>Correlation analysis</strong>: scipy.stats.linregress for calculating slopes, intercepts, and R² values</li>
+<li><strong>Feature engineering</strong>: cyclical encoding with sin/cos, lag features with .shift(), datetime extraction with .dt accessor</li>
+<li><strong>Model training</strong>: LinearRegression.fit() for learning patterns, .predict() for generating forecasts</li>
+<li><strong>Time series splitting</strong>: chronological .iloc[] indexing, TimeSeriesSplit for expanding window cross-validation</li>
+<li><strong>Performance evaluation</strong>: r2_score, mean_squared_error, cross_val_score for comprehensive model assessment</li>
+<li><strong>Result interpretation</strong>: translating R² and RMSE into business-relevant forecasting accuracy estimates</li>
+</ul>
+<p><strong>Next Steps:</strong>
+In the next module, you'll advance to model evaluation techniques, learning to assess prediction quality, diagnose model limitations, and communicate performance to stakeholders. You'll also explore non-linear models that can capture more complex patterns beyond linear relationships.</p>
+<p>Your forecasting model transforms Capital City Bikes from reactive operations to predictive planning, enabling data-driven decisions about bike distribution, staffing levels, and capacity management. You've demonstrated the systematic machine learning workflow that professional data scientists use to deliver reliable predictions for real-world business applications!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 03: Programming Example - Predictive Modeling MOOC</title>
+    
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 30px -30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .nav-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-colab {
+        background-color: #f9ab00;
+        color: #1a1a1a;
+        border: 2px solid #f9ab00;
+    }
+
+    .btn-colab:hover {
+        background-color: #ff9900;
+        border-color: #ff9900;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
+    }
+
+    .btn-github {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-github:hover {
+        background-color: white;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .jupyter-content {
+        margin-top: 20px;
+    }
+
+    /* Notebook cell styling */
+    div.cell {
+        margin-bottom: 1.5rem;
+    }
+
+    div.input_area {
+        border-left: 3px solid #667eea;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    div.output_area {
+        padding: 10px;
+        border-left: 3px solid #28a745;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    /* Code highlighting */
+    .highlight {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .nav-header {
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+        }
+
+        .nav-header h1 {
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>Lecture 03: Programming Example</h1>
+            <div class="nav-buttons">
+                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-03-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
+                    ▶ Open in Colab
+                </a>
+                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-03-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
+                    📂 View on GitHub
+                </a>
+            </div>
+        </div>
+        <div class="jupyter-content">
+
+<main>
+<div class="border-box-sizing" id="notebook" tabindex="-1">
+<div class="container" id="notebook-container">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b44a91bd"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Lecture-3:-Programming-Example---Pandas-Fundamentals-with-Washington-D.C.-Data">Lecture 3: Programming Example - Pandas Fundamentals with Washington D.C. Data<a class="anchor-link" href="#Lecture-3:-Programming-Example---Pandas-Fundamentals-with-Washington-D.C.-Data">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=45f548ee"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction:-Your-First-Day-as-a-Data-Consultant">Introduction: Your First Day as a Data Consultant<a class="anchor-link" href="#Introduction:-Your-First-Day-as-a-Data-Consultant">¶</a></h2><p>Welcome to your first hands-on session as a junior data consultant! Today, you'll work with real Washington D.C. bike-sharing data, learning pandas step-by-step. We'll start with absolute basics and build up to loading and exploring your client's dataset.</p>
+<blockquote>
+<p><strong>🚀 Interactive Learning Alert</strong></p>
+<p>This is a hands-on programming tutorial with code examples and challenges. For the best learning experience:</p>
+<ul>
+<li><strong>Click "Open in Colab"</strong> at the bottom of this notebook to run it in Google Colab</li>
+<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong> to see the results</li>
+<li><strong>Complete the challenges</strong> to practice what you learn</li>
+</ul>
+</blockquote>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bb855692"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-1:-Setting-Up-Your-Data-Analysis-Environment">Step 1: Setting Up Your Data Analysis Environment<a class="anchor-link" href="#Step-1:-Setting-Up-Your-Data-Analysis-Environment">¶</a></h2><p>Let's start by importing the tools you'll need for data analysis. Think of this like setting up your workbench before starting a project:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=724575f5">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas - your primary data manipulation tool</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Print confirmation</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Pandas imported successfully!"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pandas version: </span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4d103433"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p><strong>Note:</strong> To run a code cell in Jupyter Notebook, click inside the cell and press <strong>Shift + Enter</strong>. This will execute the code and show the output directly below the cell.</p>
+</blockquote>
+<p><strong>What this does:</strong></p>
+<ul>
+<li><code>import pandas as pd</code> makes the pandas library available with the shorthand "pd"</li>
+<li>The shorthand <code>pd</code> is a universal convention - all pandas users worldwide use this</li>
+<li>Checking the version ensures you're working with up-to-date tools. In real-world projects, you usually just import pandas and skip printing the version or confirmation messages. We're doing it here only for teaching purposes, so you can see exactly what's happening step by step.</li>
+</ul>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9d6d0507"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-1:-Import-Practice">Challenge 1: Import Practice<a class="anchor-link" href="#Challenge-1:-Import-Practice">¶</a></h3><p>Import pandas yourself, then check that it worked by running <code>type(pd)</code>. The output should be <code>&lt;class 'module'&gt;</code>, confirming that <code>pd</code> is a module.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=a1ebeba4">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">_____</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  <span class="c1"># Fill in the library name</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pd</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=82c11ded"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p><strong>Note:</strong> To solve the exercise, replace each <code>_____</code> with the correct value or code. After that, expand the Solution section to compare your answer with the correct one.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a50df45a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>  <span class="c1"># Fill in the library name</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pd</span><span class="p">))</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4c9a02c9"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d53c9569"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-2:-Understanding-Series---Single-Column-Data">Step 2: Understanding Series - Single Column Data<a class="anchor-link" href="#Step-2:-Understanding-Series---Single-Column-Data">¶</a></h2><p>Let's start with Series by creating bike rental data for a typical Monday morning. Think of Series as a single column from a spreadsheet:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=62e84edd">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create a Series with hourly bike rentals</span>
+<span class="n">morning_rentals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">287</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Morning Bike Rentals:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">morning_rentals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=19b15f8c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><code>morning_rentals = pd.Series([...])</code> creates a pandas Series object and saves it in the variable <code>morning_rentals</code></li>
+<li>The numbers on the right column represent bike rentals for each hour</li>
+<li>The numbers on the left column are index numbers that Pandas automatically assigns (0, 1, 2, etc.)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9cc1a5c8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-2:-Create-Your-Own-Series">Challenge 2: Create Your Own Series<a class="anchor-link" href="#Challenge-2:-Create-Your-Own-Series">¶</a></h3><p>Create a Series representing temperature readings for the same morning hours. Use these temperatures: [6, 7, 8, 10, 12, 13, 14, 16]</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7cab4a56">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas for Series creation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Your code here - create a Series called 'morning_temps'</span>
+<span class="n">morning_temps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in the temperature list</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Print your Series to verify it worked</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=3a957811"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When creating Series objects, consider these best practices:</p>
+<ul>
+<li>Use descriptive variable names like <code>morning_temps</code> instead of generic names like <code>data</code></li>
+<li>Print the Series to verify it contains the expected values and structure</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=54fb2852"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import pandas for Series creation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Your code here - create a Series called 'morning_temps'</span>
+<span class="n">morning_temps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>  <span class="c1"># Fill in the temperature list</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">morning_temps</span><span class="p">)</span>  <span class="c1"># Print your Series to verify it worked</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5b03bafb"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2946ce18"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-3:-Adding-Meaningful-Labels-to-Series">Step 3: Adding Meaningful Labels to Series<a class="anchor-link" href="#Step-3:-Adding-Meaningful-Labels-to-Series">¶</a></h2><p>Raw index numbers (0, 1, 2) aren't very business-friendly. Let's add meaningful labels:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=dd1309c5">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create Series with meaningful hour labels</span>
+<span class="n">hour_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">,</span> <span class="s1">'11 AM'</span><span class="p">,</span> <span class="s1">'12 PM'</span><span class="p">,</span> <span class="s1">'1 PM'</span><span class="p">]</span>
+<span class="n">morning_rentals_labeled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">287</span><span class="p">],</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">hour_labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Labeled Morning Bike Rentals:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">morning_rentals_labeled</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e25937ff"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><code>hour_labels = ['6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM']</code> creates a list of time labels that represent each hour in the morning</li>
+<li><code>index=hour_labels</code> replaces default numbers with business-meaningful labels created in the previous line</li>
+<li>Now each rental count is clearly connected to its time period</li>
+</ul>
+<p>Now when you show this to your client, they immediately understand that 1 PM has the highest rentals (287), which makes perfect sense for lunch-time bike usage.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bcc65093"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-3:-Access-Specific-Data-Points">Challenge 3: Access Specific Data Points<a class="anchor-link" href="#Challenge-3:-Access-Specific-Data-Points">¶</a></h3><p>Using your labeled Series, find the bike rentals at 9 AM. Use this syntax: <code>morning_rentals_labeled['9 AM']</code></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=f1ca6f35">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas and create the labeled Series</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Create Series with meaningful hour labels</span>
+<span class="n">hour_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">,</span> <span class="s1">'11 AM'</span><span class="p">,</span> <span class="s1">'12 PM'</span><span class="p">,</span> <span class="s1">'1 PM'</span><span class="p">]</span>
+<span class="n">morning_rentals_labeled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">287</span><span class="p">],</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">hour_labels</span><span class="p">)</span>
+
+<span class="c1"># Your code here - access the 9 AM value from the labeled Series</span>
+<span class="n">nine_am_rentals</span> <span class="o">=</span> <span class="n">morning_rentals_labeled</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span>  <span class="c1"># Fill in the correct label</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bike rentals at 9 AM: </span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Print the result</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7bc499ec"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When accessing Series data by label, keep these techniques in mind:</p>
+<ul>
+<li>In this challenge, we're using square brackets with the exact label: <code>series_name['label']</code></li>
+<li>Check available labels with <code>series_name.index</code> to see all options</li>
+<li>Access multiple values: <code>series_name[['9 AM', '10 AM']]</code> (note double brackets)</li>
+<li>Use <code>.loc[]</code> for explicit label-based selection: <code>series_name.loc['9 AM']</code></li>
+<li>Be careful with exact spelling and spacing in labels to avoid KeyError</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=072b27b1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import pandas and create the labeled Series</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Create Series with meaningful hour labels</span>
+<span class="n">hour_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">,</span> <span class="s1">'11 AM'</span><span class="p">,</span> <span class="s1">'12 PM'</span><span class="p">,</span> <span class="s1">'1 PM'</span><span class="p">]</span>
+<span class="n">morning_rentals_labeled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">287</span><span class="p">],</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">hour_labels</span><span class="p">)</span>
+
+<span class="c1"># Your code here - access the 9 AM value from the labeled Series</span>
+<span class="n">nine_am_rentals</span> <span class="o">=</span> <span class="n">morning_rentals_labeled</span><span class="p">[</span><span class="s1">'9 AM'</span><span class="p">]</span>  <span class="c1"># Fill in the correct label</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bike rentals at 9 AM: </span><span class="si">{</span><span class="n">nine_am_rentals</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Print the result</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=5350f229"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=973eeda3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-4:-Creating-Your-First-DataFrame---Complete-Business-Data">Step 4: Creating Your First DataFrame - Complete Business Data<a class="anchor-link" href="#Step-4:-Creating-Your-First-DataFrame---Complete-Business-Data">¶</a></h2><p>Now let's combine multiple pieces of information into a DataFrame. Think of this as creating a complete spreadsheet with multiple columns:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=fa6311cd">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create a comprehensive DataFrame with multiple variables</span>
+<span class="n">bike_operations_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'hour'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">],</span>
+    <span class="s1">'temperature'</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">11.7</span><span class="p">],</span>
+    <span class="s1">'bike_rentals'</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>
+    <span class="s1">'weather_condition'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Partly Cloudy'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Complete Bike Operations Data:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bike_operations_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=96d91d31"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><code>pd.DataFrame({...})</code> creates a DataFrame with multiple columns</li>
+<li>The DataFrame constructor accepts a dictionary where:<ul>
+<li>each key (like 'hour', 'temperature', etc.) becomes a column name</li>
+<li>each list in the dictionary provides the values for that column</li>
+</ul>
+</li>
+<li>All rows stay aligned (first hour corresponds to first temperature, etc.)</li>
+</ul>
+<p>You can immediately see patterns - bike rentals increase with temperature and time, giving your client valuable operational insights..</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d8dad344"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-4:-Add-a-New-Column">Challenge 4: Add a New Column<a class="anchor-link" href="#Challenge-4:-Add-a-New-Column">¶</a></h3><p>Add a column called 'user_satisfaction' with values [3.2, 3.5, 3.8, 4.1, 4.3] representing customer satisfaction ratings.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=59804935">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas and create the DataFrame</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Create a comprehensive DataFrame with multiple variables</span>
+<span class="n">bike_operations_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'hour'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">],</span>
+    <span class="s1">'temperature'</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">11.7</span><span class="p">],</span>
+    <span class="s1">'bike_rentals'</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>
+    <span class="s1">'weather_condition'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Partly Cloudy'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Your code here - add a new column with satisfaction ratings</span>
+<span class="n">bike_operations_data</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">]</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Print the updated DataFrame</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c2ebe7da"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When adding new columns to DataFrames, follow these best practices:</p>
+<ul>
+<li>Ensure the new data list has the same length as existing rows: <code>len(new_data) == len(df)</code></li>
+<li>Use descriptive column names that clearly indicate what the data represents</li>
+<li>Verify the addition worked: <code>df.columns</code> shows all column names including the new one</li>
+<li>Check data types: <code>df.dtypes</code> to ensure the new column has appropriate type (float64 for ratings)</li>
+<li>You can also add columns using <code>df.assign(column_name=values)</code> for a more functional approach</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=dbc3e7fa"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import pandas and create the DataFrame</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Create a comprehensive DataFrame with multiple variables</span>
+<span class="n">bike_operations_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'hour'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'6 AM'</span><span class="p">,</span> <span class="s1">'7 AM'</span><span class="p">,</span> <span class="s1">'8 AM'</span><span class="p">,</span> <span class="s1">'9 AM'</span><span class="p">,</span> <span class="s1">'10 AM'</span><span class="p">],</span>
+    <span class="s1">'temperature'</span><span class="p">:</span> <span class="p">[</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">11.7</span><span class="p">],</span>
+    <span class="s1">'bike_rentals'</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">89</span><span class="p">],</span>
+    <span class="s1">'weather_condition'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Partly Cloudy'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="s1">'Clear'</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Your code here - add a new column with satisfaction ratings</span>
+<span class="n">bike_operations_data</span><span class="p">[</span><span class="s1">'user_satisfaction'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">]</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bike_operations_data</span><span class="p">)</span>  <span class="c1"># Print the updated DataFrame</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=fd14fa2d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=077ba4a5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-5:-Loading-Real-Washington-D.C.-Dataset">Step 5: Loading Real Washington D.C. Dataset<a class="anchor-link" href="#Step-5:-Loading-Real-Washington-D.C.-Dataset">¶</a></h2><p>Now for the real challenge - loading your client's actual historical data. This is where professional consulting begins:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7369720b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Confirm successful loading</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset loaded successfully!"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows × </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7d18a0d1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><code>pd.read_csv()</code> reads data from a CSV file into a DataFrame</li>
+<li>CSV (Comma-Separated Values) a standard format for sharing tabular data</li>
+<li>The shape tells you how much data you have to work with</li>
+</ul>
+<p>Always check the shape immediately after loading - it confirms the file loaded correctly and gives you a sense of your dataset size.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=1888f9d7"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-5:-Explore-the-Column-Names">Challenge 5: Explore the Column Names<a class="anchor-link" href="#Challenge-5:-Explore-the-Column-Names">¶</a></h3><p>Print the column names using <code>df.columns</code> to see what variables are available in your dataset.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=a3248577">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - explore the available columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Available columns:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">_____</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>  <span class="c1"># Fill in the DataFrame name</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c69f40fc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When exploring column names in a new dataset, use these investigation techniques:</p>
+<ul>
+<li><code>df.columns</code> returns an Index object with all column names</li>
+<li><code>list(df.columns)</code> converts to a regular Python list for easier reading</li>
+<li><code>len(df.columns)</code> tells you how many variables you have to work with</li>
+<li>Look for patterns in naming conventions to understand data structure</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=560caf59"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - explore the available columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Available columns:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>  <span class="c1"># Fill in the DataFrame name</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a8a6d610"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c4eaeed6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-6:-First-Look-at-Real-Transportation-Data">Step 6: First Look at Real Transportation Data<a class="anchor-link" href="#Step-6:-First-Look-at-Real-Transportation-Data">¶</a></h2><p>Let's examine the first few rows to understand the data structure:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=f1d326cb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Display the first 5 rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"First 5 rows of the dataset:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ff60c17c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this shows:</strong></p>
+<ul>
+<li><code>head()</code> displays the first 5 rows by default (you can specify a different number like <code>df.head(10)</code> to see 10 rows)</li>
+<li>You'll see actual bike-sharing data with timestamps, weather, and usage counts</li>
+<li>Each row represents one hour of bike-sharing operations</li>
+</ul>
+<p><strong>Understanding the real data:</strong></p>
+<ul>
+<li><code>datetime</code>: When this data was recorded</li>
+<li><code>season</code>, <code>holiday</code>, <code>workingday</code>: Operational context</li>
+<li><code>weather</code>, <code>temp</code>, <code>humidity</code>, <code>windspeed</code>: Weather conditions</li>
+<li><code>casual</code>, <code>registered</code>, <code>count</code>: Different types of users and total rentals</li>
+</ul>
+<p>This is the foundation of all your future analysis for this client.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4f531c58"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-6:-Look-at-the-Last-Few-Rows">Challenge 6: Look at the Last Few Rows<a class="anchor-link" href="#Challenge-6:-Look-at-the-Last-Few-Rows">¶</a></h3><p>Use <code>df.tail()</code> to see the last 5 rows of the dataset. This helps verify you have complete data coverage.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=eb8517d4">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - examine the last few rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Last 5 rows of the dataset:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="o">.</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in the DataFrame name and method</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e12386e6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When examining the end of your dataset, consider these data quality checks:</p>
+<ul>
+<li>Compare last row's datetime to first row's datetime to understand time coverage</li>
+<li>Check if the last rows have complete data or if there are missing values</li>
+<li>Use <code>df.tail(10)</code> to see more rows if you want a larger sample</li>
+<li>Look for any unusual patterns or data entry errors in the final records</li>
+<li>Verify that the data collection didn't stop abruptly mid-period</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=99bb2a56"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - examine the last few rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Last 5 rows of the dataset:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>  <span class="c1"># Fill in the DataFrame name and method</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a6f6ee3d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8e5dde8f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-7:-Understanding-Your-Dataset-Size-and-Structure">Step 7: Understanding Your Dataset Size and Structure<a class="anchor-link" href="#Step-7:-Understanding-Your-Dataset-Size-and-Structure">¶</a></h2><p>Professional data analysis requires understanding exactly what you're working with:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=76aa61be">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Get detailed information about the dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dataset Information:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total records: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total variables: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Show data types for each column</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Data Types:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=341ed2a9"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this tells you:</strong></p>
+<ul>
+<li><strong>Total records</strong>: How much historical data your client has collected</li>
+<li><strong>Total variables</strong>: How many different factors you can analyze</li>
+<li><strong>Data types</strong>: What kind of analysis you can perform on each variable</li>
+</ul>
+<p>More historical data means more reliable predictions. The variety of variables (weather, time, user types) means you can build sophisticated demand forecasting models.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a84ddd8a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-7:-Calculate-Time-Coverage">Challenge 7: Calculate Time Coverage<a class="anchor-link" href="#Challenge-7:-Calculate-Time-Coverage">¶</a></h3><p>The dataset contains hourly data. Calculate how many days of data you have by dividing the total rows by 24.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=4a872b12">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - calculate days of coverage</span>
+<span class="n">total_days</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span> <span class="o">/</span> <span class="n">_____</span>  <span class="c1"># Fill in DataFrame name and divisor</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset covers approximately </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> days"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ab7a5917"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When calculating time coverage for time series data, consider these analysis approaches:</p>
+<ul>
+<li>Use <code>:.1f</code> formatting to display days with one decimal place for readability</li>
+<li>Calculate weeks as well: <code>total_days / 7</code> for business planning context</li>
+<li>Consider if you have complete days: <code>len(df) % 24</code> shows any partial days</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=87a3271e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - calculate days of coverage</span>
+<span class="n">total_days</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">/</span> <span class="mi">24</span>  <span class="c1"># Fill in DataFrame name and divisor</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset covers approximately </span><span class="si">{</span><span class="n">total_days</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> days"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=64b32e30"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=34936b9d"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-8:-Basic-Statistical-Summary">Step 8: Basic Statistical Summary<a class="anchor-link" href="#Step-8:-Basic-Statistical-Summary">¶</a></h2><p>Understanding the data distribution helps identify patterns and potential issues:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=91656333">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Generate statistical summary for numerical variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Statistical Summary:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f0c924bf"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this shows:</strong></p>
+<ul>
+<li><strong>count</strong>: How many non-missing values exist for each variable</li>
+<li><strong>mean</strong>: Average values (useful for understanding typical conditions)</li>
+<li><strong>std</strong>: Standard deviation (shows how much values vary)</li>
+<li><strong>min/max</strong>: Range of values (helps identify outliers or impossible values)</li>
+<li><strong>25%, 50%, 75%</strong>: Quartiles (show data distribution)</li>
+</ul>
+<p>If minimum bike counts are 1 and maximum is 977, that's a huge range! This suggests your client experiences very different demand conditions that you'll need to understand and predict.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0be256ad"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-8:-Focus-on-Key-Business-Metrics">Challenge 8: Focus on Key Business Metrics<a class="anchor-link" href="#Challenge-8:-Focus-on-Key-Business-Metrics">¶</a></h3><p>Create a summary focusing only on the key business variables: temperature (<code>temp</code>), humidity (<code>humidity</code>), and bike count (<code>count</code>).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=5cafeb4c">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - create a summary of key metrics</span>
+<span class="n">key_metrics</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[[</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame and column names</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Key Business Metrics Summary:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Print the summary</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7b2a30a0"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When focusing on specific business metrics, use these analytical techniques:</p>
+<ul>
+<li>Select columns using double brackets: <code>df[['col1', 'col2']]</code> to maintain DataFrame structure</li>
+<li>Compare ranges across variables to understand which have more variation</li>
+<li>Check for outliers: are max values realistic or potentially data entry errors?</li>
+<li>Consider business thresholds: what temperature ranges are most relevant for operations?</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=46984b09"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - create a summary of key metrics</span>
+<span class="n">key_metrics</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame and column names</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Key Business Metrics Summary:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">key_metrics</span><span class="p">)</span>  <span class="c1"># Print the summary</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=40c4e41f"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bad2e03c"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-9:-Selecting-Specific-Data-for-Analysis">Step 9: Selecting Specific Data for Analysis<a class="anchor-link" href="#Step-9:-Selecting-Specific-Data-for-Analysis">¶</a></h2><p>Often you need to focus on specific parts of your dataset. Let's learn several ways to select data:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=af12b3b2">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Select a single column (bike counts)</span>
+<span class="n">bike_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bike counts - Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">bike_counts</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average daily rentals: </span><span class="si">{</span><span class="n">bike_counts</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Select multiple columns for weather analysis</span>
+<span class="n">weather_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Weather data shape: </span><span class="si">{</span><span class="n">weather_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">weather_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Select first 12 rows for initial analysis</span>
+<span class="n">sample_data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sample data covers first </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> hours"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a2de8b55"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this demonstrates:</strong></p>
+<ul>
+<li><strong>Single column selection</strong>: Returns a Series (one-dimensional)</li>
+<li><strong>Multiple column selection</strong>: Returns a DataFrame (two-dimensional)</li>
+<li><strong>Row selection</strong>: Gets a subset of the full dataset</li>
+</ul>
+<p>You might analyze just weather data to understand seasonal patterns, or focus on the first few months to understand how the bike-sharing system performed during its early operations.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b886a555"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-9:-Create-a-Sample-Dataset">Challenge 9: Create a Sample Dataset<a class="anchor-link" href="#Challenge-9:-Create-a-Sample-Dataset">¶</a></h3><p>Select only the columns 'datetime', 'temp', 'count' and only the first 168 rows (first week of data).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=28c67d26">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - create a focused dataset for rush hour analysis</span>
+<span class="n">rush_hour_analysis</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[[</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in details</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rush hour dataset shape: </span><span class="si">{</span><span class="n">_____</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Print sample data</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=eb89473b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When creating focused analysis datasets, use these selection strategies:</p>
+<ul>
+<li>Verify the subset size: 168 hours = 7 days × 24 hours = 1 week</li>
+<li>Combine column and row selection: <code>df[['col1', 'col2']].head(n)</code></li>
+<li>Confirm time coverage: compare first and last datetime values - as you will see, it doesn't match (this may mean that some hour registers are missing)</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=46d7712e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - create a focused dataset for rush hour analysis</span>
+<span class="n">rush_hour_analysis</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">168</span><span class="p">)</span>  <span class="c1"># Fill in details</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rush hour dataset shape: </span><span class="si">{</span><span class="n">rush_hour_analysis</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rush_hour_analysis</span><span class="p">)</span>  <span class="c1"># Print sample data</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ffeee0a4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=82d1c5ad"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-10:-Understanding-Time-Based-Data">Step 10: Understanding Time-Based Data<a class="anchor-link" href="#Step-10:-Understanding-Time-Based-Data">¶</a></h2><p>Transportation data is inherently time-based. Let's work with the datetime information:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=715a8a03">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Convert datetime column to pandas datetime format</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Datetime conversion successful. Type: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Ensure chronological order for time-based operations</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Extract useful time components</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Show the first few rows with time components</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Data with extracted time components:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'hour'</span><span class="p">,</span> <span class="s1">'day_of_week'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bffaca22"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>Timedelta primer: A Timedelta represents a duration (difference between two timestamps). You'll use <code>pd.Timedelta(hours=1)</code> in the next step to flag gaps larger than one hour between records.</p>
+</blockquote>
+<p><strong>What this accomplishes:</strong></p>
+<ul>
+<li>Converts text dates to actual datetime objects for analysis</li>
+<li>Extracts hour, day, and month for business analysis</li>
+<li>Enables time-based filtering and grouping</li>
+</ul>
+<p>These <strong>time-based features</strong> unlock powerful insights. <strong>Hour analysis</strong> allows you to identify peak usage times for bike rebalancing, while <strong>day analysis</strong> helps compare weekday vs. weekend patterns. Additionally, <strong>month analysis</strong> reveals seasonal trends that are crucial for capacity planning.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4bd14280"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-10:-Find-Peak-Hour">Challenge 10: Find Peak Hour<a class="anchor-link" href="#Challenge-10:-Find-Peak-Hour">¶</a></h3><p>Use the new <code>hour</code> column to find which hour of the day has the highest average bike rentals.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=8ff7bc2c">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Convert datetime column and extract time components</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Your code here - find the peak hour for bike rentals</span>
+<span class="n">hourly_average</span> <span class="o">=</span> <span class="n">_____</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">_____</span><span class="p">)[</span><span class="n">_____</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame, grouping column, target column</span>
+<span class="n">peak_hour</span> <span class="o">=</span> <span class="n">hourly_average</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Fill in method to find maximum index</span>
+<span class="n">peak_rentals</span> <span class="o">=</span> <span class="n">hourly_average</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Fill in method to get maximum value</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak hour: </span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2">:00"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average rentals during peak hour: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=4af77382"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When analyzing time-based patterns, use these grouping and aggregation techniques:</p>
+<ul>
+<li><code>df.groupby('hour')['count'].mean()</code> calculates average by hour</li>
+<li>Use <code>.idxmax()</code> to find the index (hour) with maximum value</li>
+<li>Use <code>.max()</code> to get the actual maximum value</li>
+<li>Explore other time patterns: <code>df.groupby('day_of_week')['count'].mean()</code></li>
+<li>Consider multiple aggregations: <code>df.groupby('hour')['count'].agg(['mean', 'std', 'count'])</code></li>
+<li>Sort results for easier interpretation: <code>hourly_average.sort_values(ascending=False)</code></li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8d368396"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Convert datetime column and extract time components</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Your code here - find the peak hour for bike rentals</span>
+<span class="n">hourly_average</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'hour'</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame, grouping column, target column</span>
+<span class="n">peak_hour</span> <span class="o">=</span> <span class="n">hourly_average</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>  <span class="c1"># Fill in method to find maximum index</span>
+<span class="n">peak_rentals</span> <span class="o">=</span> <span class="n">hourly_average</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>  <span class="c1"># Fill in method to get maximum value</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak hour: </span><span class="si">{</span><span class="n">peak_hour</span><span class="si">}</span><span class="s2">:00"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average rentals during peak hour: </span><span class="si">{</span><span class="n">peak_rentals</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d1961a33"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=571a37b4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-11:-Data-Quality-Assessment---Missing-Data-Detection-(Empty-Cells)">Step 11: Data Quality Assessment - Missing Data Detection (Empty Cells)<a class="anchor-link" href="#Step-11:-Data-Quality-Assessment---Missing-Data-Detection-(Empty-Cells)">¶</a></h2><p>Real-world data often has missing values (empty cells). Let's check if any values are missing from our dataset. Note that we're checking for empty cells here - detecting missing time periods (like skipped hours) requires a different approach that we'll handle in Challenge 11.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=37b7b1db">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check for missing data in each column</span>
+<span class="n">missing_data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Missing Data Summary:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_data</span><span class="p">)</span>
+
+<span class="c1"># Calculate percentage of missing data</span>
+<span class="n">missing_percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">missing_data</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Missing Data Percentages:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">missing_data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">missing_percentage</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">: 0% (Complete)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b1d5cbf5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this code accomplishes:</strong></p>
+<ul>
+<li><code>df.isnull()</code> creates a DataFrame of True/False values where True indicates a missing value</li>
+<li><code>.sum()</code> counts the True values (which represent missing entries) for each column - since True is treated as 1 and False as 0 in arithmetic operations</li>
+<li>The percentage calculation shows the proportion of missing data relative to total records</li>
+<li>The loop displays results in a business-friendly format, clearly marking complete vs incomplete columns</li>
+<li>Converting to percentages helps understand the severity of missing data</li>
+</ul>
+<p>By running this code, we can see that there is <strong>no missing data</strong> in the dataset - all columns are complete. This means that <strong>we can confidently use any column</strong> for calculations without data quality concerns. <strong>If we had missing data</strong>, we would need to decide what to do with it: drop incomplete rows, exclude unreliable columns, or fill gaps using estimates (like averages or trends) - each choice would impact the quality of our analysis.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=f8f2e6a8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-11:-Identify-Missing-Datetime-Gaps-(Skipped-Hours)">Challenge 11: Identify Missing Datetime Gaps (Skipped Hours)<a class="anchor-link" href="#Challenge-11:-Identify-Missing-Datetime-Gaps-(Skipped-Hours)">¶</a></h3><p>Find where the gap between consecutive <code>datetime</code> values is greater than 1 hour — these indicate missing hourly records in the time series. This approach works because time series data should have consistent intervals. In our case, records are generated hourly, so any gap larger than 1 hour reveals missing records in the sequence.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=8bc2876d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - detect gaps &gt; 1 hour in the datetime sequence</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'_____'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Fill in the time column</span>
+
+<span class="n">time_diffs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>  <span class="c1"># Fill in the time column</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">time_diffs</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">_____</span><span class="p">)]</span>  <span class="c1"># Fill in the gap size</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Rows that follow a gap &gt; 1 hour:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2139fcc8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When detecting missing time periods, keep these practices in mind:</p>
+<ul>
+<li>Convert the datetime column to pandas datetime format by using <code>pd.to_datetime()</code></li>
+<li>Ensure the data is sorted by time before calling <code>.diff()</code></li>
+<li>Remember that <code>.diff()</code> calculates the time difference between each row and the previous row</li>
+<li>Use <code>pd.Timedelta(hours=1)</code> for a clear 1-hour threshold</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=c1133d85"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Your code here - detect gaps &gt; 1 hour in the datetime sequence</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Fill in the time column</span>
+
+<span class="n">time_diffs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>  <span class="c1"># Fill in the time column</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">time_diffs</span> <span class="o">&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>  <span class="c1"># Fill in the gap size</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Rows that follow a gap &gt; 1 hour:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gaps</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d02ea670"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=0de074d1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-12:-Basic-Data-Filtering-for-Business-Insights">Step 12: Basic Data Filtering for Business Insights<a class="anchor-link" href="#Step-12:-Basic-Data-Filtering-for-Business-Insights">¶</a></h2><p>Now we'll use data filtering to answer critical business questions that help optimize bike-sharing operations. By creating targeted subsets of our data, we can identify peak demand periods, understand weather impacts on ridership, and develop insights for operational planning:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=685f297f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Find high-demand periods (above average usage)</span>
+<span class="n">average_rentals</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">high_demand</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">average_rentals</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"High-demand periods: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">high_demand</span><span class="p">)</span><span class="si">}</span><span class="s2"> out of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> total hours"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"That's </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">high_demand</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of all hours"</span><span class="p">)</span>
+
+<span class="c1"># Find cold weather operations (temperature below 8°C)</span>
+<span class="n">cold_weather</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Cold weather operations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cold_weather</span><span class="p">)</span><span class="si">}</span><span class="s2"> hours"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average rentals in cold weather: </span><span class="si">{</span><span class="n">cold_weather</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Compare to warm weather (temperature above 26°C)</span>
+<span class="n">warm_weather</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">26</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average rentals in warm weather: </span><span class="si">{</span><span class="n">warm_weather</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7026c0a4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The analysis reveals clear patterns in bike-sharing demand:</p>
+<ul>
+<li>Out of more than <strong>10,000 recorded hours</strong>, around <strong>40% qualify as high-demand periods</strong>, showing that elevated usage is a regular occurrence rather than an exception</li>
+<li><strong>Weather plays a particularly strong role</strong>: when temperatures drop below <strong>8°C</strong>, bike rentals average only about <strong>61 per hour</strong>, reflecting how cold conditions discourage riders</li>
+<li>In contrast, when the temperature climbs to <strong>26°C or higher</strong>, average rentals surge to over <strong>277 per hour</strong>—more than <strong>four times the cold-weather figure</strong></li>
+</ul>
+<p>As you can imagine, these findings have significant implications for operational planning and resource allocation.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=3120359e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-12:-Weekend-vs.-Weekday-Analysis">Challenge 12: Weekend vs. Weekday Analysis<a class="anchor-link" href="#Challenge-12:-Weekend-vs.-Weekday-Analysis">¶</a></h3><p>Filter the data to compare average bike rentals on weekends (Saturday, Sunday) versus weekdays.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=b6dd59a3">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Convert datetime column and extract time components</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Your code here - compare weekend vs weekday bike usage</span>
+<span class="n">weekend_data</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[</span><span class="n">_____</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">])]</span>  <span class="c1"># Fill in details</span>
+<span class="n">weekday_data</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[</span><span class="o">~</span><span class="n">_____</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">])]</span>  <span class="c1"># Fill in details</span>
+
+<span class="n">weekend_avg</span> <span class="o">=</span> <span class="n">weekend_data</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in column name</span>
+<span class="n">weekday_avg</span> <span class="o">=</span> <span class="n">weekday_data</span><span class="p">[</span><span class="n">_____</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in column name</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekend average rentals: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekday average rentals: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Difference: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">_____</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_____</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> rentals per hour"</span><span class="p">)</span>  <span class="c1"># Fill in variable names</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=aeed41f6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When comparing categorical groups like weekends vs weekdays, use these filtering strategies:</p>
+<ul>
+<li>Use <code>.isin(['value1', 'value2'])</code> to match multiple values</li>
+<li>Use <code>~</code> (tilde) for "not" to get the inverse: <code>~df['col'].isin(values)</code></li>
+<li>Alternative approach: <code>df['day_of_week'].str.contains('Saturday|Sunday')</code></li>
+<li>Consider statistical significance: do the groups have meaningful differences?</li>
+<li>Calculate percentage difference: <code>((weekend_avg - weekday_avg) / weekday_avg) * 100</code></li>
+<li>Explore within-group variation: <code>weekend_data['count'].std()</code> vs <code>weekday_data['count'].std()</code></li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d22261d4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import required libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">data_file_path</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+
+<span class="c1"># Convert datetime column and extract time components</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day_name</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+
+<span class="c1"># Your code here - compare weekend vs weekday bike usage</span>
+<span class="n">weekend_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">'Saturday'</span><span class="p">,</span> <span class="s1">'Sunday'</span><span class="p">])]</span>  <span class="c1"># Fill in details</span>
+<span class="n">weekday_data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">'Saturday'</span><span class="p">,</span> <span class="s1">'Sunday'</span><span class="p">])]</span>  <span class="c1"># Fill in details</span>
+
+<span class="n">weekend_avg</span> <span class="o">=</span> <span class="n">weekend_data</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in column name</span>
+<span class="n">weekday_avg</span> <span class="o">=</span> <span class="n">weekday_data</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in column name</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekend average rentals: </span><span class="si">{</span><span class="n">weekend_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekday average rentals: </span><span class="si">{</span><span class="n">weekday_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Difference: </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">weekend_avg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">weekday_avg</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> rentals per hour"</span><span class="p">)</span>  <span class="c1"># Fill in variable names</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a7bda2ed"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8b5179a4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary:-Professional-Pandas-Data-Analysis-Fundamentals">Summary: Professional Pandas Data Analysis Fundamentals<a class="anchor-link" href="#Summary:-Professional-Pandas-Data-Analysis-Fundamentals">¶</a></h2><p><strong>What We've Accomplished</strong>:</p>
+<ul>
+<li>Established comprehensive pandas environment and data manipulation workflows</li>
+<li>Implemented systematic data loading and exploration methodologies for real transportation data</li>
+<li>Performed data quality assessment with missing data detection protocols</li>
+<li>Created time-based feature extraction and business intelligence filtering frameworks</li>
+</ul>
+<p><strong>Key Technical Skills Mastered</strong>:</p>
+<ul>
+<li>Series and DataFrame creation with meaningful business labeling systems</li>
+<li>CSV data loading and basic analysis for professional client datasets</li>
+<li>Temporal data manipulation with datetime extraction and grouping operations</li>
+<li>Data filtering and aggregation techniques for business insight generation</li>
+</ul>
+<p><strong>Next Steps</strong>: Next, we'll advance to professional data cleaning techniques, mastering missing value handling, outlier identification, and data preparation protocols that ensure our transportation datasets meet the rigorous quality standards required for sophisticated predictive modeling and client-ready analysis.</p>
+<p>Your bike-sharing client now has a solid data foundation built with professional pandas techniques that demonstrate systematic data exploration and business-focused analytical thinking - the core competencies that consulting firms expect from junior transportation data analysts!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+    </div>
+</body>
+</html>

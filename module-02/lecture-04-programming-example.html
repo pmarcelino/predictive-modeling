@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 04: Programming Example - Predictive Modeling MOOC</title>
+    
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .nav-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 30px -30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .nav-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-colab {
+        background-color: #f9ab00;
+        color: #1a1a1a;
+        border: 2px solid #f9ab00;
+    }
+
+    .btn-colab:hover {
+        background-color: #ff9900;
+        border-color: #ff9900;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
+    }
+
+    .btn-github {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-github:hover {
+        background-color: white;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .jupyter-content {
+        margin-top: 20px;
+    }
+
+    /* Notebook cell styling */
+    div.cell {
+        margin-bottom: 1.5rem;
+    }
+
+    div.input_area {
+        border-left: 3px solid #667eea;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    div.output_area {
+        padding: 10px;
+        border-left: 3px solid #28a745;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+
+    /* Code highlighting */
+    .highlight {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        .nav-header {
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+        }
+
+        .nav-header h1 {
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>Lecture 04: Programming Example</h1>
+            <div class="nav-buttons">
+                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-04-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
+                    ▶ Open in Colab
+                </a>
+                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-04-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
+                    📂 View on GitHub
+                </a>
+            </div>
+        </div>
+        <div class="jupyter-content">
+
+<main>
+<div class="border-box-sizing" id="notebook" tabindex="-1">
+<div class="container" id="notebook-container">
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a538cdbd"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Lecture-4:-Programming-Example---Data-Quality-Assessment-and-Cleaning">Lecture 4: Programming Example - Data Quality Assessment and Cleaning<a class="anchor-link" href="#Lecture-4:-Programming-Example---Data-Quality-Assessment-and-Cleaning">¶</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8c5d41e8"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction:-Cleaning-Real-Transportation-Data">Introduction: Cleaning Real Transportation Data<a class="anchor-link" href="#Introduction:-Cleaning-Real-Transportation-Data">¶</a></h2><p>Welcome back, junior data consultant! Your client was impressed with your initial work and now they need you to ensure their Washington D.C. bike-sharing dataset is ready for business predictions. Today, you'll learn to be a data detective - identifying problems, applying fixes, and validating your work.</p>
+<p>Think of data cleaning like being a mechanic inspecting a car before a long journey. You need to check every component, fix what's broken, and ensure everything runs smoothly. Your client is counting on clean, reliable data for their million-dollar bike expansion decisions.</p>
+<blockquote>
+<p><strong>🚀 Interactive Learning Alert</strong></p>
+<p>This is a hands-on data cleaning tutorial with detective work and problem-solving. For the best experience:</p>
+<ul>
+<li><strong>Click "Open in Colab"</strong> at the bottom to run code interactively</li>
+<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong></li>
+<li><strong>Complete the challenges</strong> to practice your data cleaning skills</li>
+<li><strong>Think like a consultant</strong> - every decision impacts client trust</li>
+</ul>
+</blockquote>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=91745224"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-1:-Loading-Your-Dataset-and-Getting-the-First-Look">Step 1: Loading Your Dataset and Getting the First Look<a class="anchor-link" href="#Step-1:-Loading-Your-Dataset-and-Getting-the-First-Look">¶</a></h2><p>Just like a mechanic needs the right tools before inspecting a car, you need to set up your data cleaning environment and load your client's data. Let's start by importing essential libraries and loading the bike-sharing dataset:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=18182279">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas - your primary data manipulation tool</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="c1"># Import numpy - for mathematical operations and handling special values</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the Washington D.C. bike-sharing dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Get your first look at what you're working with</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dataset Overview:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows × </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=9c6d1527"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><strong>Libraries</strong>: <code>pandas</code> (as <code>pd</code>) is your Swiss Army knife for data manipulation, <code>numpy</code> (as <code>np</code>) helps with mathematical operations and missing data handling</li>
+<li><strong>Dataset loading</strong>: Brings your client's bike-sharing data into your workspace for analysis</li>
+<li><strong>Shape overview</strong>: Shows how many hours of data you have (rows) and how many variables you need to check (columns)</li>
+</ul>
+<p>More data means more reliable insights, but also more potential quality issues to find and fix.</p>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=652c021b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-1:-Get-the-Complete-Data-Health-Report">Challenge 1: Get the Complete Data Health Report<a class="anchor-link" href="#Challenge-1:-Get-the-Complete-Data-Health-Report">¶</a></h3><p>Your client wants to know: "What exactly is in this dataset?" Use <code>df.info()</code> to create a comprehensive health report showing data types and completeness.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=7f355e68">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - generate the complete data health report</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dataset Health Report:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>  <span class="c1"># Fill in the DataFrame name</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=2074d563"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>The <code>df.info()</code> method is like getting a complete medical checkup for your data. Look for:</p>
+<ul>
+<li><strong>Non-null counts</strong>: Should match total rows if data is complete</li>
+<li><strong>Data types</strong>: Numbers should be <code>int64</code> or <code>float64</code>, not <code>object</code></li>
+<li><strong>Memory usage</strong>: Helps you know if your computer can handle the data</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=8c84c0df"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - generate the complete data health report</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Dataset Health Report:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>  <span class="c1"># Fill in the DataFrame name</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=86bc7c82"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d3258a54"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-2:-Checking-for-Out-of-Range-Values">Step 2: Checking for Out-of-Range Values<a class="anchor-link" href="#Step-2:-Checking-for-Out-of-Range-Values">¶</a></h2><p>Think of this like a car inspection - you need to know if the readings make sense. A thermometer can't read 200°C in Washington D.C., and you can't have negative bike rentals! We'll define reasonable ranges that represent <strong>physical limits</strong> (temperature and humidity can't exceed natural boundaries), <strong>business limits</strong> (bike stations have capacity constraints), and <strong>sensor limits</strong> (equipment has measurement ranges). Values outside these ranges might indicate broken sensors, data entry errors, or extraordinary events that need investigation.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=d7606942">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># First, let's see what our data actually looks like</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Current data ranges:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># Define what "normal" looks like for Washington D.C. bike data</span>
+<span class="n">reasonable_ranges</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'temp'</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>      <span class="c1"># Temperature in Celsius (D.C. winter to summer)</span>
+    <span class="s1">'atemp'</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>     <span class="c1"># How temperature feels to humans</span>
+    <span class="s1">'humidity'</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>   <span class="c1"># Humidity percentage (0% = desert, 100% = fog)</span>
+    <span class="s1">'windspeed'</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>   <span class="c1"># Wind speed km/h (50+ is severe storm)</span>
+    <span class="s1">'count'</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>     <span class="c1"># Total bike rentals per hour</span>
+    <span class="s1">'casual'</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>     <span class="c1"># Casual user rentals per hour</span>
+    <span class="s1">'registered'</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>   <span class="c1"># Registered user rentals per hour</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Reasonable Range Definitions:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">variable</span><span class="p">,</span> <span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">reasonable_ranges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">min_val</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_val</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Now check if any actual values fall outside our reasonable ranges</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Range Validation Results:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">reasonable_ranges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="c1"># Get the actual data range</span>
+        <span class="n">actual_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">actual_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        
+        <span class="c1"># Count violations (values outside reasonable range)</span>
+        <span class="n">below_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_val</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">above_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Expected: </span><span class="si">{</span><span class="n">min_val</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_val</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Actual: </span><span class="si">{</span><span class="n">actual_min</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">actual_max</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        
+        <span class="c1"># Report any problems found</span>
+        <span class="k">if</span> <span class="n">below_range</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ⚠️ WARNING: </span><span class="si">{</span><span class="n">below_range</span><span class="si">}</span><span class="s2"> values too low"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">above_range</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ⚠️ WARNING: </span><span class="si">{</span><span class="n">above_range</span><span class="si">}</span><span class="s2"> values too high"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">below_range</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">above_range</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ✅ All values look reasonable"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=04a6985b"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong></p>
+<ul>
+<li><strong>Validates reality</strong>: Data should match what's physically possible</li>
+<li><strong>Identifies errors</strong>: Impossible values suggest data collection problems</li>
+<li><strong>Builds trust</strong>: Your client knows the data has been thoroughly checked</li>
+</ul>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=d6ac0291"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-2:-Investigate-Extreme-Values">Challenge 2: Investigate Extreme Values<a class="anchor-link" href="#Challenge-2:-Investigate-Extreme-Values">¶</a></h3><p>Your client asks: "Were those really busy hours normal, or were they data errors?" Find the top 5 highest bike rental hours and examine the conditions to see if they make sense.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=5b83b3d1">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - find the top 5 busiest hours</span>
+<span class="n">top_rentals</span> <span class="o">=</span> <span class="n">_____</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in DataFrame, number, and column</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Top 5 busiest bike rental hours:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top_rentals</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
+
+<span class="c1"># Make datetime more readable</span>
+<span class="n">top_rentals_copy</span> <span class="o">=</span> <span class="n">top_rentals</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">top_rentals_copy</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">top_rentals_copy</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">With readable dates:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top_rentals_copy</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=133be2c6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Use <code>df.nlargest(n, 'column')</code> to efficiently find the top N values in any column. Think of it as asking "show me the highest scores on the test." Look at the weather and temperature during these busy times - do they explain why so many people rented bikes?</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=07641638"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - find the top 5 busiest hours</span>
+<span class="n">top_rentals</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">)</span>  <span class="c1"># Fill in DataFrame, number, and column</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Top 5 busiest bike rental hours:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top_rentals</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
+
+<span class="c1"># Make datetime more readable</span>
+<span class="n">top_rentals_copy</span> <span class="o">=</span> <span class="n">top_rentals</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">top_rentals_copy</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">top_rentals_copy</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">With readable dates:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top_rentals_copy</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=86ce1cae"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ea658222"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-3:-Outlier-Detection-and-Treatment---Finding-the-Unusual">Step 3: Outlier Detection and Treatment - Finding the Unusual<a class="anchor-link" href="#Step-3:-Outlier-Detection-and-Treatment---Finding-the-Unusual">¶</a></h2><p>Now, let's identify outliers - data points that are unusually high or low compared to the rest. Think of outliers like finding a person who is 8 feet tall in a crowd - they're not necessarily wrong, but they're different enough to deserve special attention.</p>
+<p>In this example, we will use the IQR (Interquartile Range) method to detect outliers. The IQR method is like creating a "normal zone" for your data. Here's how it works:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=b64a0908">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Function to detect outliers using IQR method with detailed explanation</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_outliers_iqr</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Detect outliers using the Interquartile Range (IQR) method.</span>
+<span class="sd">    </span>
+<span class="sd">    The IQR method works by:</span>
+<span class="sd">    1. Finding Q1 (25th percentile) - 25% of data is below this value</span>
+<span class="sd">    2. Finding Q3 (75th percentile) - 75% of data is below this value  </span>
+<span class="sd">    3. Calculating IQR = Q3 - Q1 (the middle 50% range)</span>
+<span class="sd">    4. Setting boundaries at Q1 - 1.5*IQR and Q3 + 1.5*IQR</span>
+<span class="sd">    </span>
+<span class="sd">    Data points outside these boundaries are considered outliers.</span>
+<span class="sd">    """</span>
+    <span class="n">Q1</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>  <span class="c1"># 25th percentile</span>
+    <span class="n">Q3</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>  <span class="c1"># 75th percentile</span>
+    <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>               <span class="c1"># Interquartile range (middle 50%)</span>
+    
+    <span class="c1"># Calculate outlier boundaries</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="n">IQR</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="n">IQR</span>
+    
+    <span class="c1"># Identify outliers (values outside boundaries)</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="p">(</span><span class="n">series</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">series</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"IQR Analysis for </span><span class="si">{</span><span class="n">series</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Q1 (25th percentile): </span><span class="si">{</span><span class="n">Q1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Q3 (75th percentile): </span><span class="si">{</span><span class="n">Q3</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  IQR (Q3 - Q1): </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Lower boundary: </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Upper boundary: </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">outliers</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span>
+
+<span class="c1"># Detect outliers in bike count</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Analyzing bike rental outliers using IQR method:"</span><span class="p">)</span>
+<span class="n">outliers</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="n">detect_outliers_iqr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Number of outliers: </span><span class="si">{</span><span class="n">outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Percentage of data: </span><span class="si">{</span><span class="n">outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+
+<span class="c1"># Examine extreme outliers</span>
+<span class="k">if</span> <span class="n">outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">extreme_outliers</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">outliers</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Top 5 outlier periods:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">extreme_outliers</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'workingday'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=fa075ba5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p><strong>Note</strong>: Why IQR method is robust:</p>
+<ul>
+<li><strong>Not affected by extreme values</strong>: Unlike mean/standard deviation, IQR uses percentiles</li>
+<li><strong>Works with skewed data</strong>: Doesn't assume normal distribution</li>
+<li><strong>Interpretable boundaries</strong>: Clear definition of "normal" vs "unusual"</li>
+</ul>
+</blockquote>
+<p>When you run this code, you'll see the number of outliers detected in the bike count data using the IQR method. Rather than automatically removing outliers, we should investigate them first because they might indicate:</p>
+<ul>
+<li>Special events (festivals, parades)</li>
+<li>Perfect weather conditions</li>
+<li>System promotions or changes</li>
+<li>Data collection errors</li>
+</ul>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=e9855ca6"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-3:-Alternative-Outlier-Detection-with-Z-Score-Method">Challenge 3: Alternative Outlier Detection with Z-Score Method<a class="anchor-link" href="#Challenge-3:-Alternative-Outlier-Detection-with-Z-Score-Method">¶</a></h3><p>Your client asks: "Can we use a different statistical approach to validate our outlier findings?" Implement the Z-score method and compare results with the IQR approach.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=f169e45d">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - implement Z-score outlier detection</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_outliers_zscore</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Detect outliers using the Z-score method.</span>
+<span class="sd">    </span>
+<span class="sd">    Z-score measures how many standard deviations a value is from the mean.</span>
+<span class="sd">    Values with |Z-score| &gt; threshold are considered outliers.</span>
+<span class="sd">    Common threshold: 3 (99.7% of normal data falls within ±3 standard deviations)</span>
+<span class="sd">    """</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">_____</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Fill in series and method</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">_____</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>   <span class="c1"># Fill in series and method</span>
+    
+    <span class="c1"># Calculate Z-scores</span>
+    <span class="n">z_scores</span> <span class="o">=</span> <span class="p">(</span><span class="n">_____</span> <span class="o">-</span> <span class="n">_____</span><span class="p">)</span> <span class="o">/</span> <span class="n">_____</span>  <span class="c1"># Fill in: (series - mean) / std</span>
+    
+    <span class="c1"># Identify outliers</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_____</span>  <span class="c1"># Fill in z_scores and threshold</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Z-score Analysis for </span><span class="si">{</span><span class="n">series</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Mean: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Standard deviation: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Threshold: ±</span><span class="si">{</span><span class="n">_____</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in threshold</span>
+    
+    <span class="k">return</span> <span class="n">outliers</span><span class="p">,</span> <span class="n">z_scores</span>
+
+<span class="c1"># Apply Z-score method to bike count</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Analyzing bike rental outliers using Z-score method:"</span><span class="p">)</span>
+<span class="n">zscore_outliers</span><span class="p">,</span> <span class="n">z_scores</span> <span class="o">=</span> <span class="n">detect_outliers_zscore</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">])</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Number of outliers: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Percentage of data: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+
+<span class="c1"># Compare with IQR method</span>
+<span class="n">iqr_outliers</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">detect_outliers_iqr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">])</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Method Comparison:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  IQR outliers: </span><span class="si">{</span><span class="n">iqr_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Z-score outliers: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Find overlapping outliers</span>
+<span class="n">overlap</span> <span class="o">=</span> <span class="p">(</span><span class="n">iqr_outliers</span> <span class="o">&amp;</span> <span class="n">zscore_outliers</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Overlapping outliers: </span><span class="si">{</span><span class="n">overlap</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Agreement rate: </span><span class="si">{</span><span class="n">overlap</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">iqr_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="w"> </span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=ff5842ac"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>The Z-score method assumes your data follows a normal distribution. Use <code>np.abs()</code> to get absolute values (distance from mean regardless of direction). Compare the two methods: Z-score is more sensitive to extreme values, while IQR is more robust. Look for patterns in which outliers each method identifies!</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=24f7d257"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - implement Z-score outlier detection</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_outliers_zscore</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Detect outliers using the Z-score method.</span>
+<span class="sd">    </span>
+<span class="sd">    Z-score measures how many standard deviations a value is from the mean.</span>
+<span class="sd">    Values with |Z-score| &gt; threshold are considered outliers.</span>
+<span class="sd">    Common threshold: 3 (99.7% of normal data falls within ±3 standard deviations)</span>
+<span class="sd">    """</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Fill in series and method</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>   <span class="c1"># Fill in series and method</span>
+    
+    <span class="c1"># Calculate Z-scores</span>
+    <span class="n">z_scores</span> <span class="o">=</span> <span class="p">(</span><span class="n">series</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span>  <span class="c1"># Fill in: (series - mean) / std</span>
+    
+    <span class="c1"># Identify outliers</span>
+    <span class="n">outliers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z_scores</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span>  <span class="c1"># Fill in z_scores and threshold</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Z-score Analysis for </span><span class="si">{</span><span class="n">series</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Standard deviation: </span><span class="si">{</span><span class="n">std</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in variable</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Threshold: ±</span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Fill in threshold</span>
+    
+    <span class="k">return</span> <span class="n">outliers</span><span class="p">,</span> <span class="n">z_scores</span>
+
+<span class="c1"># Apply Z-score method to bike count</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Analyzing bike rental outliers using Z-score method:"</span><span class="p">)</span>
+<span class="n">zscore_outliers</span><span class="p">,</span> <span class="n">z_scores</span> <span class="o">=</span> <span class="n">detect_outliers_zscore</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Number of outliers: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Percentage of data: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+
+<span class="c1"># Compare with IQR method</span>
+<span class="n">iqr_outliers</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">detect_outliers_iqr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>  <span class="c1"># Fill in column name</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Method Comparison:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  IQR outliers: </span><span class="si">{</span><span class="n">iqr_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Z-score outliers: </span><span class="si">{</span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Find overlapping outliers</span>
+<span class="n">overlap</span> <span class="o">=</span> <span class="p">(</span><span class="n">iqr_outliers</span> <span class="o">&amp;</span> <span class="n">zscore_outliers</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Overlapping outliers: </span><span class="si">{</span><span class="n">overlap</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Agreement rate: </span><span class="si">{</span><span class="n">overlap</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">iqr_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="w"> </span><span class="n">zscore_outliers</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=7fd6763e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=00135d1a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-4:-Creating-a-Missing-Data-Report-Card">Step 4: Creating a Missing Data Report Card<a class="anchor-link" href="#Step-4:-Creating-a-Missing-Data-Report-Card">¶</a></h2><p>Missing data is like having pieces of a puzzle scattered around. Before you can solve the puzzle (make predictions), you need to know which pieces are missing and how serious the problem is. Let's create a comprehensive missing data report card:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e5cc5894">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Count missing values (like counting empty seats in a theater)</span>
+<span class="n">missing_counts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Missing Data Count:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_counts</span><span class="p">)</span>
+
+<span class="c1"># Calculate percentages (like getting a grade out of 100%)</span>
+<span class="n">missing_percentages</span> <span class="o">=</span> <span class="p">(</span><span class="n">missing_counts</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="c1"># Create a professional missing data report</span>
+<span class="n">missing_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">'Missing_Count'</span><span class="p">:</span> <span class="n">missing_counts</span><span class="p">,</span>
+    <span class="s1">'Missing_Percentage'</span><span class="p">:</span> <span class="n">missing_percentages</span>
+<span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Missing Data Report Card:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_summary</span><span class="p">[</span><span class="n">missing_summary</span><span class="p">[</span><span class="s1">'Missing_Count'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Identify the "A+ students" - columns with perfect attendance</span>
+<span class="n">complete_columns</span> <span class="o">=</span> <span class="n">missing_summary</span><span class="p">[</span><span class="n">missing_summary</span><span class="p">[</span><span class="s1">'Missing_Count'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Perfect attendance (no missing data): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">complete_columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">complete_columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ✓ </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=92c706e2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What <code>.isnull()</code> does:</strong></p>
+<ul>
+<li>Creates a True/False map of your data</li>
+<li><code>True</code> means "this cell is empty"</li>
+<li><code>.sum()</code> counts all the <code>True</code> values (empty cells)</li>
+</ul>
+<p><strong>What this reveals:</strong></p>
+<ul>
+<li><strong>Missing counts</strong>: How many empty cells each variable has</li>
+<li><strong>Missing percentages</strong>: How reliable each variable is (0% = completely reliable)</li>
+<li><strong>Complete columns</strong>: Variables you can trust for all calculations</li>
+</ul>
+<p>Variables with 0% missing data are gold - you can use them confidently. Variables with missing data need special handling before making business decisions.</p>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=239f46b9"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-4:-Investigate-Missing-Data-Patterns">Challenge 4: Investigate Missing Data Patterns<a class="anchor-link" href="#Challenge-4:-Investigate-Missing-Data-Patterns">¶</a></h3><p>Be a data detective! Your client wants to know: "Are the missing windspeed readings random, or is there a pattern?" Examine missing windspeed data to see when it occurred.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=778c07fb">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Ensure proper datetime handling for pattern analysis</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Your code here - investigate missing windspeed patterns</span>
+<span class="k">if</span> <span class="s1">'windspeed'</span> <span class="ow">in</span> <span class="n">_____</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>  <span class="c1"># Fill in DataFrame name</span>
+    <span class="n">missing_windspeed</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[</span><span class="n">_____</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>  <span class="c1"># Fill in DataFrame names</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"First 10 periods with missing windspeed:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">_____</span><span class="p">))</span>  <span class="c1"># Fill in number</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Last 10 periods with missing windspeed:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">_____</span><span class="p">))</span>  <span class="c1"># Fill in number</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Great news! No missing windspeed data found"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Windspeed column not found in dataset"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=501b3630"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>When investigating missing data patterns, think like a detective:</p>
+<ul>
+<li>Use <code>df[df['column'].isnull()]</code> to filter rows where data is missing</li>
+<li>Look at timestamps: are missing values clustered in time periods?</li>
+<li>Check other variables: do missing values happen during specific weather conditions?</li>
+</ul>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=929db4a4"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import libraries and load data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+
+<span class="c1"># Ensure proper datetime handling for pattern analysis</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Your code here - investigate missing windspeed patterns</span>
+<span class="k">if</span> <span class="s1">'windspeed'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>  <span class="c1"># Fill in DataFrame name</span>
+    <span class="n">missing_windspeed</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>  <span class="c1"># Fill in DataFrame names</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"First 10 periods with missing windspeed:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># Fill in number</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Last 10 periods with missing windspeed:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">missing_windspeed</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># Fill in number</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Great news! No missing windspeed data found"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Windspeed column not found in dataset"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=184a5e5a"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=653c0af3"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-5:-Standardizing-the-Timeline---Fixing-Duplicate-Hours">Step 5: Standardizing the Timeline - Fixing Duplicate Hours<a class="anchor-link" href="#Step-5:-Standardizing-the-Timeline---Fixing-Duplicate-Hours">¶</a></h2><p>Before we can trust our time-series data, we need to ensure each hour appears exactly once. Think of this like organizing a photo album - if you have multiple copies of the same photo, you need to decide which one to keep or how to combine them. We'll first identify duplicates, then collapse them using smart aggregation rules.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=9b07b38b">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># First, let's check how many duplicate timestamps we have</span>
+<span class="n">rows_per_ts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">"n_rows_per_ts"</span><span class="p">)</span>
+<span class="n">duplicated_ts</span> <span class="o">=</span> <span class="n">rows_per_ts</span><span class="p">[</span><span class="n">rows_per_ts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+<span class="n">n_dup_timestamps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">duplicated_ts</span><span class="p">)</span>
+<span class="n">n_dup_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">rows_per_ts</span><span class="p">[</span><span class="n">rows_per_ts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="n">n_dup_timestamps</span><span class="si">}</span><span class="s2"> timestamps with duplicates"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total extra duplicate rows to collapse: </span><span class="si">{</span><span class="n">n_dup_rows</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Show an example of duplicated data</span>
+<span class="k">if</span> <span class="n">n_dup_timestamps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">sample_duplicate</span> <span class="o">=</span> <span class="n">duplicated_ts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Example - rows for </span><span class="si">{</span><span class="n">sample_duplicate</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">"datetime"</span><span class="p">]</span> <span class="o">==</span> <span class="n">sample_duplicate</span><span class="p">][[</span><span class="s2">"datetime"</span><span class="p">,</span> <span class="s2">"count"</span><span class="p">,</span> <span class="s2">"temp"</span><span class="p">,</span> <span class="s2">"weather"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Build our aggregation policy - different rules for different types of data</span>
+<span class="n">numeric_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">agg_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="s2">"mean"</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">numeric_cols</span><span class="p">}</span>
+
+<span class="c1"># For bike counts (targets), we SUM because rentals accumulate</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"casual"</span><span class="p">,</span> <span class="s2">"registered"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">agg_map</span><span class="p">:</span>
+        <span class="n">agg_map</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"sum"</span>
+
+<span class="c1"># For categorical variables, we take the FIRST value</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"holiday"</span><span class="p">,</span> <span class="s2">"weather"</span><span class="p">,</span> <span class="s2">"season"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">agg_map</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"first"</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Aggregation policy:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"- Bike counts (count, casual, registered): SUM"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"- Weather variables (temp, humidity, etc.): MEAN"</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"- Categories (holiday, weather, season): FIRST"</span><span class="p">)</span>
+
+<span class="c1"># Handle duplicates based on what we found</span>
+<span class="k">if</span> <span class="n">n_dup_timestamps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✅ No duplicate timestamps found - data is already clean!"</span><span class="p">)</span>
+    <span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Collapse the duplicates</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Collapsing </span><span class="si">{</span><span class="n">n_dup_timestamps</span><span class="si">}</span><span class="s2"> duplicate timestamps..."</span><span class="p">)</span>
+    <span class="n">df_clean</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">agg_map</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Add a flag to track which hours were collapsed</span>
+    <span class="n">df_clean</span><span class="p">[</span><span class="s2">"flag_collapsed_from_duplicates"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s2">"datetime"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">duplicated_ts</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Collapse complete!"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hours that were collapsed: </span><span class="si">{</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'flag_collapsed_from_duplicates'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total rows now: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=88ca66a1"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What this does:</strong>
+We successfully identify and collapse duplicate timestamps using intelligent aggregation rules. Bike rental counts are summed (because rentals accumulate), weather variables are averaged (representing hourly conditions), and categorical variables keep their first values (maintaining consistency). We create a clean dataset (<code>df_clean</code>) and add a transparency flag to track which hours were affected by this process.</p>
+<p><strong>Why this matters:</strong>
+This standardization is critical for reliable time-series analysis. Duplicate rows would inflate rental counts and create false demand patterns, potentially leading to poor business decisions. Now each hour has exactly one record with properly combined data, creating a trustworthy foundation for forecasting models.</p>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=a44b479e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-5:-Complete-Timeline---Filling-the-Missing-Hours">Challenge 5: Complete Timeline - Filling the Missing Hours<a class="anchor-link" href="#Challenge-5:-Complete-Timeline---Filling-the-Missing-Hours">¶</a></h3><p>Your client asks: "Are we missing any hours in our dataset? Can we have a complete timeline?" Create a continuous hourly timeline by inserting rows for missing hours.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=e3f25846">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data (and apply Step 5 cleaning first)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load and prepare the dataset with collapsed duplicates</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">])</span>
+
+<span class="c1"># First collapse duplicates (from Step 5)</span>
+<span class="n">rows_per_ts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">duplicated_ts</span> <span class="o">=</span> <span class="n">rows_per_ts</span><span class="p">[</span><span class="n">rows_per_ts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+
+<span class="n">numeric_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">agg_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="s2">"mean"</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">numeric_cols</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"casual"</span><span class="p">,</span> <span class="s2">"registered"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">agg_map</span><span class="p">:</span>
+        <span class="n">agg_map</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"sum"</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"holiday"</span><span class="p">,</span> <span class="s2">"weather"</span><span class="p">,</span> <span class="s2">"season"</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">agg_map</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"first"</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">agg_map</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Your challenge: Create a complete hourly timeline</span>
+<span class="n">time_min</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[</span><span class="s2">"datetime"</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame name</span>
+<span class="n">time_max</span> <span class="o">=</span> <span class="n">_____</span><span class="p">[</span><span class="s2">"datetime"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>  <span class="c1"># Fill in DataFrame name</span>
+
+<span class="c1"># Build the full hourly index from min to max</span>
+<span class="n">full_hours</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"H"</span><span class="p">)</span>  <span class="c1"># Fill in time_min and time_max</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Original hours: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected hours: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">full_hours</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Missing hours: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">full_hours</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Your code here - reindex to the full timeline and add a flag</span>
+<span class="n">original_hours</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"datetime"</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"datetime"</span><span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in the full_hours variable</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"datetime"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>  <span class="c1"># Ensure chronological order</span>
+
+<span class="c1"># Add flag for inserted missing hours</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"flag_missing_timestamp"</span><span class="p">]</span> <span class="o">=</span> <span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in original_hours variable</span>
+
+<span class="c1"># Check results</span>
+<span class="n">inserted_hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"flag_missing_timestamp"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Timeline completed!"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total hours now: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Inserted missing hours: </span><span class="si">{</span><span class="n">inserted_hours</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=fca4e653"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>What you should achieve:</strong></p>
+<ul>
+<li>A complete hourly timeline from first to last timestamp</li>
+<li>Identification of how many hours were missing</li>
+<li>A flag marking which rows were inserted vs. original data</li>
+</ul>
+<p><strong>Why this matters:</strong>
+A continuous timeline is essential for time-series analysis. Missing hours can break seasonal patterns and forecasting models.</p>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b5dc35c5"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-6:-Forward-Fill-for-Known-Missing-Data">Step 6: Forward Fill for Known Missing Data<a class="anchor-link" href="#Step-6:-Forward-Fill-for-Known-Missing-Data">¶</a></h2><p>From our data quality assessment, we identified missing values in windspeed and potentially other variables. Before applying complex imputation strategies, let's start with forward fill for variables that change slowly over time.</p>
+<p>This method assumes that if a value is missing, the most recent valid observation is our best estimate. For example, if temperature at 2 PM is missing but we recorded 25°C at 1 PM, forward fill uses 25°C for the 2 PM gap. This works because many weather variables have <strong>temporal continuity</strong> - they don't jump dramatically from hour to hour.</p>
+<p>The beauty of this method is that it's simple, preserves actual measurements (rather than creating artificial averages), and works well for variables with natural persistence. Think of it as saying "conditions probably stayed similar to the last known measurement" rather than guessing with statistical averages.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=ea8c061f">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Rule #1: Never modify original data! Always work on a copy</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Created a backup copy of original data"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Now we can safely apply fixes without losing the original"</span><span class="p">)</span>
+
+<span class="c1"># Check which variables have missing data (from our previous analysis)</span>
+<span class="n">missing_summary</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Variables with missing data:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">missing_summary</span><span class="p">[</span><span class="n">missing_summary</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">missing_summary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+    <span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> missing (</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+
+<span class="c1"># Apply forward fill to slowly-changing weather variables</span>
+<span class="n">weather_vars_for_ffill</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'atemp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">]</span>
+<span class="n">filled_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">weather_vars_for_ffill</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">missing_before</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ffill'</span><span class="p">)</span>
+        <span class="n">missing_after</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">filled</span> <span class="o">=</span> <span class="n">missing_before</span> <span class="o">-</span> <span class="n">missing_after</span>
+        <span class="n">filled_count</span> <span class="o">+=</span> <span class="n">filled</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Forward-filled </span><span class="si">{</span><span class="n">filled</span><span class="si">}</span><span class="s2"> missing values in </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">filled_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No weather variables needed forward fill"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Total values filled with forward fill: </span><span class="si">{</span><span class="n">filled_count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Show remaining missing data after forward fill</span>
+<span class="n">remaining_missing</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Missing data remaining after forward fill:"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">remaining_missing</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"🎉 All missing data has been handled!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">remaining_missing</span><span class="p">[</span><span class="n">remaining_missing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_missing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> still missing"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=bee10098"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>When forward fill works well:</strong></p>
+<ul>
+<li><strong>Temperature variables</strong>: Change gradually over hours</li>
+<li><strong>Atmospheric pressure</strong>: Varies slowly throughout the day</li>
+<li><strong>Humidity</strong>: Generally stable unless weather system changes</li>
+</ul>
+<p><strong>When NOT to use forward fill:</strong></p>
+<ul>
+<li><strong>Windspeed</strong>: Can change rapidly with weather fronts</li>
+<li><strong>Bike counts</strong>: Demand varies dramatically by hour</li>
+<li><strong>Precipitation</strong>: Rain can start/stop suddenly</li>
+</ul>
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=b8aad1e2"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Challenge-6:-Smart-Grouping-for-Weather-Related-Variables">Challenge 6: Smart Grouping for Weather-Related Variables<a class="anchor-link" href="#Challenge-6:-Smart-Grouping-for-Weather-Related-Variables">¶</a></h3><p>Your client asks: "Can we handle the remaining missing windspeed data more intelligently?" Implement season-aware weather-based imputation for windspeed since wind patterns vary significantly between weather conditions AND seasons (winter storms vs summer breezes).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered" id="cell-id=456a2647">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import libraries and load data (building on Step 6)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load and apply our Step 6 cleaning first</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Apply forward fill to slowly-changing variables (from Step 6)</span>
+<span class="n">weather_vars_for_ffill</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'atemp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">weather_vars_for_ffill</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ffill'</span><span class="p">)</span>
+
+<span class="c1"># Your code here - implement smart grouping for windspeed</span>
+<span class="k">if</span> <span class="s1">'windspeed'</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Found missing windspeed data - implementing season-aware weather-based imputation"</span><span class="p">)</span>
+    
+    <span class="c1"># Step 1: Calculate typical windspeed for each season-weather combination</span>
+    <span class="n">seasonal_weather_windspeed</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'_____'</span><span class="p">,</span> <span class="s1">'_____'</span><span class="p">])[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Fill in groupby columns and aggregation method</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Typical windspeed by season and weather condition:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seasonal_weather_windspeed</span><span class="p">)</span>
+    
+    <span class="c1"># Step 2: Fill missing values based on season-weather combinations</span>
+    <span class="n">missing_filled</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">weather_code</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'weather'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="c1"># Find rows with this season-weather combination AND missing windspeed</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">]</span> <span class="o">==</span> <span class="n">weather_code</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">())</span>  <span class="c1"># Fill in column and missing check</span>
+            <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Get the fill value for this season-weather combination</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">season</span><span class="p">,</span> <span class="n">weather_code</span><span class="p">)</span> <span class="ow">in</span> <span class="n">seasonal_weather_windspeed</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                    <span class="n">fill_value</span> <span class="o">=</span> <span class="n">seasonal_weather_windspeed</span><span class="p">[(</span><span class="n">season</span><span class="p">,</span> <span class="n">weather_code</span><span class="p">)]</span>
+                    <span class="c1"># Check if the median value is valid (not NaN)</span>
+                    <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">fill_value</span><span class="p">):</span>
+                        <span class="c1"># Fallback to season-only median</span>
+                        <span class="n">fill_value</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">][</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Fallback to season-only median if combination doesn't exist</span>
+                    <span class="n">fill_value</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">][</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+                
+                <span class="c1"># Apply the fill value</span>
+                <span class="n">df_clean</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fill_value</span>
+                <span class="n">missing_filled</span> <span class="o">+=</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Filled </span><span class="si">{</span><span class="n">missing_filled</span><span class="si">}</span><span class="s2"> missing windspeed values using season-aware weather logic"</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3: Validate our smart imputation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Validation - windspeed distribution by season and weather:"</span><span class="p">)</span>
+    <span class="n">validation</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'season'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">])[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'count'</span><span class="p">,</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+    
+    <span class="c1"># Step 4: Additional seasonal validation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Seasonal windspeed patterns:"</span><span class="p">)</span>
+    <span class="n">seasonal_summary</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'season'</span><span class="p">)[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seasonal_summary</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No missing windspeed data found"</span><span class="p">)</span>
+
+<span class="c1"># Final check - did we handle all missing data?</span>
+<span class="n">remaining_missing</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Final missing data status:"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">remaining_missing</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"🎉 All missing data has been successfully handled!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Variables still with missing data:"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">remaining_missing</span><span class="p">[</span><span class="n">remaining_missing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_missing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> missing"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=6eee9131"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>💡 <strong>Tip</strong> (click to expand)</summary>
+<p>Season-aware weather imputation is more meteorologically accurate because wind patterns depend on both weather conditions AND seasonal factors. Use <code>groupby(['season', 'weather'])['windspeed'].median()</code> to calculate typical windspeed for each season-weather combination. Winter storms typically have higher winds than summer storms, while spring/fall weather systems show different patterns. The median remains more robust than mean for this type of imputation. Validate that your results show realistic seasonal progression: winter (season=1) and fall (season=4) generally have higher wind speeds than summer (season=3).</p>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=cb5d5fc7"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<details>
+<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
+<div class="highlight"><pre><span></span><span class="c1"># Import libraries and load data (building on Step 6)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Load and apply our Step 6 cleaning first</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset-teaching-lec-04.csv"</span><span class="p">)</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Apply forward fill to slowly-changing variables (from Step 6)</span>
+<span class="n">weather_vars_for_ffill</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'atemp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">weather_vars_for_ffill</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'ffill'</span><span class="p">)</span>
+
+<span class="c1"># Your code here - implement smart grouping for windspeed</span>
+<span class="k">if</span> <span class="s1">'windspeed'</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Found missing windspeed data - implementing season-aware weather-based imputation"</span><span class="p">)</span>
+    
+    <span class="c1"># Step 1: Calculate typical windspeed for each season-weather combination</span>
+    <span class="n">seasonal_weather_windspeed</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'season'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">])[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>  <span class="c1"># Fill in groupby columns and aggregation method</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Typical windspeed by season and weather condition:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seasonal_weather_windspeed</span><span class="p">)</span>
+    
+    <span class="c1"># Step 2: Fill missing values based on season-weather combinations</span>
+    <span class="n">missing_filled</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">weather_code</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'weather'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="c1"># Find rows with this season-weather combination AND missing windspeed</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'weather'</span><span class="p">]</span> <span class="o">==</span> <span class="n">weather_code</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">())</span>  <span class="c1"># Fill in column and missing check</span>
+            <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Get the fill value for this season-weather combination</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">season</span><span class="p">,</span> <span class="n">weather_code</span><span class="p">)</span> <span class="ow">in</span> <span class="n">seasonal_weather_windspeed</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                    <span class="n">fill_value</span> <span class="o">=</span> <span class="n">seasonal_weather_windspeed</span><span class="p">[(</span><span class="n">season</span><span class="p">,</span> <span class="n">weather_code</span><span class="p">)]</span>
+                    <span class="c1"># Check if the median value is valid (not NaN)</span>
+                    <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">fill_value</span><span class="p">):</span>
+                        <span class="c1"># Fallback to season-only median</span>
+                        <span class="n">fill_value</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">][</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Fallback to season-only median if combination doesn't exist</span>
+                    <span class="n">fill_value</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'season'</span><span class="p">]</span> <span class="o">==</span> <span class="n">season</span><span class="p">][</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+                
+                <span class="c1"># Apply the fill value</span>
+                <span class="n">df_clean</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fill_value</span>
+                <span class="n">missing_filled</span> <span class="o">+=</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Filled </span><span class="si">{</span><span class="n">missing_filled</span><span class="si">}</span><span class="s2"> missing windspeed values using season-aware weather logic"</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3: Validate our smart imputation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Validation - windspeed distribution by season and weather:"</span><span class="p">)</span>
+    <span class="n">validation</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'season'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">])[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'count'</span><span class="p">,</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">validation</span><span class="p">)</span>  <span class="c1"># Fill in variable name</span>
+    
+    <span class="c1"># Step 4: Additional seasonal validation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Seasonal windspeed patterns:"</span><span class="p">)</span>
+    <span class="n">seasonal_summary</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'season'</span><span class="p">)[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seasonal_summary</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"No missing windspeed data found"</span><span class="p">)</span>
+
+<span class="c1"># Final check - did we handle all missing data?</span>
+<span class="n">remaining_missing</span> <span class="o">=</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Final missing data status:"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">remaining_missing</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"🎉 All missing data has been successfully handled!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Variables still with missing data:"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">remaining_missing</span><span class="p">[</span><span class="n">remaining_missing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">remaining_missing</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="si">}</span><span class="s2"> missing"</span><span class="p">)</span>
+</pre></div>
+</details>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=aee866cc"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr/>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered" id="cell-id=3685700e"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary:-Professional-Data-Quality-Assessment-and-Cleaning">Summary: Professional Data Quality Assessment and Cleaning<a class="anchor-link" href="#Summary:-Professional-Data-Quality-Assessment-and-Cleaning">¶</a></h2><p><strong>What We've Accomplished</strong>:</p>
+<ul>
+<li>Implemented comprehensive data quality assessment protocols for real transportation datasets</li>
+<li>Applied advanced statistical outlier detection methodologies using IQR and Z-score techniques</li>
+<li>Developed timeline standardization procedures through intelligent duplicate handling and missing timestamp resolution</li>
+<li>Executed sophisticated imputation strategies including forward-fill and season-aware weather-based approaches</li>
+<li>Established data validation frameworks ensuring cleaning operations preserved essential dataset characteristics</li>
+<li>Created systematic approaches to range validation and impossible value detection for business contexts</li>
+</ul>
+<p><strong>Key Technical Skills Mastered</strong>:</p>
+<ul>
+<li>Range validation and boundary checking for transportation data quality control</li>
+<li>Statistical outlier identification and investigation using multiple detection methodologies</li>
+<li>Time-series data standardization with intelligent aggregation rule implementation</li>
+<li>Missing data pattern analysis and targeted imputation strategy development</li>
+<li>Business logic integration for contextual data cleaning and validation protocols</li>
+<li>Quality assurance verification through before-and-after statistical comparison frameworks</li>
+</ul>
+<p><strong>Next Steps</strong>: Next, we'll advance to feature engineering and preprocessing techniques, transforming cleaned datasets into optimized variable structures and formats required for sophisticated machine learning model development and deployment in transportation demand forecasting applications.</p>
+<p>Your bike-sharing client now possesses thoroughly validated, production-ready datasets that demonstrate professional data cleaning methodologies and systematic quality control processes - the essential foundation that consulting firms require for reliable predictive modeling and strategic business intelligence initiatives.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+    </div>
+</body>
+</html>
