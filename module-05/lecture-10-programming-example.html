@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lecture 10: Programming Example - Predictive Modeling MOOC</title>
-    
-<style>
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica", "Arial", sans-serif;
         line-height: 1.6;
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
         background-color: #f8f9fa;
-    }
+      }
 
-    .container {
+      .container {
         background-color: white;
         border-radius: 8px;
         padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    .nav-header {
+      .nav-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 20px 30px;
@@ -33,21 +34,21 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 15px;
-    }
+      }
 
-    .nav-header h1 {
+      .nav-header h1 {
         margin: 0;
         font-size: 1.5rem;
         font-weight: 600;
-    }
+      }
 
-    .nav-buttons {
+      .nav-buttons {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-    }
+      }
 
-    .btn {
+      .btn {
         display: inline-block;
         padding: 10px 20px;
         text-decoration: none;
@@ -55,150 +56,249 @@
         border-radius: 6px;
         transition: all 0.3s ease;
         font-size: 0.9rem;
-    }
+      }
 
-    .btn-colab {
+      .btn-colab {
         background-color: #f9ab00;
         color: #1a1a1a;
         border: 2px solid #f9ab00;
-    }
+      }
 
-    .btn-colab:hover {
+      .btn-colab:hover {
         background-color: #ff9900;
         border-color: #ff9900;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
-    }
+      }
 
-    .btn-github {
+      .btn-github {
         background-color: transparent;
         color: white;
         border: 2px solid white;
-    }
+      }
 
-    .btn-github:hover {
+      .btn-github:hover {
         background-color: white;
         color: #667eea;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-    }
+      }
 
-    .jupyter-content {
+      .jupyter-content {
         margin-top: 20px;
-    }
+      }
 
-    /* Notebook cell styling */
-    div.cell {
+      /* Notebook cell styling */
+      div.cell {
         margin-bottom: 1.5rem;
-    }
+      }
 
-    div.input_area {
+      div.input_area {
         border-left: 3px solid #667eea;
         background-color: #f8f9fa;
         padding: 10px;
         border-radius: 4px;
-    }
+      }
 
-    div.output_area {
+      div.output_area {
         padding: 10px;
         border-left: 3px solid #28a745;
         background-color: #f8f9fa;
         border-radius: 4px;
         margin-top: 10px;
-    }
+      }
 
-    /* Code highlighting */
-    .highlight {
+      /* Code highlighting */
+      .highlight {
         background-color: #f8f9fa;
         border-radius: 4px;
-    }
+      }
 
-    /* Responsive design */
-    @media (max-width: 768px) {
+      /* Responsive design */
+      @media (max-width: 768px) {
         body {
-            padding: 10px;
+          padding: 10px;
         }
 
         .container {
-            padding: 15px;
+          padding: 15px;
         }
 
         .nav-header {
-            padding: 15px;
-            margin: -15px -15px 15px -15px;
+          padding: 15px;
+          margin: -15px -15px 15px -15px;
         }
 
         .nav-header h1 {
-            font-size: 1.2rem;
+          font-size: 1.2rem;
         }
 
         .nav-buttons {
-            width: 100%;
-            justify-content: center;
+          width: 100%;
+          justify-content: center;
         }
-    }
-</style>
-
-</head>
-<body>
+      }
+    </style>
+  </head>
+  <body>
     <div class="container">
-        <div class="nav-header">
-            <h1>Lecture 10: Programming Example</h1>
-            <div class="nav-buttons">
-                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-05/lecture-10-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
-                    ▶ Open in Colab
-                </a>
-                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-05/lecture-10-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
-                    📂 View on GitHub
-                </a>
-            </div>
+      <div class="nav-header">
+        <h1>Lecture 10: Programming Example</h1>
+        <div class="nav-buttons">
+          <a
+            href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-05/lecture-10-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-colab"
+          >
+            ▶ Open in Colab
+          </a>
+          <a
+            href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-05/lecture-10-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-github"
+          >
+            📂 View on GitHub
+          </a>
         </div>
-        <div class="jupyter-content">
-
-<main>
-<div class="border-box-sizing" id="notebook" tabindex="-1">
-<div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=844b5aae"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lecture-10:-End-to-End-Machine-Learning-Pipeline---Programming-Example">Lecture 10: End-to-End Machine Learning Pipeline - Programming Example<a class="anchor-link" href="#Lecture-10:-End-to-End-Machine-Learning-Pipeline---Programming-Example">¶</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=285a4396"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction:-Building-a-Complete-Production-Ready-Forecasting-System">Introduction: Building a Complete Production-Ready Forecasting System<a class="anchor-link" href="#Introduction:-Building-a-Complete-Production-Ready-Forecasting-System">¶</a></h2><p>Welcome to your final lecture! Over the past lectures, you've mastered essential machine learning (ML) skills: data cleaning, feature engineering, statistical analysis, visualization, linear regression, and ensemble methods. Today, you'll integrate all these skills into <strong>one complete end-to-end pipeline</strong> - taking Capital City Bikes from raw operational data through to production-ready demand forecasting models with rigorous evaluation and deployment recommendations.</p>
-<p>Think of this as your graduation project: you'll work through the exact workflow professional ML engineers follow daily. Starting with data validation and ending with deployment decisions, you'll see how every skill you've learned fits into the bigger picture. This isn't just about building models - it's about building <strong>trust in your predictions</strong> through systematic data preparation, thoughtful feature engineering, rigorous evaluation, and transparent business communication.</p>
-<p>Your client, Capital City Bikes, needs more than accurate forecasts - they need a complete system they can trust, explain to investors, and deploy confidently for their $2.3M municipal contract. Your end-to-end pipeline will demonstrate the professional rigor that justifies Series B funding rounds.</p>
-<blockquote>
-<p><strong>🚀 Interactive Learning Alert</strong></p>
-<p>This is a comprehensive hands-on capstone project integrating all course concepts. For the best experience:</p>
-<ul>
-<li><strong>Click "Open in Colab"</strong> at the bottom to run code interactively</li>
-<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong></li>
-<li><strong>Complete the challenges</strong> to reinforce your end-to-end ML skills</li>
-<li><strong>Think like a professional consultant</strong> - every decision impacts deployment success</li>
-</ul>
-</blockquote>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=98506cb2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Data-Quality-Assessment-and-Cleaning">Step 1: Data Quality Assessment and Cleaning<a class="anchor-link" href="#Step-1:-Data-Quality-Assessment-and-Cleaning">¶</a></h2><p>Before rushing into modeling, professional consultants always validate data quality. Even with "clean" datasets, we systematically verify integrity, check for edge cases, and ensure our foundation is solid. This disciplined approach prevents downstream surprises and builds stakeholder confidence.</p>
-<p><strong>From the lecture "Data Quality &amp; Cleaning Essentials"</strong>, we learned the unified cleaning workflow: assess quality, identify issues, apply systematic fixes with transparency. Let's apply these principles to establish our reliable data foundation.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=19408730">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import essential libraries</span>
+      </div>
+      <div class="jupyter-content">
+        <main>
+          <div class="border-box-sizing" id="notebook" tabindex="-1">
+            <div class="container" id="notebook-container">
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=844b5aae"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h1
+                      id="Lecture-10:-End-to-End-Machine-Learning-Pipeline---Programming-Example"
+                      >Lecture 10: End-to-End Machine Learning Pipeline -
+                      Programming Example<a
+                        class="anchor-link"
+                        href="#Lecture-10:-End-to-End-Machine-Learning-Pipeline---Programming-Example"
+                      ></a
+                    ></h1>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=285a4396"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Introduction:-Building-a-Complete-Production-Ready-Forecasting-System"
+                      >Introduction: Building a Complete Production-Ready
+                      Forecasting System<a
+                        class="anchor-link"
+                        href="#Introduction:-Building-a-Complete-Production-Ready-Forecasting-System"
+                      ></a></h2
+                    ><p
+                      >Welcome to your final lecture! Over the past lectures,
+                      you've mastered essential machine learning (ML) skills:
+                      data cleaning, feature engineering, statistical analysis,
+                      visualization, linear regression, and ensemble methods.
+                      Today, you'll integrate all these skills into
+                      <strong>one complete end-to-end pipeline</strong> - taking
+                      Capital City Bikes from raw operational data through to
+                      production-ready demand forecasting models with rigorous
+                      evaluation and deployment recommendations.</p
+                    >
+                    <p
+                      >Think of this as your graduation project: you'll work
+                      through the exact workflow professional ML engineers
+                      follow daily. Starting with data validation and ending
+                      with deployment decisions, you'll see how every skill
+                      you've learned fits into the bigger picture. This isn't
+                      just about building models - it's about building
+                      <strong>trust in your predictions</strong> through
+                      systematic data preparation, thoughtful feature
+                      engineering, rigorous evaluation, and transparent business
+                      communication.</p
+                    >
+                    <p
+                      >Your client, Capital City Bikes, needs more than accurate
+                      forecasts - they need a complete system they can trust,
+                      explain to investors, and deploy confidently for their
+                      $2.3M municipal contract. Your end-to-end pipeline will
+                      demonstrate the professional rigor that justifies Series B
+                      funding rounds.</p
+                    >
+                    <blockquote>
+                      <p><strong>🚀 Interactive Learning Alert</strong></p>
+                      <p
+                        >This is a comprehensive hands-on capstone project
+                        integrating all course concepts. For the best
+                        experience:</p
+                      >
+                      <ul>
+                        <li
+                          ><strong>Click "Open in Colab"</strong> at the bottom
+                          to run code interactively</li
+                        >
+                        <li
+                          ><strong>Execute each code cell</strong> by pressing
+                          <strong>Shift + Enter</strong></li
+                        >
+                        <li
+                          ><strong>Complete the challenges</strong> to reinforce
+                          your end-to-end ML skills</li
+                        >
+                        <li
+                          ><strong>Think like a professional consultant</strong>
+                          - every decision impacts deployment success</li
+                        >
+                      </ul>
+                    </blockquote>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=98506cb2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-1:-Data-Quality-Assessment-and-Cleaning"
+                      >Step 1: Data Quality Assessment and Cleaning<a
+                        class="anchor-link"
+                        href="#Step-1:-Data-Quality-Assessment-and-Cleaning"
+                      ></a></h2
+                    ><p
+                      >Before rushing into modeling, professional consultants
+                      always validate data quality. Even with "clean" datasets,
+                      we systematically verify integrity, check for edge cases,
+                      and ensure our foundation is solid. This disciplined
+                      approach prevents downstream surprises and builds
+                      stakeholder confidence.</p
+                    >
+                    <p
+                      ><strong
+                        >From the lecture "Data Quality &amp; Cleaning
+                        Essentials"</strong
+                      >, we learned the unified cleaning workflow: assess
+                      quality, identify issues, apply systematic fixes with
+                      transparency. Let's apply these principles to establish
+                      our reliable data foundation.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=19408730"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import essential libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -275,38 +375,72 @@
 <span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ df_clean created: </span><span class="si">{</span><span class="n">df_clean</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows × </span><span class="si">{</span><span class="n">df_clean</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Data quality validated and ready for feature engineering!"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=affd5c08"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Loads dataset and validates data quality systematically</li>
-<li>Checks for missing values, impossible values, timeline continuity</li>
-<li>Creates <code>df_clean</code> as validated foundation for the next steps</li>
-</ul>
-<p><strong>Business value:</strong>
-This systematic validation ensures Capital City Bikes can trust their data foundation. Any quality issues are identified and resolved transparently before they contaminate modeling results.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c2497188"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-1:-Outlier-Detection-and-Investigation">Challenge 1: Outlier Detection and Investigation<a class="anchor-link" href="#Challenge-1:-Outlier-Detection-and-Investigation">¶</a></h3><p>Your client asks: "Are there any unusual windspeed conditions we should investigate before modeling?" Implement outlier detection using the IQR method to identify extreme windspeed periods.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=7cbcf1a6">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - detect outliers using IQR method</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=affd5c08"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Loads dataset and validates data quality
+                        systematically</li
+                      >
+                      <li
+                        >Checks for missing values, impossible values, timeline
+                        continuity</li
+                      >
+                      <li
+                        >Creates <code>df_clean</code> as validated foundation
+                        for the next steps</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> This systematic
+                      validation ensures Capital City Bikes can trust their data
+                      foundation. Any quality issues are identified and resolved
+                      transparently before they contaminate modeling results.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c2497188"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-1:-Outlier-Detection-and-Investigation"
+                      >Challenge 1: Outlier Detection and Investigation<a
+                        class="anchor-link"
+                        href="#Challenge-1:-Outlier-Detection-and-Investigation"
+                      ></a></h3
+                    ><p
+                      >Your client asks: "Are there any unusual windspeed
+                      conditions we should investigate before modeling?"
+                      Implement outlier detection using the IQR method to
+                      identify extreme windspeed periods.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=7cbcf1a6"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - detect outliers using IQR method</span>
 
 <span class="c1"># Calculate IQR (Interquartile Range) for windspeed</span>
 <span class="n">Q1</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'_____'</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># 25th percentile</span>
@@ -332,27 +466,62 @@ This systematic validation ensures Capital City Bikes can trust their data found
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outliers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Top 5 high-windspeed outliers:"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">outliers</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">)[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">]])</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=78f79918"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>The IQR method uses quartiles to define outlier boundaries: Q1 (25th percentile) and Q3 (75th percentile) define the "box" in a box plot, IQR = Q3 - Q1 is the box height. Standard outlier boundaries are Q1 - 1.5×IQR (lower) and Q3 + 1.5×IQR (upper). Use <code>.quantile(0.25)</code> for Q1 and <code>.quantile(0.75)</code> for Q3. Filter outliers with boolean indexing: <code>df[(df['windspeed'] &lt; lower_bound) | (df['windspeed'] &gt; upper_bound)]</code>. The <code>|</code> operator means "OR" - values below lower bound OR above upper bound. Examine outliers using <code>.nlargest(5, 'windspeed')</code> to see if they're legitimate events (storms, extreme weather) or measurement errors. At this stage, windspeed is still in original units (0-67 normalized scale from the dataset), so outlier boundaries will be in these original units. High windspeed outliers may indicate extreme weather events that significantly impact bike demand, so we typically flag them for transparency in reporting to clients.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a7aea9b8"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Calculate IQR for windspeed</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=78f79918"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >The IQR method uses quartiles to define outlier
+                        boundaries: Q1 (25th percentile) and Q3 (75th
+                        percentile) define the "box" in a box plot, IQR = Q3 -
+                        Q1 is the box height. Standard outlier boundaries are Q1
+                        - 1.5×IQR (lower) and Q3 + 1.5×IQR (upper). Use
+                        <code>.quantile(0.25)</code> for Q1 and
+                        <code>.quantile(0.75)</code> for Q3. Filter outliers
+                        with boolean indexing:
+                        <code
+                          >df[(df['windspeed'] &lt; lower_bound) |
+                          (df['windspeed'] &gt; upper_bound)]</code
+                        >. The <code>|</code> operator means "OR" - values below
+                        lower bound OR above upper bound. Examine outliers using
+                        <code>.nlargest(5, 'windspeed')</code> to see if they're
+                        legitimate events (storms, extreme weather) or
+                        measurement errors. At this stage, windspeed is still in
+                        original units (0-67 normalized scale from the dataset),
+                        so outlier boundaries will be in these original units.
+                        High windspeed outliers may indicate extreme weather
+                        events that significantly impact bike demand, so we
+                        typically flag them for transparency in reporting to
+                        clients.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a7aea9b8"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Calculate IQR for windspeed</span>
 <span class="n">Q1</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">Q3</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
 <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
@@ -380,31 +549,57 @@ This systematic validation ensures Capital City Bikes can trust their data found
     <span class="c1"># Add outlier flag for transparency</span>
     <span class="n">df_clean</span><span class="p">[</span><span class="s1">'is_windspeed_outlier'</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'windspeed'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Windspeed outliers flagged for transparency in analysis"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=f9652f35"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6b5a5d23"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Feature-Engineering-and-Preprocessing">Step 2: Feature Engineering and Preprocessing<a class="anchor-link" href="#Step-2:-Feature-Engineering-and-Preprocessing">¶</a></h2><p>With validated data, we now engineer features that expose patterns for machine learning. <strong>From the lectures in the module "Data Preparation"</strong>, we learned categorical encoding, feature scaling, cyclical time encoding, and temporal features. These transformations convert raw data into optimized machine learning inputs.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=abe95f2e">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import preprocessing tools</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=f9652f35"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6b5a5d23"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-2:-Feature-Engineering-and-Preprocessing"
+                      >Step 2: Feature Engineering and Preprocessing<a
+                        class="anchor-link"
+                        href="#Step-2:-Feature-Engineering-and-Preprocessing"
+                      ></a></h2
+                    ><p
+                      >With validated data, we now engineer features that expose
+                      patterns for machine learning.
+                      <strong
+                        >From the lectures in the module "Data
+                        Preparation"</strong
+                      >, we learned categorical encoding, feature scaling,
+                      cyclical time encoding, and temporal features. These
+                      transformations convert raw data into optimized machine
+                      learning inputs.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=abe95f2e"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import preprocessing tools</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== STEP 2: FEATURE ENGINEERING ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
@@ -480,41 +675,85 @@ This systematic validation ensures Capital City Bikes can trust their data found
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Feature engineering complete: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> total columns"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Ready for exploratory analysis and modeling!"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=899a59f1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Extracts temporal components (hour, day, month) from datetime</li>
-<li>Creates binary indicators for operational segments (rush hour, weekend, night)</li>
-<li>Implements cyclical encoding ensuring time continuity (11pm → midnight)</li>
-<li>Scales weather features to comparable ranges (mean=0, std=1)</li>
-<li>Generates lag features capturing sequential demand patterns</li>
-<li>Validates feature quality through correlation analysis</li>
-</ul>
-<p><strong>Business value:</strong>
-These engineered features transform raw measurements into ML-ready predictors that expose temporal patterns, operational contexts, and sequential dependencies - the patterns that drive accurate demand forecasting.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1d4ea626"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-2:-Create-Rolling-Window-Features">Challenge 2: Create Rolling Window Features<a class="anchor-link" href="#Challenge-2:-Create-Rolling-Window-Features">¶</a></h3><p>Your client asks: "Can we capture demand trends over recent hours? I'd like to understand short-term and daily patterns." Implement rolling window features that summarize recent demand history.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=9b36b276">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create rolling window features</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=899a59f1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Extracts temporal components (hour, day, month) from
+                        datetime</li
+                      >
+                      <li
+                        >Creates binary indicators for operational segments
+                        (rush hour, weekend, night)</li
+                      >
+                      <li
+                        >Implements cyclical encoding ensuring time continuity
+                        (11pm → midnight)</li
+                      >
+                      <li
+                        >Scales weather features to comparable ranges (mean=0,
+                        std=1)</li
+                      >
+                      <li
+                        >Generates lag features capturing sequential demand
+                        patterns</li
+                      >
+                      <li
+                        >Validates feature quality through correlation
+                        analysis</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> These engineered
+                      features transform raw measurements into ML-ready
+                      predictors that expose temporal patterns, operational
+                      contexts, and sequential dependencies - the patterns that
+                      drive accurate demand forecasting.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=1d4ea626"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-2:-Create-Rolling-Window-Features"
+                      >Challenge 2: Create Rolling Window Features<a
+                        class="anchor-link"
+                        href="#Challenge-2:-Create-Rolling-Window-Features"
+                      ></a></h3
+                    ><p
+                      >Your client asks: "Can we capture demand trends over
+                      recent hours? I'd like to understand short-term and daily
+                      patterns." Implement rolling window features that
+                      summarize recent demand history.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=9b36b276"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create rolling window features</span>
 
 <span class="c1"># 3-hour rolling average (short-term trend)</span>
 <span class="n">df_clean</span><span class="p">[</span><span class="s1">'demand_3h_avg'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">_____</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>
@@ -534,27 +773,63 @@ These engineered features transform raw measurements into ML-ready predictors th
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">24-hour rolling average statistics:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Mean: </span><span class="si">{</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'demand_24h_avg'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Std: </span><span class="si">{</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">'demand_24h_avg'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=edbb8440"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Rolling window features use pandas <code>.rolling(window=n)</code> to calculate statistics over the past n observations. ALWAYS use <code>.shift(1)</code> before <code>.rolling()</code> to prevent data leakage - without it, the current value you're trying to predict gets included in the "past" window! The pattern is: <code>df['count'].shift(1).rolling(window=3).mean()</code> for a 3-hour average. Use <code>window=3</code> for short-term trends and <code>window=24</code> for daily baselines. Set <code>min_periods=1</code> to handle the first few rows where full windows aren't available. The 3-hour average captures immediate trends (is demand rising or falling in the past few hours?), while the 24-hour average provides a stable daily baseline that accounts for typical patterns at each hour. These features help models understand not just current conditions but recent demand trajectories. For example, if demand_3h_avg is significantly higher than demand_24h_avg, it signals an unusual surge requiring proactive bike rebalancing.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=52645f01"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># 3-hour rolling average (short-term trend)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=edbb8440"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Rolling window features use pandas
+                        <code>.rolling(window=n)</code> to calculate statistics
+                        over the past n observations. ALWAYS use
+                        <code>.shift(1)</code> before <code>.rolling()</code> to
+                        prevent data leakage - without it, the current value
+                        you're trying to predict gets included in the "past"
+                        window! The pattern is:
+                        <code
+                          >df['count'].shift(1).rolling(window=3).mean()</code
+                        >
+                        for a 3-hour average. Use <code>window=3</code> for
+                        short-term trends and <code>window=24</code> for daily
+                        baselines. Set <code>min_periods=1</code> to handle the
+                        first few rows where full windows aren't available. The
+                        3-hour average captures immediate trends (is demand
+                        rising or falling in the past few hours?), while the
+                        24-hour average provides a stable daily baseline that
+                        accounts for typical patterns at each hour. These
+                        features help models understand not just current
+                        conditions but recent demand trajectories. For example,
+                        if demand_3h_avg is significantly higher than
+                        demand_24h_avg, it signals an unusual surge requiring
+                        proactive bike rebalancing.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=52645f01"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># 3-hour rolling average (short-term trend)</span>
 <span class="n">df_clean</span><span class="p">[</span><span class="s1">'demand_3h_avg'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clean</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
 <span class="c1"># 24-hour rolling average (daily baseline)</span>
@@ -579,31 +854,56 @@ These engineered features transform raw measurements into ML-ready predictors th
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Correlation with current demand:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  3-hour rolling avg:  r = </span><span class="si">{</span><span class="n">corr_3h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  24-hour rolling avg: r = </span><span class="si">{</span><span class="n">corr_24h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5ff7da9a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=d0e50383"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3:-Exploratory-Data-Analysis-and-Visualization">Step 3: Exploratory Data Analysis and Visualization<a class="anchor-link" href="#Step-3:-Exploratory-Data-Analysis-and-Visualization">¶</a></h2><p>Before modeling, we explore our engineered features to validate they capture real patterns. <strong>From the lectures in module "Data Exploration"</strong>, we learned statistical analysis and visualization techniques. This exploration builds confidence in our feature engineering and reveals insights that guide modeling decisions.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=d436bad9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== STEP 3: EXPLORATORY DATA ANALYSIS ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=5ff7da9a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=d0e50383"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-3:-Exploratory-Data-Analysis-and-Visualization"
+                      >Step 3: Exploratory Data Analysis and Visualization<a
+                        class="anchor-link"
+                        href="#Step-3:-Exploratory-Data-Analysis-and-Visualization"
+                      ></a></h2
+                    ><p
+                      >Before modeling, we explore our engineered features to
+                      validate they capture real patterns.
+                      <strong
+                        >From the lectures in module "Data Exploration"</strong
+                      >, we learned statistical analysis and visualization
+                      techniques. This exploration builds confidence in our
+                      feature engineering and reveals insights that guide
+                      modeling decisions.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=d436bad9"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== STEP 3: EXPLORATORY DATA ANALYSIS ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Descriptive statistics for key variables</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"--- Descriptive Statistics ---"</span><span class="p">)</span>
@@ -736,39 +1036,86 @@ These engineered features transform raw measurements into ML-ready predictors th
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Lag features show strong predictive power: 1h (r=</span><span class="si">{</span><span class="n">r_1h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">), 24h (r=</span><span class="si">{</span><span class="n">r_24h</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Binary features create meaningful demand segmentation"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Feature correlation matrix reveals relationships and independence"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=4e044b27"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Creates four visualization panels</li>
-<li><strong>Lag correlation scatters</strong> (panels 1-2): Validate that demand_lag_1h and demand_lag_24h strongly predict current demand (r ≈ 0.8-0.9), proving sequential patterns are captured</li>
-<li><strong>Binary feature box plots</strong> (panel 3): Show how is_rush_hour, is_weekend, and is_night create distinct demand distributions - visual evidence these flags segment operational contexts effectively</li>
-<li><strong>Correlation heatmap</strong> (panel 4): Reveals relationships among ALL engineered features - identifies redundant features (high inter-feature correlation) vs. complementary features (low inter-feature correlation but high correlation with target)</li>
-</ul>
-<p><strong>Business value:</strong>
-These visualizations prove that Step 2 feature engineering works BEFORE investing in modeling. Strong lag correlations justify real-time demand monitoring systems. Binary feature segmentation guides operational policy (different strategies for rush hour vs. night). Correlation matrix prevents redundant data collection and identifies most cost-effective monitoring investments.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=ba64b848"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-3:-Create-Diverse-Visualization-Types">Challenge 3: Create Diverse Visualization Types<a class="anchor-link" href="#Challenge-3:-Create-Diverse-Visualization-Types">¶</a></h3><p>Your client requests: "Can you create additional visualizations showing demand distributions and multi-dimensional patterns? We want to understand variability and combined effects." Create box plots and heatmaps to reveal distribution patterns and interaction effects.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=cdb5eaea">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create box plots and heatmap</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=4e044b27"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li>Creates four visualization panels</li>
+                      <li
+                        ><strong>Lag correlation scatters</strong> (panels 1-2):
+                        Validate that demand_lag_1h and demand_lag_24h strongly
+                        predict current demand (r ≈ 0.8-0.9), proving sequential
+                        patterns are captured</li
+                      >
+                      <li
+                        ><strong>Binary feature box plots</strong> (panel 3):
+                        Show how is_rush_hour, is_weekend, and is_night create
+                        distinct demand distributions - visual evidence these
+                        flags segment operational contexts effectively</li
+                      >
+                      <li
+                        ><strong>Correlation heatmap</strong> (panel 4): Reveals
+                        relationships among ALL engineered features - identifies
+                        redundant features (high inter-feature correlation) vs.
+                        complementary features (low inter-feature correlation
+                        but high correlation with target)</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> These visualizations
+                      prove that Step 2 feature engineering works BEFORE
+                      investing in modeling. Strong lag correlations justify
+                      real-time demand monitoring systems. Binary feature
+                      segmentation guides operational policy (different
+                      strategies for rush hour vs. night). Correlation matrix
+                      prevents redundant data collection and identifies most
+                      cost-effective monitoring investments.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=ba64b848"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-3:-Create-Diverse-Visualization-Types"
+                      >Challenge 3: Create Diverse Visualization Types<a
+                        class="anchor-link"
+                        href="#Challenge-3:-Create-Diverse-Visualization-Types"
+                      ></a></h3
+                    ><p
+                      >Your client requests: "Can you create additional
+                      visualizations showing demand distributions and
+                      multi-dimensional patterns? We want to understand
+                      variability and combined effects." Create box plots and
+                      heatmaps to reveal distribution patterns and interaction
+                      effects.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=cdb5eaea"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create box plots and heatmap</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
@@ -797,27 +1144,66 @@ These visualizations prove that Step 2 feature engineering works BEFORE investin
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== ADVANCED VISUALIZATION INSIGHTS ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Box plot: Shows demand variability across weather conditions"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Heatmap: Reveals hour-day interaction patterns (weekday rush hours vs weekend leisure)"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=be02361a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Box plots show distribution characteristics: the box spans Q1 to Q3 (middle 50%), the line inside is the median, whiskers extend to typical min/max, and dots are outliers. Create data list using list comprehension: <code>[df_clean[df_clean['weather'] == i]['count'] for i in [1, 2, 3, 4]]</code> gives you four arrays (one per weather type). Pass this list to <code>plt.boxplot()</code> with <code>labels=['Clear', 'Mist', 'Light Rain', 'Heavy Rain']</code>. For heatmaps, use <code>df.pivot_table(values='count', index='hour', columns='dayofweek', aggfunc='mean')</code> to create a matrix where rows=hours, columns=days, cells=average demand. Then <code>sns.heatmap()</code> with <code>cmap='YlOrRd'</code> creates color-coded visualization where darker colors = higher demand. The heatmap will instantly reveal weekday morning/evening peaks versus weekend midday patterns - visual confirmation of temporal feature importance!</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=eb8db686"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=be02361a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Box plots show distribution characteristics: the box
+                        spans Q1 to Q3 (middle 50%), the line inside is the
+                        median, whiskers extend to typical min/max, and dots are
+                        outliers. Create data list using list comprehension:
+                        <code
+                          >[df_clean[df_clean['weather'] == i]['count'] for i in
+                          [1, 2, 3, 4]]</code
+                        >
+                        gives you four arrays (one per weather type). Pass this
+                        list to <code>plt.boxplot()</code> with
+                        <code
+                          >labels=['Clear', 'Mist', 'Light Rain', 'Heavy
+                          Rain']</code
+                        >. For heatmaps, use
+                        <code
+                          >df.pivot_table(values='count', index='hour',
+                          columns='dayofweek', aggfunc='mean')</code
+                        >
+                        to create a matrix where rows=hours, columns=days,
+                        cells=average demand. Then
+                        <code>sns.heatmap()</code> with
+                        <code>cmap='YlOrRd'</code> creates color-coded
+                        visualization where darker colors = higher demand. The
+                        heatmap will instantly reveal weekday morning/evening
+                        peaks versus weekend midday patterns - visual
+                        confirmation of temporal feature importance!</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=eb8db686"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
 <span class="c1"># Panel 1: Box plot - demand distribution by weather condition</span>
 <span class="n">weather_labels</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">'Clear'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">'Mist'</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">'Light Rain'</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s1">'Heavy Rain'</span><span class="p">}</span>
@@ -844,31 +1230,55 @@ These visualizations prove that Step 2 feature engineering works BEFORE investin
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Box plot reveals: Clear weather has highest median and widest range"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Heatmap shows: Weekday hours 8 &amp; 17 are hottest (rush hours)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ Pattern validated: Temporal features critical for accurate forecasting"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=bb72a7d7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=088e39dc"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-4:-Linear-Regression-Baseline-Model">Step 4: Linear Regression Baseline Model<a class="anchor-link" href="#Step-4:-Linear-Regression-Baseline-Model">¶</a></h2><p>With validated features, we build our baseline model. <strong>From the lecture "Linear Models for Prediction"</strong>, Linear Regression provides interpretable predictions with clear coefficient interpretation. This baseline establishes performance that advanced models must beat to justify their complexity.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=21ab8cab">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import modeling tools</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=bb72a7d7"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=088e39dc"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-4:-Linear-Regression-Baseline-Model"
+                      >Step 4: Linear Regression Baseline Model<a
+                        class="anchor-link"
+                        href="#Step-4:-Linear-Regression-Baseline-Model"
+                      ></a></h2
+                    ><p
+                      >With validated features, we build our baseline model.
+                      <strong
+                        >From the lecture "Linear Models for Prediction"</strong
+                      >, Linear Regression provides interpretable predictions
+                      with clear coefficient interpretation. This baseline
+                      establishes performance that advanced models must beat to
+                      justify their complexity.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=21ab8cab"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import modeling tools</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span>
 
@@ -959,40 +1369,81 @@ These visualizations prove that Step 2 feature engineering works BEFORE investin
 <span class="nb">print</span><span class="p">(</span><span class="n">comparison</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Linear Regression baseline established: R² = </span><span class="si">{</span><span class="n">test_r2_linear</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=551d3773"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Selects 17 engineered features for modeling (weather, temporal, binary, lags)</li>
-<li>Creates chronological 80/20 split preserving temporal integrity for honest evaluation</li>
-<li>Trains LinearRegression on historical data (first 80% of timeline)</li>
-<li>Evaluates on unseen future data (last 20% of timeline) using R² metric</li>
-<li>Shows example predictions with errors to understand model behavior</li>
-</ul>
-<p><strong>Business value:</strong>
-Linear baseline provides interpretable performance benchmark and reveals which features have strongest linear relationships with demand. R² indicates how much demand variation the simple linear model explains.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c75552e2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-4:-Feature-Combination-Experiments">Challenge 4: Feature Combination Experiments<a class="anchor-link" href="#Challenge-4:-Feature-Combination-Experiments">¶</a></h3><p>Your client asks: "Which feature types matter most - weather or time? Can we get good performance with fewer features?" Compare model performance using different feature combinations.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=b828a6c2">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - compare feature combinations</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=551d3773"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Selects 17 engineered features for modeling (weather,
+                        temporal, binary, lags)</li
+                      >
+                      <li
+                        >Creates chronological 80/20 split preserving temporal
+                        integrity for honest evaluation</li
+                      >
+                      <li
+                        >Trains LinearRegression on historical data (first 80%
+                        of timeline)</li
+                      >
+                      <li
+                        >Evaluates on unseen future data (last 20% of timeline)
+                        using R² metric</li
+                      >
+                      <li
+                        >Shows example predictions with errors to understand
+                        model behavior</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Linear baseline provides
+                      interpretable performance benchmark and reveals which
+                      features have strongest linear relationships with demand.
+                      R² indicates how much demand variation the simple linear
+                      model explains.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c75552e2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-4:-Feature-Combination-Experiments"
+                      >Challenge 4: Feature Combination Experiments<a
+                        class="anchor-link"
+                        href="#Challenge-4:-Feature-Combination-Experiments"
+                      ></a></h3
+                    ><p
+                      >Your client asks: "Which feature types matter most -
+                      weather or time? Can we get good performance with fewer
+                      features?" Compare model performance using different
+                      feature combinations.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=b828a6c2"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - compare feature combinations</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== FEATURE COMBINATION EXPERIMENTS ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
@@ -1058,27 +1509,59 @@ Linear baseline provides interpretable performance benchmark and reveals which f
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== INSIGHTS ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Best performing set: </span><span class="si">{</span><span class="n">best_set</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Key finding: </span><span class="si">{</span><span class="s1">'Time'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="s1">'Time'</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">best_set</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Weather'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="s1">'Weather'</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">best_set</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Combined'</span><span class="si">}</span><span class="s2"> features drive predictions"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=f9b454c2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>For each feature set, subset the training and testing data using <code>X_train[features]</code> where features is the list of column names. Train a fresh LinearRegression() model for each subset - don't reuse models! The pattern is: subset data → create new model → fit on subset training → predict on subset testing → calculate R². Store results in a list of dictionaries for easy comparison. Weather-only features test whether environmental conditions alone can predict demand (typically r² ~0.15-0.25). Time-only features test temporal patterns without weather (typically r² ~0.40-0.60). Full feature set combines both (typically r² ~0.65-0.80). The comparison reveals whether demand is primarily driven by when people ride (temporal) or what conditions encourage riding (weather). Business insight: If time features dominate, invest in temporal fleet positioning; if weather dominates, invest in weather-responsive operations; if combination is best, integrated strategy needed.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=af8910f2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== FEATURE COMBINATION EXPERIMENTS ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=f9b454c2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >For each feature set, subset the training and testing
+                        data using <code>X_train[features]</code> where features
+                        is the list of column names. Train a fresh
+                        LinearRegression() model for each subset - don't reuse
+                        models! The pattern is: subset data → create new model →
+                        fit on subset training → predict on subset testing →
+                        calculate R². Store results in a list of dictionaries
+                        for easy comparison. Weather-only features test whether
+                        environmental conditions alone can predict demand
+                        (typically r² ~0.15-0.25). Time-only features test
+                        temporal patterns without weather (typically r²
+                        ~0.40-0.60). Full feature set combines both (typically
+                        r² ~0.65-0.80). The comparison reveals whether demand is
+                        primarily driven by when people ride (temporal) or what
+                        conditions encourage riding (weather). Business insight:
+                        If time features dominate, invest in temporal fleet
+                        positioning; if weather dominates, invest in
+                        weather-responsive operations; if combination is best,
+                        integrated strategy needed.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=af8910f2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== FEATURE COMBINATION EXPERIMENTS ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Define three feature sets</span>
 <span class="n">weather_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'atemp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">]</span>
@@ -1146,31 +1629,54 @@ Linear baseline provides interpretable performance benchmark and reveals which f
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Weather features alone: </span><span class="si">{</span><span class="n">weather_r2</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> explanatory power"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Full set: </span><span class="si">{</span><span class="n">results_df</span><span class="p">[</span><span class="n">results_df</span><span class="p">[</span><span class="s1">'Feature Set'</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'Full Feature Set'</span><span class="p">][</span><span class="s1">'Test R²'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Key finding: </span><span class="si">{</span><span class="s1">'Temporal patterns dominate'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">time_r2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">weather_r2</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'Weather conditions dominate'</span><span class="si">}</span><span class="s2"> bike demand"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6627a8e9"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=dab965d1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-5:-Random-Forest-Ensemble-Model">Step 5: Random Forest Ensemble Model<a class="anchor-link" href="#Step-5:-Random-Forest-Ensemble-Model">¶</a></h2><p>Linear regression established our baseline. Now we deploy ensemble methods to capture non-linear patterns and feature interactions. <strong>From the lecture "Tree-Based Models"</strong>, Random Forest combines multiple decision trees to achieve superior accuracy while reducing overfitting.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=346a85fb">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import ensemble methods</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6627a8e9"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=dab965d1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-5:-Random-Forest-Ensemble-Model"
+                      >Step 5: Random Forest Ensemble Model<a
+                        class="anchor-link"
+                        href="#Step-5:-Random-Forest-Ensemble-Model"
+                      ></a></h2
+                    ><p
+                      >Linear regression established our baseline. Now we deploy
+                      ensemble methods to capture non-linear patterns and
+                      feature interactions.
+                      <strong>From the lecture "Tree-Based Models"</strong>,
+                      Random Forest combines multiple decision trees to achieve
+                      superior accuracy while reducing overfitting.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=346a85fb"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import ensemble methods</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== STEP 5: RANDOM FOREST ENSEMBLE MODEL ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
@@ -1234,39 +1740,78 @@ Linear baseline provides interpretable performance benchmark and reveals which f
     <span class="s1">'RF Error'</span><span class="p">:</span> <span class="n">y_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">test_predictions_rf</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 <span class="p">})</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">comparison_rf</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c505235e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Trains RandomForestRegressor with 100 trees using same train-test split as Linear model</li>
-<li>Evaluates on test set with R² metric for direct comparison</li>
-<li>Checks train-test gap to assess overfitting (should be &lt;0.20 for good generalization)</li>
-<li>Visualizes top 10 features with horizontal bar chart for stakeholder communication</li>
-</ul>
-<p><strong>Business value:</strong>
-Random Forest captures non-linear relationships and feature interactions Linear models miss. Feature importance guides strategic investments - showing whether to prioritize temporal optimization or weather-responsive operations.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=68da42b1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-5:-Deep-Feature-Importance-Analysis">Challenge 5: Deep Feature Importance Analysis<a class="anchor-link" href="#Challenge-5:-Deep-Feature-Importance-Analysis">¶</a></h3><p>Your client asks: "Can you analyze the feature importance patterns more deeply? I want to understand cumulative importance and identify the minimal feature set that retains most predictive power." Perform comprehensive feature importance analysis.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=60416f59">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create feature importance DataFrame from Random Forest model</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c505235e"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Trains RandomForestRegressor with 100 trees using same
+                        train-test split as Linear model</li
+                      >
+                      <li
+                        >Evaluates on test set with R² metric for direct
+                        comparison</li
+                      >
+                      <li
+                        >Checks train-test gap to assess overfitting (should be
+                        &lt;0.20 for good generalization)</li
+                      >
+                      <li
+                        >Visualizes top 10 features with horizontal bar chart
+                        for stakeholder communication</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Random Forest captures
+                      non-linear relationships and feature interactions Linear
+                      models miss. Feature importance guides strategic
+                      investments - showing whether to prioritize temporal
+                      optimization or weather-responsive operations.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=68da42b1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-5:-Deep-Feature-Importance-Analysis"
+                      >Challenge 5: Deep Feature Importance Analysis<a
+                        class="anchor-link"
+                        href="#Challenge-5:-Deep-Feature-Importance-Analysis"
+                      ></a></h3
+                    ><p
+                      >Your client asks: "Can you analyze the feature importance
+                      patterns more deeply? I want to understand cumulative
+                      importance and identify the minimal feature set that
+                      retains most predictive power." Perform comprehensive
+                      feature importance analysis.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=60416f59"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Create feature importance DataFrame from Random Forest model</span>
 <span class="n">feature_importance_rf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">'feature'</span><span class="p">:</span> <span class="n">feature_columns</span><span class="p">,</span>
     <span class="s1">'importance'</span><span class="p">:</span> <span class="n">rf_model</span><span class="o">.</span><span class="n">feature_importances_</span>
@@ -1332,27 +1877,67 @@ Random Forest captures non-linear relationships and feature interactions Linear 
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Top 8 features: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_features_list</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'✓ Recommend reduced model for production'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">r2_reduced</span><span class="o">/</span><span class="n">test_r2_rf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.95</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'✓ Recommend full model - all features provide value'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6a0c0794"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>First create the feature importance DataFrame from <code>rf_model.feature_importances_</code> paired with <code>feature_columns</code>: <code>pd.DataFrame({'feature': feature_columns, 'importance': rf_model.feature_importances_})</code>. Sort by importance descending and reset the index. Cumulative importance shows how much predictive power accumulates as you add features ranked by importance. Calculate with <code>.cumsum()</code> on the sorted importance column. The cumulative curve typically shows diminishing returns: top 3 features might capture 60%, top 6 capture 80%, top 10 capture 90%. To find thresholds, iterate through cumulative values checking when they cross 0.80 and 0.90. For the reduced model test, use the top N features list: <code>top_features_list = feature_importance_rf.head(N)['feature'].tolist()</code>, then subset X_train and X_test with this list. Train a fresh Random Forest and compare its R² to the full model. Business question: Can we get 95%+ of performance with 50% fewer features? If yes, the simplified model is easier to maintain and deploy. If no, all features justify their complexity. Practical rule: If top 8 features give you 95% of performance, drop the bottom 12 for production simplicity.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=3aead668"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Create feature importance DataFrame from Random Forest model</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6a0c0794"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >First create the feature importance DataFrame from
+                        <code>rf_model.feature_importances_</code> paired with
+                        <code>feature_columns</code>:
+                        <code
+                          >pd.DataFrame({'feature': feature_columns,
+                          'importance': rf_model.feature_importances_})</code
+                        >. Sort by importance descending and reset the index.
+                        Cumulative importance shows how much predictive power
+                        accumulates as you add features ranked by importance.
+                        Calculate with <code>.cumsum()</code> on the sorted
+                        importance column. The cumulative curve typically shows
+                        diminishing returns: top 3 features might capture 60%,
+                        top 6 capture 80%, top 10 capture 90%. To find
+                        thresholds, iterate through cumulative values checking
+                        when they cross 0.80 and 0.90. For the reduced model
+                        test, use the top N features list:
+                        <code
+                          >top_features_list =
+                          feature_importance_rf.head(N)['feature'].tolist()</code
+                        >, then subset X_train and X_test with this list. Train
+                        a fresh Random Forest and compare its R² to the full
+                        model. Business question: Can we get 95%+ of performance
+                        with 50% fewer features? If yes, the simplified model is
+                        easier to maintain and deploy. If no, all features
+                        justify their complexity. Practical rule: If top 8
+                        features give you 95% of performance, drop the bottom 12
+                        for production simplicity.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=3aead668"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Create feature importance DataFrame from Random Forest model</span>
 <span class="n">feature_importance_rf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">'feature'</span><span class="p">:</span> <span class="n">feature_columns</span><span class="p">,</span>
     <span class="s1">'importance'</span><span class="p">:</span> <span class="n">rf_model</span><span class="o">.</span><span class="n">feature_importances_</span>
@@ -1418,32 +2003,74 @@ Random Forest captures non-linear relationships and feature interactions Linear 
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✓ Top 8 features: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top_features_list</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'✓ Recommend reduced model for production'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">r2_reduced</span><span class="o">/</span><span class="n">test_r2_rf</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.95</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'✓ Recommend full model - all features provide value'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=505aa2b2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=fec41f3f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-6:-Comprehensive-Model-Comparison-and-Deployment-Decision">Step 6: Comprehensive Model Comparison and Deployment Decision<a class="anchor-link" href="#Step-6:-Comprehensive-Model-Comparison-and-Deployment-Decision">¶</a></h2><p>We've trained both a Linear Regression baseline and a Random Forest ensemble model. Now we face the critical question: <strong>which model should we deploy to production?</strong> This decision requires more than comparing R² scores from a single train-test split—we need statistical confidence that one model consistently outperforms the other across different time periods.</p>
-<p><strong>From the lecture "Model Evaluation &amp; Performance Assessment"</strong>, we learned that rigorous model selection requires: (1) multiple evaluation metrics (MAE, RMSE, R²), (2) cross-validation for statistical confidence, and (3) business impact translation. We implement this framework using <strong>TimeSeriesSplit cross-validation</strong>, which respects temporal ordering by training on historical data and testing on future data—mimicking real-world deployment where we predict tomorrow using yesterday's patterns.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=8761b4b6">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import comprehensive evaluation metrics</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=505aa2b2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=fec41f3f"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-6:-Comprehensive-Model-Comparison-and-Deployment-Decision"
+                      >Step 6: Comprehensive Model Comparison and Deployment
+                      Decision<a
+                        class="anchor-link"
+                        href="#Step-6:-Comprehensive-Model-Comparison-and-Deployment-Decision"
+                      ></a></h2
+                    ><p
+                      >We've trained both a Linear Regression baseline and a
+                      Random Forest ensemble model. Now we face the critical
+                      question:
+                      <strong
+                        >which model should we deploy to production?</strong
+                      >
+                      This decision requires more than comparing R² scores from
+                      a single train-test split—we need statistical confidence
+                      that one model consistently outperforms the other across
+                      different time periods.</p
+                    >
+                    <p
+                      ><strong
+                        >From the lecture "Model Evaluation &amp; Performance
+                        Assessment"</strong
+                      >, we learned that rigorous model selection requires: (1)
+                      multiple evaluation metrics (MAE, RMSE, R²), (2)
+                      cross-validation for statistical confidence, and (3)
+                      business impact translation. We implement this framework
+                      using <strong>TimeSeriesSplit cross-validation</strong>,
+                      which respects temporal ordering by training on historical
+                      data and testing on future data—mimicking real-world
+                      deployment where we predict tomorrow using yesterday's
+                      patterns.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=8761b4b6"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import comprehensive evaluation metrics</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span><span class="p">,</span> <span class="n">cross_val_score</span>
 
@@ -1645,49 +2272,120 @@ Random Forest captures non-linear relationships and feature interactions Linear 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6d1ae154"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Uses <strong>TimeSeriesSplit cross-validation as the primary evaluation method</strong> (not an afterthought)</li>
-<li>Shows fold structure with date ranges for transparency (5 expanding windows)</li>
-<li>Prints fold-by-fold R² scores for both Linear Regression AND Random Forest</li>
-<li>Calculates CV mean and std for statistical confidence</li>
-<li>Computes test set metrics (MAE, RMSE, R²) for both models</li>
-<li><strong>Creates comprehensive comparison table</strong> showing all 4 metrics (MAE, RMSE, test R², CV mean R²) with winner declared for each</li>
-<li>Visualizes performance with 4-panel dashboard:<ul>
-<li><strong>Panel 1</strong>: CV fold-by-fold performance (line plot showing R² across 5 folds)</li>
-<li><strong>Panel 2</strong>: CV stability (box plot showing distribution and outliers)</li>
-<li><strong>Panel 3</strong>: Test set error metrics (MAE and RMSE in bikes/hour - same scale)</li>
-<li><strong>Panel 4</strong>: R² score comparison (Test Set R² and CV Mean R² on 0-1 scale)</li>
-</ul>
-</li>
-<li>Shows clear summary: which model wins on how many metrics</li>
-</ul>
-<p><strong>Business value:</strong>
-Cross-validation provides statistical confidence across multiple time periods, not just one arbitrary train-test split. The comprehensive comparison table gives stakeholders a clear, at-a-glance view of model performance across all key metrics. This rigorous approach demonstrates which model will generalize better to future unseen data.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=724b17b1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-6:-Enhanced-Model-with-Rolling-Window-Features">Challenge 6: Enhanced Model with Rolling Window Features<a class="anchor-link" href="#Challenge-6:-Enhanced-Model-with-Rolling-Window-Features">¶</a></h3><p>Your client asks: "We engineered those rolling window features in Challenge 2 - do they actually improve our models? I want to see if the extra complexity is worth it." Add the rolling features to both models and compare baseline vs enhanced performance.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=adb20a12">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - retrain models with rolling window features and compare</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6d1ae154"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Uses
+                        <strong
+                          >TimeSeriesSplit cross-validation as the primary
+                          evaluation method</strong
+                        >
+                        (not an afterthought)</li
+                      >
+                      <li
+                        >Shows fold structure with date ranges for transparency
+                        (5 expanding windows)</li
+                      >
+                      <li
+                        >Prints fold-by-fold R² scores for both Linear
+                        Regression AND Random Forest</li
+                      >
+                      <li
+                        >Calculates CV mean and std for statistical
+                        confidence</li
+                      >
+                      <li
+                        >Computes test set metrics (MAE, RMSE, R²) for both
+                        models</li
+                      >
+                      <li
+                        ><strong>Creates comprehensive comparison table</strong>
+                        showing all 4 metrics (MAE, RMSE, test R², CV mean R²)
+                        with winner declared for each</li
+                      >
+                      <li
+                        >Visualizes performance with 4-panel dashboard:<ul>
+                          <li
+                            ><strong>Panel 1</strong>: CV fold-by-fold
+                            performance (line plot showing R² across 5
+                            folds)</li
+                          >
+                          <li
+                            ><strong>Panel 2</strong>: CV stability (box plot
+                            showing distribution and outliers)</li
+                          >
+                          <li
+                            ><strong>Panel 3</strong>: Test set error metrics
+                            (MAE and RMSE in bikes/hour - same scale)</li
+                          >
+                          <li
+                            ><strong>Panel 4</strong>: R² score comparison (Test
+                            Set R² and CV Mean R² on 0-1 scale)</li
+                          >
+                        </ul>
+                      </li>
+                      <li
+                        >Shows clear summary: which model wins on how many
+                        metrics</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Cross-validation
+                      provides statistical confidence across multiple time
+                      periods, not just one arbitrary train-test split. The
+                      comprehensive comparison table gives stakeholders a clear,
+                      at-a-glance view of model performance across all key
+                      metrics. This rigorous approach demonstrates which model
+                      will generalize better to future unseen data.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=724b17b1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3
+                      id="Challenge-6:-Enhanced-Model-with-Rolling-Window-Features"
+                      >Challenge 6: Enhanced Model with Rolling Window
+                      Features<a
+                        class="anchor-link"
+                        href="#Challenge-6:-Enhanced-Model-with-Rolling-Window-Features"
+                      ></a></h3
+                    ><p
+                      >Your client asks: "We engineered those rolling window
+                      features in Challenge 2 - do they actually improve our
+                      models? I want to see if the extra complexity is worth
+                      it." Add the rolling features to both models and compare
+                      baseline vs enhanced performance.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=adb20a12"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - retrain models with rolling window features and compare</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== ENHANCED MODEL WITH ROLLING WINDOW FEATURES ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
@@ -1829,27 +2527,86 @@ Cross-validation provides statistical confidence across multiple time periods, n
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"✗ RECOMMENDATION: Use baseline models - rolling features add complexity without significant value"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1003430d"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Build the enhanced feature set: <code>enhanced_features = feature_columns + ['demand_3h_avg', 'demand_24h_avg']</code>. Create X_enhanced using this list. Following Step 6's rigorous methodology, use <code>cross_val_score()</code> with the <code>tscv</code> TimeSeriesSplit object to evaluate enhanced models: <code>cross_val_score(LinearRegression(), X_enhanced, y_enhanced, cv=tscv, scoring='r2')</code>. This gives you 5 fold scores for the enhanced model. Compare the CV means: <code>linear_enh_cv_scores.mean()</code> vs <code>linear_cv_mean</code> from Step 6. The blanks require: <code>X_enhanced</code> for the feature matrix, <code>tscv</code> for the cv parameter (reusing the TimeSeriesSplit from Step 6), and <code>.mean()</code> to get the average across folds. Also run test set evaluation for detailed metrics (MAE) and feature importance analysis - this requires the train-test split. Train fresh models: <code>LinearRegression()</code> and <code>RandomForestRegressor()</code> with identical hyperparameters. The test set blanks need: <code>X_train_enh, y_train_enh</code> for fitting, <code>X_test_enh</code> for prediction, and <code>y_test_enh, linear_enh_pred</code> for R² scoring. Fill NaN values in rolling features BEFORE creating X_enhanced to prevent "Input contains NaN" errors. Expected realistic results: Linear CV improvement 0.00-0.03, Random Forest improvement 0.00-0.02. The 3-hour rolling average captures short-term trends while the 24-hour rolling average provides daily baseline patterns - both help models understand demand trajectories beyond single lag values. Key insight: Linear models typically benefit MORE from rolling features (capturing sequential patterns they can't model), while Random Forest shows smaller gains (trees already capture patterns via existing lag features). Use CV mean improvement (not single test score) for the deployment decision - this is statistically robust. Rule of thumb: CV improvement &gt;0.02 R² is meaningful, 0.01-0.02 is marginal, &lt;0.01 suggests feature redundancy.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=8af6f469"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== ENHANCED MODEL WITH ROLLING WINDOW FEATURES ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=1003430d"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Build the enhanced feature set:
+                        <code
+                          >enhanced_features = feature_columns +
+                          ['demand_3h_avg', 'demand_24h_avg']</code
+                        >. Create X_enhanced using this list. Following Step 6's
+                        rigorous methodology, use
+                        <code>cross_val_score()</code> with the
+                        <code>tscv</code> TimeSeriesSplit object to evaluate
+                        enhanced models:
+                        <code
+                          >cross_val_score(LinearRegression(), X_enhanced,
+                          y_enhanced, cv=tscv, scoring='r2')</code
+                        >. This gives you 5 fold scores for the enhanced model.
+                        Compare the CV means:
+                        <code>linear_enh_cv_scores.mean()</code> vs
+                        <code>linear_cv_mean</code> from Step 6. The blanks
+                        require: <code>X_enhanced</code> for the feature matrix,
+                        <code>tscv</code> for the cv parameter (reusing the
+                        TimeSeriesSplit from Step 6), and
+                        <code>.mean()</code> to get the average across folds.
+                        Also run test set evaluation for detailed metrics (MAE)
+                        and feature importance analysis - this requires the
+                        train-test split. Train fresh models:
+                        <code>LinearRegression()</code> and
+                        <code>RandomForestRegressor()</code> with identical
+                        hyperparameters. The test set blanks need:
+                        <code>X_train_enh, y_train_enh</code> for fitting,
+                        <code>X_test_enh</code> for prediction, and
+                        <code>y_test_enh, linear_enh_pred</code> for R² scoring.
+                        Fill NaN values in rolling features BEFORE creating
+                        X_enhanced to prevent "Input contains NaN" errors.
+                        Expected realistic results: Linear CV improvement
+                        0.00-0.03, Random Forest improvement 0.00-0.02. The
+                        3-hour rolling average captures short-term trends while
+                        the 24-hour rolling average provides daily baseline
+                        patterns - both help models understand demand
+                        trajectories beyond single lag values. Key insight:
+                        Linear models typically benefit MORE from rolling
+                        features (capturing sequential patterns they can't
+                        model), while Random Forest shows smaller gains (trees
+                        already capture patterns via existing lag features). Use
+                        CV mean improvement (not single test score) for the
+                        deployment decision - this is statistically robust. Rule
+                        of thumb: CV improvement &gt;0.02 R² is meaningful,
+                        0.01-0.02 is marginal, &lt;0.01 suggests feature
+                        redundancy.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=8af6f469"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"=== ENHANCED MODEL WITH ROLLING WINDOW FEATURES ===</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># First, create rolling window features if not already present</span>
 <span class="k">if</span> <span class="s1">'demand_3h_avg'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -2020,47 +2777,129 @@ Cross-validation provides statistical confidence across multiple time periods, n
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Random Forest CV improved by </span><span class="si">{</span><span class="p">(</span><span class="n">rf_cv_change</span><span class="o">/</span><span class="n">rf_cv_mean</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">+.1f</span><span class="si">}</span><span class="s2">% (trees already capture patterns)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Decision based on CV performance (statistically robust across 5 time periods)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1b736784"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=2c15266d"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary:-Complete-End-to-End-Machine-Learning-Pipeline-Mastery">Summary: Complete End-to-End Machine Learning Pipeline Mastery<a class="anchor-link" href="#Summary:-Complete-End-to-End-Machine-Learning-Pipeline-Mastery">¶</a></h2><p><strong>What We've Accomplished</strong>:</p>
-<ul>
-<li><strong>Data Quality Pipeline</strong>: Implemented systematic validation workflows, handled missing values, verified timeline integrity, and established clean data foundation for reliable modeling</li>
-<li><strong>Feature Engineering</strong>: Created 17 optimized features including categorical encodings, scaled weather variables, cyclical temporal features, and lag variables - transforming raw data into ML-ready inputs</li>
-<li><strong>Statistical Validation</strong>: Applied descriptive statistics, correlation analysis, and professional visualizations (line plots, bar charts, scatter plots, box plots, heatmaps) confirming features capture real demand patterns</li>
-<li><strong>Linear Regression Baseline</strong>: Trained interpretable baseline model achieving R² ≈ 0.80, established performance benchmark, and validated temporal train-test splitting methodology</li>
-<li><strong>Random Forest Excellence</strong>: Deployed ensemble model with 100 trees achieving R² ≈ 0.90, analyzed feature importance revealing key demand drivers, and demonstrated non-linear pattern capture</li>
-<li><strong>Evaluation Framework</strong>: Compared models across MAE, RMSE, and R² metrics; applied 5-fold TimeSeriesSplit cross-validation for robust estimates; translated performance to business impact; made evidence-based deployment recommendation</li>
-</ul>
-<p><strong>Key Technical Skills Mastered</strong>:</p>
-<ul>
-<li><strong>Data preparation</strong>: Quality assessment workflows, missing data handling, timeline standardization, outlier detection (IQR method)</li>
-<li><strong>Feature engineering</strong>: One-hot encoding, binary indicators, StandardScaler normalization, cyclical sin/cos encoding for temporal continuity, lag features with <code>.shift()</code></li>
-<li><strong>Exploratory analysis</strong>: <code>.describe()</code> for statistics, <code>.corr()</code> for relationships, <code>.groupby()</code> for segmentation, professional matplotlib visualizations</li>
-<li><strong>Model development</strong>: LinearRegression and RandomForestRegressor with scikit-learn, chronological train-test splitting, proper evaluation on unseen future data</li>
-<li><strong>Performance evaluation</strong>: MAE/RMSE/R² metric calculation, TimeSeriesSplit cross-validation, statistical confidence intervals, feature importance interpretation</li>
-</ul>
-<p>Congratulations! 🥳 You've completed the full professional ML workflow from raw data to deployment-ready system. Your Capital City Bikes forecasting system demonstrates production-grade rigor across data preparation, feature engineering, model development, and evaluation - the complete skillset that distinguishes professional ML engineers from basic model builders. You're now ready to tackle real-world transportation forecasting challenges with confidence, systematic methodology, and stakeholder-ready communication!</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-
-        </div>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=1b736784"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=2c15266d"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Summary:-Complete-End-to-End-Machine-Learning-Pipeline-Mastery"
+                      >Summary: Complete End-to-End Machine Learning Pipeline
+                      Mastery<a
+                        class="anchor-link"
+                        href="#Summary:-Complete-End-to-End-Machine-Learning-Pipeline-Mastery"
+                      ></a></h2
+                    ><p><strong>What We've Accomplished</strong>:</p>
+                    <ul>
+                      <li
+                        ><strong>Data Quality Pipeline</strong>: Implemented
+                        systematic validation workflows, handled missing values,
+                        verified timeline integrity, and established clean data
+                        foundation for reliable modeling</li
+                      >
+                      <li
+                        ><strong>Feature Engineering</strong>: Created 17
+                        optimized features including categorical encodings,
+                        scaled weather variables, cyclical temporal features,
+                        and lag variables - transforming raw data into ML-ready
+                        inputs</li
+                      >
+                      <li
+                        ><strong>Statistical Validation</strong>: Applied
+                        descriptive statistics, correlation analysis, and
+                        professional visualizations (line plots, bar charts,
+                        scatter plots, box plots, heatmaps) confirming features
+                        capture real demand patterns</li
+                      >
+                      <li
+                        ><strong>Linear Regression Baseline</strong>: Trained
+                        interpretable baseline model achieving R² ≈ 0.80,
+                        established performance benchmark, and validated
+                        temporal train-test splitting methodology</li
+                      >
+                      <li
+                        ><strong>Random Forest Excellence</strong>: Deployed
+                        ensemble model with 100 trees achieving R² ≈ 0.90,
+                        analyzed feature importance revealing key demand
+                        drivers, and demonstrated non-linear pattern capture</li
+                      >
+                      <li
+                        ><strong>Evaluation Framework</strong>: Compared models
+                        across MAE, RMSE, and R² metrics; applied 5-fold
+                        TimeSeriesSplit cross-validation for robust estimates;
+                        translated performance to business impact; made
+                        evidence-based deployment recommendation</li
+                      >
+                    </ul>
+                    <p><strong>Key Technical Skills Mastered</strong>:</p>
+                    <ul>
+                      <li
+                        ><strong>Data preparation</strong>: Quality assessment
+                        workflows, missing data handling, timeline
+                        standardization, outlier detection (IQR method)</li
+                      >
+                      <li
+                        ><strong>Feature engineering</strong>: One-hot encoding,
+                        binary indicators, StandardScaler normalization,
+                        cyclical sin/cos encoding for temporal continuity, lag
+                        features with <code>.shift()</code></li
+                      >
+                      <li
+                        ><strong>Exploratory analysis</strong>:
+                        <code>.describe()</code> for statistics,
+                        <code>.corr()</code> for relationships,
+                        <code>.groupby()</code> for segmentation, professional
+                        matplotlib visualizations</li
+                      >
+                      <li
+                        ><strong>Model development</strong>: LinearRegression
+                        and RandomForestRegressor with scikit-learn,
+                        chronological train-test splitting, proper evaluation on
+                        unseen future data</li
+                      >
+                      <li
+                        ><strong>Performance evaluation</strong>: MAE/RMSE/R²
+                        metric calculation, TimeSeriesSplit cross-validation,
+                        statistical confidence intervals, feature importance
+                        interpretation</li
+                      >
+                    </ul>
+                    <p
+                      >Congratulations! 🥳 You've completed the full
+                      professional ML workflow from raw data to deployment-ready
+                      system. Your Capital City Bikes forecasting system
+                      demonstrates production-grade rigor across data
+                      preparation, feature engineering, model development, and
+                      evaluation - the complete skillset that distinguishes
+                      professional ML engineers from basic model builders.
+                      You're now ready to tackle real-world transportation
+                      forecasting challenges with confidence, systematic
+                      methodology, and stakeholder-ready communication!</p
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-</body>
+  </body>
 </html>

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lecture 06: Programming Example - Predictive Modeling MOOC</title>
-    
-<style>
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica", "Arial", sans-serif;
         line-height: 1.6;
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
         background-color: #f8f9fa;
-    }
+      }
 
-    .container {
+      .container {
         background-color: white;
         border-radius: 8px;
         padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    .nav-header {
+      .nav-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 20px 30px;
@@ -33,21 +34,21 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 15px;
-    }
+      }
 
-    .nav-header h1 {
+      .nav-header h1 {
         margin: 0;
         font-size: 1.5rem;
         font-weight: 600;
-    }
+      }
 
-    .nav-buttons {
+      .nav-buttons {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-    }
+      }
 
-    .btn {
+      .btn {
         display: inline-block;
         padding: 10px 20px;
         text-decoration: none;
@@ -55,149 +56,235 @@
         border-radius: 6px;
         transition: all 0.3s ease;
         font-size: 0.9rem;
-    }
+      }
 
-    .btn-colab {
+      .btn-colab {
         background-color: #f9ab00;
         color: #1a1a1a;
         border: 2px solid #f9ab00;
-    }
+      }
 
-    .btn-colab:hover {
+      .btn-colab:hover {
         background-color: #ff9900;
         border-color: #ff9900;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
-    }
+      }
 
-    .btn-github {
+      .btn-github {
         background-color: transparent;
         color: white;
         border: 2px solid white;
-    }
+      }
 
-    .btn-github:hover {
+      .btn-github:hover {
         background-color: white;
         color: #667eea;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-    }
+      }
 
-    .jupyter-content {
+      .jupyter-content {
         margin-top: 20px;
-    }
+      }
 
-    /* Notebook cell styling */
-    div.cell {
+      /* Notebook cell styling */
+      div.cell {
         margin-bottom: 1.5rem;
-    }
+      }
 
-    div.input_area {
+      div.input_area {
         border-left: 3px solid #667eea;
         background-color: #f8f9fa;
         padding: 10px;
         border-radius: 4px;
-    }
+      }
 
-    div.output_area {
+      div.output_area {
         padding: 10px;
         border-left: 3px solid #28a745;
         background-color: #f8f9fa;
         border-radius: 4px;
         margin-top: 10px;
-    }
+      }
 
-    /* Code highlighting */
-    .highlight {
+      /* Code highlighting */
+      .highlight {
         background-color: #f8f9fa;
         border-radius: 4px;
-    }
+      }
 
-    /* Responsive design */
-    @media (max-width: 768px) {
+      /* Responsive design */
+      @media (max-width: 768px) {
         body {
-            padding: 10px;
+          padding: 10px;
         }
 
         .container {
-            padding: 15px;
+          padding: 15px;
         }
 
         .nav-header {
-            padding: 15px;
-            margin: -15px -15px 15px -15px;
+          padding: 15px;
+          margin: -15px -15px 15px -15px;
         }
 
         .nav-header h1 {
-            font-size: 1.2rem;
+          font-size: 1.2rem;
         }
 
         .nav-buttons {
-            width: 100%;
-            justify-content: center;
+          width: 100%;
+          justify-content: center;
         }
-    }
-</style>
-
-</head>
-<body>
+      }
+    </style>
+  </head>
+  <body>
     <div class="container">
-        <div class="nav-header">
-            <h1>Lecture 06: Programming Example</h1>
-            <div class="nav-buttons">
-                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-03/lecture-06-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
-                    ▶ Open in Colab
-                </a>
-                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-03/lecture-06-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
-                    📂 View on GitHub
-                </a>
-            </div>
+      <div class="nav-header">
+        <h1>Lecture 06: Programming Example</h1>
+        <div class="nav-buttons">
+          <a
+            href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-03/lecture-06-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-colab"
+          >
+            ▶ Open in Colab
+          </a>
+          <a
+            href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-03/lecture-06-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-github"
+          >
+            📂 View on GitHub
+          </a>
         </div>
-        <div class="jupyter-content">
-
-<main>
-<div class="border-box-sizing" id="notebook" tabindex="-1">
-<div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=bf937176"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lecture-6:-Programming-Example---Statistical-Analysis-&amp;-Pattern-Discovery">Lecture 6: Programming Example - Statistical Analysis &amp; Pattern Discovery<a class="anchor-link" href="#Lecture-6:-Programming-Example---Statistical-Analysis-&amp;-Pattern-Discovery">¶</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=0164a9fb"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction:-Building-Your-Statistical-Analysis-Toolkit">Introduction: Building Your Statistical Analysis Toolkit<a class="anchor-link" href="#Introduction:-Building-Your-Statistical-Analysis-Toolkit">¶</a></h2><p>Welcome back, junior data consultant! Your Capital Bikes Washington D.C. client was impressed with your data cleaning work and now they need answers to critical business questions. Today, you'll transform from basic data manipulation to sophisticated statistical analysis - discovering the hidden patterns that drive bike-sharing demand using proven statistical techniques.</p>
-<p>Think of statistical analysis like being a detective examining evidence. While anyone can collect data, professional consultants know how to measure patterns, calculate relationships, and quantify uncertainty. You'll learn to use numbers as proof - transforming "we think demand is higher on weekends" into "weekends show 34% higher average demand with 95% confidence, suggesting we need 50-75 additional bikes at key stations."</p>
-<p>Your client is counting on you to turn their historical bike-sharing data into evidence-based recommendations worth millions in operational improvements. Every statistical technique you master serves this consulting purpose: providing the mathematical proof that drives confident business decisions.</p>
-<blockquote>
-<p><strong>🚀 Interactive Learning Alert</strong></p>
-<p>This is a hands-on statistical analysis tutorial with real transportation data challenges. For the best experience:</p>
-<ul>
-<li><strong>Click "Open in Colab"</strong> at the bottom to run code interactively</li>
-<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong></li>
-<li><strong>Complete the challenges</strong> to practice your statistical analysis skills</li>
-<li><strong>Think like a consultant</strong> - every insight impacts client decisions</li>
-</ul>
-</blockquote>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=3fc351a6"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Setting-Up-Your-Statistical-Analysis-Environment">Step 1: Setting Up Your Statistical Analysis Environment<a class="anchor-link" href="#Step-1:-Setting-Up-Your-Statistical-Analysis-Environment">¶</a></h2><p>Let's begin by importing the essential tools for statistical analysis and loading our bike-sharing dataset:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=f25a4bcc">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import pandas library for data manipulation (as 'pd' for convenience)</span>
+      </div>
+      <div class="jupyter-content">
+        <main>
+          <div class="border-box-sizing" id="notebook" tabindex="-1">
+            <div class="container" id="notebook-container">
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=bf937176"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h1
+                      id="Lecture-6:-Programming-Example---Statistical-Analysis-&amp;-Pattern-Discovery"
+                      >Lecture 6: Programming Example - Statistical Analysis
+                      &amp; Pattern Discovery<a
+                        class="anchor-link"
+                        href="#Lecture-6:-Programming-Example---Statistical-Analysis-&amp;-Pattern-Discovery"
+                      ></a
+                    ></h1>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=0164a9fb"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Introduction:-Building-Your-Statistical-Analysis-Toolkit"
+                      >Introduction: Building Your Statistical Analysis
+                      Toolkit<a
+                        class="anchor-link"
+                        href="#Introduction:-Building-Your-Statistical-Analysis-Toolkit"
+                      ></a></h2
+                    ><p
+                      >Welcome back, junior data consultant! Your Capital Bikes
+                      Washington D.C. client was impressed with your data
+                      cleaning work and now they need answers to critical
+                      business questions. Today, you'll transform from basic
+                      data manipulation to sophisticated statistical analysis -
+                      discovering the hidden patterns that drive bike-sharing
+                      demand using proven statistical techniques.</p
+                    >
+                    <p
+                      >Think of statistical analysis like being a detective
+                      examining evidence. While anyone can collect data,
+                      professional consultants know how to measure patterns,
+                      calculate relationships, and quantify uncertainty. You'll
+                      learn to use numbers as proof - transforming "we think
+                      demand is higher on weekends" into "weekends show 34%
+                      higher average demand with 95% confidence, suggesting we
+                      need 50-75 additional bikes at key stations."</p
+                    >
+                    <p
+                      >Your client is counting on you to turn their historical
+                      bike-sharing data into evidence-based recommendations
+                      worth millions in operational improvements. Every
+                      statistical technique you master serves this consulting
+                      purpose: providing the mathematical proof that drives
+                      confident business decisions.</p
+                    >
+                    <blockquote>
+                      <p><strong>🚀 Interactive Learning Alert</strong></p>
+                      <p
+                        >This is a hands-on statistical analysis tutorial with
+                        real transportation data challenges. For the best
+                        experience:</p
+                      >
+                      <ul>
+                        <li
+                          ><strong>Click "Open in Colab"</strong> at the bottom
+                          to run code interactively</li
+                        >
+                        <li
+                          ><strong>Execute each code cell</strong> by pressing
+                          <strong>Shift + Enter</strong></li
+                        >
+                        <li
+                          ><strong>Complete the challenges</strong> to practice
+                          your statistical analysis skills</li
+                        >
+                        <li
+                          ><strong>Think like a consultant</strong> - every
+                          insight impacts client decisions</li
+                        >
+                      </ul>
+                    </blockquote>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=3fc351a6"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-1:-Setting-Up-Your-Statistical-Analysis-Environment"
+                      >Step 1: Setting Up Your Statistical Analysis
+                      Environment<a
+                        class="anchor-link"
+                        href="#Step-1:-Setting-Up-Your-Statistical-Analysis-Environment"
+                      ></a></h2
+                    ><p
+                      >Let's begin by importing the essential tools for
+                      statistical analysis and loading our bike-sharing
+                      dataset:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=f25a4bcc"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import pandas library for data manipulation (as 'pd' for convenience)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Import numpy library for numerical operations (as 'np' for convenience)</span>
@@ -216,106 +303,206 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Shows (rows, columns) - number of observations and features</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Date range: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Time period covered</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total observations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> hours of bike-sharing data"</span><span class="p">)</span>  <span class="c1"># Total data points</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=12cc342e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this establishes:</strong></p>
-<ul>
-<li><code>pandas</code> provides all our data manipulation capabilities</li>
-<li><code>numpy</code> handles mathematical operations and statistical calculations</li>
-<li>Converting datetime ensures proper temporal analysis capabilities</li>
-<li>Understanding dataset scope helps interpret statistical results</li>
-</ul>
-<p><strong>Why this matters for your client:</strong>
-Your Capital Bikes client needs to understand the scale and timeframe of their data. These basic statistics set the context for all subsequent analysis - you're working with nearly two years of hourly bike rental data.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b0adab4f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-1:-Dataset-Familiarization">Challenge 1: Dataset Familiarization<a class="anchor-link" href="#Challenge-1:-Dataset-Familiarization">¶</a></h3><p>Explore the basic structure of your dataset to understand what variables are available for statistical analysis.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=61bfbcd2">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=12cc342e"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this establishes:</strong></p>
+                    <ul>
+                      <li
+                        ><code>pandas</code> provides all our data manipulation
+                        capabilities</li
+                      >
+                      <li
+                        ><code>numpy</code> handles mathematical operations and
+                        statistical calculations</li
+                      >
+                      <li
+                        >Converting datetime ensures proper temporal analysis
+                        capabilities</li
+                      >
+                      <li
+                        >Understanding dataset scope helps interpret statistical
+                        results</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Why this matters for your client:</strong> Your
+                      Capital Bikes client needs to understand the scale and
+                      timeframe of their data. These basic statistics set the
+                      context for all subsequent analysis - you're working with
+                      nearly two years of hourly bike rental data.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=b0adab4f"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-1:-Dataset-Familiarization"
+                      >Challenge 1: Dataset Familiarization<a
+                        class="anchor-link"
+                        href="#Challenge-1:-Dataset-Familiarization"
+                      ></a></h3
+                    ><p
+                      >Explore the basic structure of your dataset to understand
+                      what variables are available for statistical analysis.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=61bfbcd2"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Dataset Structure ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Display column types and missing values</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== First Few Records ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>  <span class="c1"># Show first few rows</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=70e5c3ff"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Structure your dataset exploration around these systematic discovery approaches:</p>
-<ul>
-<li>Use <code>df.info()</code> to see column data types and check for missing values comprehensively</li>
-<li>Use <code>df.head()</code> and <code>df.tail()</code> to preview actual data values and verify data consistency</li>
-<li>Pay attention to which columns are numerical vs categorical for appropriate analysis</li>
-<li>Examine data ranges with <code>df.describe()</code> to understand typical values and outliers</li>
-<li>Don't assume all numerical columns should be analyzed the same way</li>
-<li>Remember that some numbers might represent categories (like season or weather codes)</li>
-<li>Think like a consultant: What would your client want to know about their data structure before diving into statistics?</li>
-<li>Consider data quality issues: Are there any obvious errors or inconsistencies?</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=438d166e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Display dataset structure</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=70e5c3ff"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Structure your dataset exploration around these
+                        systematic discovery approaches:</p
+                      >
+                      <ul>
+                        <li
+                          >Use <code>df.info()</code> to see column data types
+                          and check for missing values comprehensively</li
+                        >
+                        <li
+                          >Use <code>df.head()</code> and
+                          <code>df.tail()</code> to preview actual data values
+                          and verify data consistency</li
+                        >
+                        <li
+                          >Pay attention to which columns are numerical vs
+                          categorical for appropriate analysis</li
+                        >
+                        <li
+                          >Examine data ranges with
+                          <code>df.describe()</code> to understand typical
+                          values and outliers</li
+                        >
+                        <li
+                          >Don't assume all numerical columns should be analyzed
+                          the same way</li
+                        >
+                        <li
+                          >Remember that some numbers might represent categories
+                          (like season or weather codes)</li
+                        >
+                        <li
+                          >Think like a consultant: What would your client want
+                          to know about their data structure before diving into
+                          statistics?</li
+                        >
+                        <li
+                          >Consider data quality issues: Are there any obvious
+                          errors or inconsistencies?</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=438d166e"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Display dataset structure</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Dataset Structure ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== First Few Records ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=82269d9a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=609303c6"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Understanding-Descriptive-Statistics-with-.describe()">Step 2: Understanding Descriptive Statistics with .describe()<a class="anchor-link" href="#Step-2:-Understanding-Descriptive-Statistics-with-.describe()">¶</a></h2><p>Let's use pandas' <code>.describe()</code> method to generate comprehensive summary statistics for our bike-sharing dataset:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=de7839c6">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=82269d9a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=609303c6"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-2:-Understanding-Descriptive-Statistics-with-.describe()"
+                      >Step 2: Understanding Descriptive Statistics with
+                      .describe()<a
+                        class="anchor-link"
+                        href="#Step-2:-Understanding-Descriptive-Statistics-with-.describe()"
+                      ></a></h2
+                    ><p
+                      >Let's use pandas' <code>.describe()</code> method to
+                      generate comprehensive summary statistics for our
+                      bike-sharing dataset:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=de7839c6"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -346,42 +533,87 @@ Your Capital Bikes client needs to understand the scale and timeframe of their d
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak hourly demand: </span><span class="si">{</span><span class="n">peak_demand</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Minimum hourly demand: </span><span class="si">{</span><span class="n">min_demand</span><span class="si">}</span><span class="s2"> bikes"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Demand variability (std): </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=92906c8c"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li><code>.describe()</code> generates eight summary statistics (count, mean, std, min, quartiles, max) for all numerical columns</li>
-<li><code>count</code> shows data completeness (number of non-null observations)</li>
-<li><code>mean</code> reveals average hourly demand - the baseline reference for typical system utilization</li>
-<li><code>std</code> (standard deviation) quantifies demand variability around the mean</li>
-<li><code>min/max</code> define the full operational range from quietest to busiest hours</li>
-<li>Quartiles (25%, 50%, 75%) reveal demand distribution shape and skewness patterns</li>
-</ul>
-<p><strong>Business value:</strong>
-Your Capital Bikes client can use these statistics to set operational baselines, understand demand variability for capacity planning, and identify whether demand distribution is symmetric or skewed by comparing mean with median (50% quartile).</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=9e889455"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-2:-Interpret-Weather-Statistics">Challenge 2: Interpret Weather Statistics<a class="anchor-link" href="#Challenge-2:-Interpret-Weather-Statistics">¶</a></h3><p>Analyze the descriptive statistics for weather variables and interpret what they mean for bike-sharing operations.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=f45f4e90">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=92906c8c"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        ><code>.describe()</code> generates eight summary
+                        statistics (count, mean, std, min, quartiles, max) for
+                        all numerical columns</li
+                      >
+                      <li
+                        ><code>count</code> shows data completeness (number of
+                        non-null observations)</li
+                      >
+                      <li
+                        ><code>mean</code> reveals average hourly demand - the
+                        baseline reference for typical system utilization</li
+                      >
+                      <li
+                        ><code>std</code> (standard deviation) quantifies demand
+                        variability around the mean</li
+                      >
+                      <li
+                        ><code>min/max</code> define the full operational range
+                        from quietest to busiest hours</li
+                      >
+                      <li
+                        >Quartiles (25%, 50%, 75%) reveal demand distribution
+                        shape and skewness patterns</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client can use these statistics to set operational
+                      baselines, understand demand variability for capacity
+                      planning, and identify whether demand distribution is
+                      symmetric or skewed by comparing mean with median (50%
+                      quartile).</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=9e889455"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-2:-Interpret-Weather-Statistics"
+                      >Challenge 2: Interpret Weather Statistics<a
+                        class="anchor-link"
+                        href="#Challenge-2:-Interpret-Weather-Statistics"
+                      ></a></h3
+                    ><p
+                      >Analyze the descriptive statistics for weather variables
+                      and interpret what they mean for bike-sharing
+                      operations.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=f45f4e90"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="n">weather_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">]</span>  <span class="c1"># Define weather columns</span>
 <span class="n">weather_stats</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">weather_cols</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Generate descriptive statistics</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Weather Analysis ==="</span><span class="p">)</span>
@@ -391,35 +623,72 @@ Your Capital Bikes client can use these statistics to set operational baselines,
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Weather Insights for Operations ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average temperature: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>  <span class="c1"># Calculate mean temperature</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature range: </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C to </span><span class="si">{</span><span class="n">_____</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>  <span class="c1"># Show min to max</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=8e344fb5"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Structure your weather statistics analysis around these key considerations:</p>
-<ul>
-<li>Calculate temperature thresholds: <code>df[df['temp'] &gt; 25]['count'].mean()</code> for warm days</li>
-<li>Examine humidity extremes: <code>df['humidity'].quantile([0.1, 0.9])</code> for operational ranges</li>
-<li>Interpret standard deviations: high variability indicates unpredictable conditions</li>
-<li>Consider operational impact: extreme temperatures affect bike maintenance and user comfort</li>
-<li>Compare seasonal weather patterns using <code>df.groupby('season')[weather_cols].mean()</code></li>
-<li>Focus on actionable insights: What weather thresholds should trigger operational changes?</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=74a775bd"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Analyze weather statistics</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=8e344fb5"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Structure your weather statistics analysis around these
+                        key considerations:</p
+                      >
+                      <ul>
+                        <li
+                          >Calculate temperature thresholds:
+                          <code>df[df['temp'] &gt; 25]['count'].mean()</code>
+                          for warm days</li
+                        >
+                        <li
+                          >Examine humidity extremes:
+                          <code>df['humidity'].quantile([0.1, 0.9])</code> for
+                          operational ranges</li
+                        >
+                        <li
+                          >Interpret standard deviations: high variability
+                          indicates unpredictable conditions</li
+                        >
+                        <li
+                          >Consider operational impact: extreme temperatures
+                          affect bike maintenance and user comfort</li
+                        >
+                        <li
+                          >Compare seasonal weather patterns using
+                          <code
+                            >df.groupby('season')[weather_cols].mean()</code
+                          ></li
+                        >
+                        <li
+                          >Focus on actionable insights: What weather thresholds
+                          should trigger operational changes?</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=74a775bd"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Analyze weather statistics</span>
 <span class="n">weather_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'weather'</span><span class="p">]</span>
 <span class="n">weather_stats</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">weather_cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Weather Analysis ==="</span><span class="p">)</span>
@@ -429,31 +698,52 @@ Your Capital Bikes client can use these statistics to set operational baselines,
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Weather Insights for Operations ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average temperature: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature range: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=7ed640e4"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a24d21b1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3:-Seasonal-Statistical-Comparison-with-.groupby()">Step 3: Seasonal Statistical Comparison with .groupby()<a class="anchor-link" href="#Step-3:-Seasonal-Statistical-Comparison-with-.groupby()">¶</a></h2><p>Let's use <code>.groupby()</code> to compare statistical patterns across seasons and understand how demand varies throughout the year:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=bab53b24">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=7ed640e4"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a24d21b1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-3:-Seasonal-Statistical-Comparison-with-.groupby()"
+                      >Step 3: Seasonal Statistical Comparison with .groupby()<a
+                        class="anchor-link"
+                        href="#Step-3:-Seasonal-Statistical-Comparison-with-.groupby()"
+                      ></a></h2
+                    ><p
+                      >Let's use <code>.groupby()</code> to compare statistical
+                      patterns across seasons and understand how demand varies
+                      throughout the year:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=bab53b24"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -487,43 +777,99 @@ Your Capital Bikes client can use these statistics to set operational baselines,
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fall average: </span><span class="si">{</span><span class="n">fall_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Winter average: </span><span class="si">{</span><span class="n">winter_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Summer vs Winter difference: </span><span class="si">{</span><span class="n">summer_avg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">winter_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour (</span><span class="si">{</span><span class="p">((</span><span class="n">summer_avg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">winter_avg</span><span class="p">)</span><span class="o">/</span><span class="n">winter_avg</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% increase)"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=9a831ab3"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li><code>.groupby('season')</code> separates data into distinct seasonal groups (Spring, Summer, Fall, Winter)</li>
-<li><code>.describe()</code> applies statistical functions to each group independently, revealing seasonal patterns</li>
-<li><code>.agg(['mean', 'std', 'max'])</code> calculates multiple statistics simultaneously for comprehensive comparison</li>
-<li>Creating season labels with <code>.map()</code> makes output more readable for business stakeholders</li>
-<li>Calculating percentage differences quantifies the magnitude of seasonal variations</li>
-</ul>
-<p><strong>Key insights from the data:</strong>
-The statistics reveal dramatic seasonal variations: Fall shows peak demand (234.4 bikes/hour), while Spring has the lowest demand (116.3 bikes/hour) - a 101% difference! The analysis focuses on Summer vs Winter comparison (8.2% difference) to demonstrate percentage calculations, but the full seasonal pattern shows that bike-sharing is highly weather-dependent, with warm-weather seasons (Summer/Fall) significantly outperforming Spring.</p>
-<p><strong>Business value:</strong>
-Your Capital Bikes client can use these seasonal patterns to plan capacity adjustments (doubling fleet capacity from Spring to Fall), schedule maintenance during the low-demand Spring season, and allocate resources based on expected demand fluctuations throughout the year. The modest Summer-Winter difference suggests relatively stable demand in warmer months, while the Spring drop signals a critical period for cost optimization.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=02c6189c"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-3:-Workday-vs-Weekend-Statistical-Analysis">Challenge 3: Workday vs Weekend Statistical Analysis<a class="anchor-link" href="#Challenge-3:-Workday-vs-Weekend-Statistical-Analysis">¶</a></h3><p>Compare bike-sharing demand patterns between workdays and weekends using groupby analysis.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=e88ebfe7">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=9a831ab3"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        ><code>.groupby('season')</code> separates data into
+                        distinct seasonal groups (Spring, Summer, Fall,
+                        Winter)</li
+                      >
+                      <li
+                        ><code>.describe()</code> applies statistical functions
+                        to each group independently, revealing seasonal
+                        patterns</li
+                      >
+                      <li
+                        ><code>.agg(['mean', 'std', 'max'])</code> calculates
+                        multiple statistics simultaneously for comprehensive
+                        comparison</li
+                      >
+                      <li
+                        >Creating season labels with <code>.map()</code> makes
+                        output more readable for business stakeholders</li
+                      >
+                      <li
+                        >Calculating percentage differences quantifies the
+                        magnitude of seasonal variations</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Key insights from the data:</strong> The
+                      statistics reveal dramatic seasonal variations: Fall shows
+                      peak demand (234.4 bikes/hour), while Spring has the
+                      lowest demand (116.3 bikes/hour) - a 101% difference! The
+                      analysis focuses on Summer vs Winter comparison (8.2%
+                      difference) to demonstrate percentage calculations, but
+                      the full seasonal pattern shows that bike-sharing is
+                      highly weather-dependent, with warm-weather seasons
+                      (Summer/Fall) significantly outperforming Spring.</p
+                    >
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client can use these seasonal patterns to plan capacity
+                      adjustments (doubling fleet capacity from Spring to Fall),
+                      schedule maintenance during the low-demand Spring season,
+                      and allocate resources based on expected demand
+                      fluctuations throughout the year. The modest Summer-Winter
+                      difference suggests relatively stable demand in warmer
+                      months, while the Spring drop signals a critical period
+                      for cost optimization.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=02c6189c"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3
+                      id="Challenge-3:-Workday-vs-Weekend-Statistical-Analysis"
+                      >Challenge 3: Workday vs Weekend Statistical Analysis<a
+                        class="anchor-link"
+                        href="#Challenge-3:-Workday-vs-Weekend-Statistical-Analysis"
+                      ></a></h3
+                    ><p
+                      >Compare bike-sharing demand patterns between workdays and
+                      weekends using groupby analysis.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=e88ebfe7"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="c1"># Analyze workingday patterns</span>
 <span class="n">workday_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">_____</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">()</span>  <span class="c1"># Group by workingday and describe</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Workday vs Weekend Demand ==="</span><span class="p">)</span>
@@ -532,35 +878,75 @@ Your Capital Bikes client can use these seasonal patterns to plan capacity adjus
 <span class="c1"># Create meaningful labels</span>
 <span class="n">workday_labels</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">'Weekend/Holiday'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">'Workday'</span><span class="p">}</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'workday_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'workingday'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span> <span class="c1"># Map labels</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=8674caa1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Develop your workday analysis to uncover operational patterns:</p>
-<ul>
-<li>Compare peak hour differences: <code>df.groupby(['workingday', 'hour'])['count'].mean()</code></li>
-<li>Analyze user type variations: <code>df.groupby('workingday')[['casual', 'registered']].mean()</code></li>
-<li>Calculate demand consistency: examine standard deviations between workdays vs weekends</li>
-<li>Consider revenue implications: workday commuters vs weekend leisure riders have different payment patterns</li>
-<li>Examine time-of-day patterns: rush hours are prominent on workdays but not weekends</li>
-<li>Remember that workingday=0 includes holidays, which may have unique demand patterns</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=ab268f64"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Analyze workingday patterns</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=8674caa1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Develop your workday analysis to uncover operational
+                        patterns:</p
+                      >
+                      <ul>
+                        <li
+                          >Compare peak hour differences:
+                          <code
+                            >df.groupby(['workingday',
+                            'hour'])['count'].mean()</code
+                          ></li
+                        >
+                        <li
+                          >Analyze user type variations:
+                          <code
+                            >df.groupby('workingday')[['casual',
+                            'registered']].mean()</code
+                          ></li
+                        >
+                        <li
+                          >Calculate demand consistency: examine standard
+                          deviations between workdays vs weekends</li
+                        >
+                        <li
+                          >Consider revenue implications: workday commuters vs
+                          weekend leisure riders have different payment
+                          patterns</li
+                        >
+                        <li
+                          >Examine time-of-day patterns: rush hours are
+                          prominent on workdays but not weekends</li
+                        >
+                        <li
+                          >Remember that workingday=0 includes holidays, which
+                          may have unique demand patterns</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=ab268f64"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Analyze workingday patterns</span>
 <span class="n">workday_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'workingday'</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Workday vs Weekend Demand ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">workday_stats</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
@@ -568,31 +954,53 @@ Your Capital Bikes client can use these seasonal patterns to plan capacity adjus
 <span class="c1"># Create meaningful labels</span>
 <span class="n">workday_labels</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">'Weekend/Holiday'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">'Workday'</span><span class="p">}</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'workday_type'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'workingday'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">workday_labels</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6031f7e7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=f04cfb70"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-4:-Weather-Impact-Thresholds-and-Categorical-Analysis">Step 4: Weather Impact Thresholds and Categorical Analysis<a class="anchor-link" href="#Step-4:-Weather-Impact-Thresholds-and-Categorical-Analysis">¶</a></h2><p>Let's analyze how different weather conditions affect bike-sharing demand using categorical weather variables:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=7844f99a">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6031f7e7"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=f04cfb70"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-4:-Weather-Impact-Thresholds-and-Categorical-Analysis"
+                      >Step 4: Weather Impact Thresholds and Categorical
+                      Analysis<a
+                        class="anchor-link"
+                        href="#Step-4:-Weather-Impact-Thresholds-and-Categorical-Analysis"
+                      ></a></h2
+                    ><p
+                      >Let's analyze how different weather conditions affect
+                      bike-sharing demand using categorical weather
+                      variables:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=7844f99a"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -638,41 +1046,86 @@ Your Capital Bikes client can use these seasonal patterns to plan capacity adjus
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hot days (&gt;30°C) average: </span><span class="si">{</span><span class="n">hot_days</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cold days (&lt;10°C) average: </span><span class="si">{</span><span class="n">cold_days</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ideal temps (15-25°C) average: </span><span class="si">{</span><span class="n">ideal_days</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=af808280"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li><code>.groupby('weather')</code> separates data by weather condition categories (1=Clear, 2=Mist, 3=Rain, 4=Heavy Rain)</li>
-<li><code>.agg(['count', 'mean', 'std'])</code> calculates multiple statistics simultaneously to understand both demand levels and variability</li>
-<li><code>.map(weather_labels)</code> transforms numeric codes into descriptive labels for business-friendly reporting</li>
-<li>Boolean filtering <code>df[df['temp'] &gt; 30]</code> isolates specific temperature ranges for threshold analysis</li>
-<li>Percentage calculations quantify the magnitude of weather impacts on demand</li>
-</ul>
-<p><strong>Business value:</strong>
-Your Capital Bikes client can use these weather thresholds to trigger operational adjustments (reducing bike availability during poor weather), plan marketing campaigns (promoting fair-weather cycling), and set realistic demand expectations across different weather scenarios.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=4e6d6f3b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-4:-Humidity-Threshold-Impact">Challenge 4: Humidity Threshold Impact<a class="anchor-link" href="#Challenge-4:-Humidity-Threshold-Impact">¶</a></h3><p>Investigate how different humidity levels affect bike-sharing demand by creating meaningful humidity categories.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=68b01fdd">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=af808280"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        ><code>.groupby('weather')</code> separates data by
+                        weather condition categories (1=Clear, 2=Mist, 3=Rain,
+                        4=Heavy Rain)</li
+                      >
+                      <li
+                        ><code>.agg(['count', 'mean', 'std'])</code> calculates
+                        multiple statistics simultaneously to understand both
+                        demand levels and variability</li
+                      >
+                      <li
+                        ><code>.map(weather_labels)</code> transforms numeric
+                        codes into descriptive labels for business-friendly
+                        reporting</li
+                      >
+                      <li
+                        >Boolean filtering
+                        <code>df[df['temp'] &gt; 30]</code> isolates specific
+                        temperature ranges for threshold analysis</li
+                      >
+                      <li
+                        >Percentage calculations quantify the magnitude of
+                        weather impacts on demand</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client can use these weather thresholds to trigger
+                      operational adjustments (reducing bike availability during
+                      poor weather), plan marketing campaigns (promoting
+                      fair-weather cycling), and set realistic demand
+                      expectations across different weather scenarios.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=4e6d6f3b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-4:-Humidity-Threshold-Impact"
+                      >Challenge 4: Humidity Threshold Impact<a
+                        class="anchor-link"
+                        href="#Challenge-4:-Humidity-Threshold-Impact"
+                      ></a></h3
+                    ><p
+                      >Investigate how different humidity levels affect
+                      bike-sharing demand by creating meaningful humidity
+                      categories.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=68b01fdd"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="c1"># Create humidity categories for analysis</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'humidity_category'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">_____</span><span class="p">],</span>
                                 <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">],</span>
@@ -681,35 +1134,73 @@ Your Capital Bikes client can use these weather thresholds to trigger operationa
 <span class="n">humidity_analysis</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">_____</span><span class="p">)[</span><span class="n">_____</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Humidity Impact Analysis ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">humidity_analysis</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=618b8035"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Build a comprehensive humidity impact analysis for operational decision-making:</p>
-<ul>
-<li>Validate category sizes: ensure each humidity category has sufficient observations for reliable statistics</li>
-<li>Cross-analyze with temperature: <code>df.groupby(['humidity_category', 'temp_range'])['count'].mean()</code></li>
-<li>Examine user type sensitivity: casual users may be more humidity-sensitive than commuters</li>
-<li>Calculate comfort index: combine temperature and humidity effects using heat index concepts</li>
-<li>Consider seasonal interactions: summer humidity impacts differ from winter humidity</li>
-<li>Focus on actionable thresholds: identify humidity levels that significantly reduce demand for operational planning</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=7f94d076"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Create humidity categories for analysis</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=618b8035"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Build a comprehensive humidity impact analysis for
+                        operational decision-making:</p
+                      >
+                      <ul>
+                        <li
+                          >Validate category sizes: ensure each humidity
+                          category has sufficient observations for reliable
+                          statistics</li
+                        >
+                        <li
+                          >Cross-analyze with temperature:
+                          <code
+                            >df.groupby(['humidity_category',
+                            'temp_range'])['count'].mean()</code
+                          ></li
+                        >
+                        <li
+                          >Examine user type sensitivity: casual users may be
+                          more humidity-sensitive than commuters</li
+                        >
+                        <li
+                          >Calculate comfort index: combine temperature and
+                          humidity effects using heat index concepts</li
+                        >
+                        <li
+                          >Consider seasonal interactions: summer humidity
+                          impacts differ from winter humidity</li
+                        >
+                        <li
+                          >Focus on actionable thresholds: identify humidity
+                          levels that significantly reduce demand for
+                          operational planning</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=7f94d076"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Create humidity categories for analysis</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'humidity_category'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">],</span>
                                 <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
                                 <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">'Low (0-40%)'</span><span class="p">,</span> <span class="s1">'Medium (40-70%)'</span><span class="p">,</span> <span class="s1">'High (70-100%)'</span><span class="p">])</span>
@@ -717,31 +1208,51 @@ Your Capital Bikes client can use these weather thresholds to trigger operationa
 <span class="n">humidity_analysis</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'humidity_category'</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Humidity Impact Analysis ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">humidity_analysis</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=0ae80ff8"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b762e0ea"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-5:-Correlation-Analysis-with-.corr()">Step 5: Correlation Analysis with .corr()<a class="anchor-link" href="#Step-5:-Correlation-Analysis-with-.corr()">¶</a></h2><p>Let's use correlation analysis to quantify relationships between variables and identify which factors most strongly influence bike-sharing demand:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=107ce994">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=0ae80ff8"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=b762e0ea"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-5:-Correlation-Analysis-with-.corr()"
+                      >Step 5: Correlation Analysis with .corr()<a
+                        class="anchor-link"
+                        href="#Step-5:-Correlation-Analysis-with-.corr()"
+                      ></a></h2
+                    ><p
+                      >Let's use correlation analysis to quantify relationships
+                      between variables and identify which factors most strongly
+                      influence bike-sharing demand:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=107ce994"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -784,41 +1295,89 @@ Your Capital Bikes client can use these weather thresholds to trigger operationa
 <span class="k">if</span> <span class="n">humidity_corr</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Humidity has a negative relationship with demand (r=</span><span class="si">{</span><span class="n">humidity_corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"→ High humidity discourages bike rentals"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=8d5cad7a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li><code>.corr()</code> calculates Pearson correlation coefficients between all numerical variable pairs, measuring linear relationship strength</li>
-<li>Correlation values range from -1.0 (perfect negative) to +1.0 (perfect positive), with 0 indicating no linear relationship</li>
-<li><code>.sort_values(ascending=False)</code> ranks variables by their correlation strength with demand</li>
-<li><code>.idxmax()</code> and <code>.idxmin()</code> identify which variables have the strongest positive and negative correlations</li>
-<li>Business interpretations translate statistical findings into actionable insights about weather impacts</li>
-</ul>
-<p><strong>Business value:</strong>
-Your Capital Bikes client can identify which external factors drive demand fluctuations. Temperature shows moderate positive correlation (0.394) - warmer days increase rentals. Humidity shows weak negative correlation (-0.317) - uncomfortable conditions deter riders. Windspeed has minimal impact (0.101). These weather correlations enable demand forecasting and operational planning, while the registered/casual breakdown (0.971/0.690) simply reflects that registered users comprise most total rentals, not a causal relationship.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=715ae7c2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-5:-Advanced-Correlation-Analysis">Challenge 5: Advanced Correlation Analysis<a class="anchor-link" href="#Challenge-5:-Advanced-Correlation-Analysis">¶</a></h3><p>Explore correlations between weather variables and different user types (casual vs registered).</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=657dac52">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=8d5cad7a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        ><code>.corr()</code> calculates Pearson correlation
+                        coefficients between all numerical variable pairs,
+                        measuring linear relationship strength</li
+                      >
+                      <li
+                        >Correlation values range from -1.0 (perfect negative)
+                        to +1.0 (perfect positive), with 0 indicating no linear
+                        relationship</li
+                      >
+                      <li
+                        ><code>.sort_values(ascending=False)</code> ranks
+                        variables by their correlation strength with demand</li
+                      >
+                      <li
+                        ><code>.idxmax()</code> and
+                        <code>.idxmin()</code> identify which variables have the
+                        strongest positive and negative correlations</li
+                      >
+                      <li
+                        >Business interpretations translate statistical findings
+                        into actionable insights about weather impacts</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client can identify which external factors drive demand
+                      fluctuations. Temperature shows moderate positive
+                      correlation (0.394) - warmer days increase rentals.
+                      Humidity shows weak negative correlation (-0.317) -
+                      uncomfortable conditions deter riders. Windspeed has
+                      minimal impact (0.101). These weather correlations enable
+                      demand forecasting and operational planning, while the
+                      registered/casual breakdown (0.971/0.690) simply reflects
+                      that registered users comprise most total rentals, not a
+                      causal relationship.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=715ae7c2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-5:-Advanced-Correlation-Analysis"
+                      >Challenge 5: Advanced Correlation Analysis<a
+                        class="anchor-link"
+                        href="#Challenge-5:-Advanced-Correlation-Analysis"
+                      ></a></h3
+                    ><p
+                      >Explore correlations between weather variables and
+                      different user types (casual vs registered).</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=657dac52"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== User Type Correlation Analysis ==="</span><span class="p">)</span>
 <span class="n">user_weather_corr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">user_weather_corr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
@@ -830,34 +1389,66 @@ Your Capital Bikes client can identify which external factors drive demand fluct
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== User Type Weather Sensitivity ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Casual users temperature correlation: </span><span class="si">{</span><span class="n">casual_temp_corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Registered users temperature correlation: </span><span class="si">{</span><span class="n">registered_temp_corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1feea5d9"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Develop user segmentation insights through correlation analysis:</p>
-<ul>
-<li>Compare correlation strength differences: which user type shows stronger weather dependency?</li>
-<li>Analyze seasonal correlation patterns: <code>df[df['season']==2].corr()</code> for summer-specific relationships</li>
-<li>Examine multiple weather factors: create correlation matrix for temp, humidity, windspeed by user type</li>
-<li>Consider business implications: weather-sensitive segments need different marketing strategies</li>
-<li>Focus on actionable insights: which weather conditions drive different user behaviors for targeted operations?</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=334e2112"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># User type correlation analysis</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=1feea5d9"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Develop user segmentation insights through correlation
+                        analysis:</p
+                      >
+                      <ul>
+                        <li
+                          >Compare correlation strength differences: which user
+                          type shows stronger weather dependency?</li
+                        >
+                        <li
+                          >Analyze seasonal correlation patterns:
+                          <code>df[df['season']==2].corr()</code> for
+                          summer-specific relationships</li
+                        >
+                        <li
+                          >Examine multiple weather factors: create correlation
+                          matrix for temp, humidity, windspeed by user type</li
+                        >
+                        <li
+                          >Consider business implications: weather-sensitive
+                          segments need different marketing strategies</li
+                        >
+                        <li
+                          >Focus on actionable insights: which weather
+                          conditions drive different user behaviors for targeted
+                          operations?</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=334e2112"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># User type correlation analysis</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== User Type Correlation Analysis ==="</span><span class="p">)</span>
 <span class="n">user_weather_corr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'temp'</span><span class="p">,</span> <span class="s1">'humidity'</span><span class="p">,</span> <span class="s1">'windspeed'</span><span class="p">,</span> <span class="s1">'casual'</span><span class="p">,</span> <span class="s1">'registered'</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">user_weather_corr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
@@ -869,31 +1460,51 @@ Your Capital Bikes client can identify which external factors drive demand fluct
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== User Type Weather Sensitivity ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Casual users temperature correlation: </span><span class="si">{</span><span class="n">casual_temp_corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Registered users temperature correlation: </span><span class="si">{</span><span class="n">registered_temp_corr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=216c8c57"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b9543402"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-6:-Time-Based-Statistical-Patterns">Step 6: Time-Based Statistical Patterns<a class="anchor-link" href="#Step-6:-Time-Based-Statistical-Patterns">¶</a></h2><p>Let's extract time-based features and analyze hourly and daily demand patterns to identify operational planning opportunities:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=18ef3dbc">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=216c8c57"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=b9543402"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-6:-Time-Based-Statistical-Patterns"
+                      >Step 6: Time-Based Statistical Patterns<a
+                        class="anchor-link"
+                        href="#Step-6:-Time-Based-Statistical-Patterns"
+                      ></a></h2
+                    ><p
+                      >Let's extract time-based features and analyze hourly and
+                      daily demand patterns to identify operational planning
+                      opportunities:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=18ef3dbc"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -939,42 +1550,102 @@ Your Capital Bikes client can identify which external factors drive demand fluct
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekend average: </span><span class="si">{</span><span class="n">weekend_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekday average: </span><span class="si">{</span><span class="n">weekday_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Weekend vs weekday difference: </span><span class="si">{</span><span class="n">weekend_avg</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">weekday_avg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5f31775f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li><code>.dt.hour</code>, <code>.dt.dayofweek</code>, and <code>.dt.month</code> extract time components from datetime objects for temporal analysis</li>
-<li><code>.iloc[6:10].idxmax()</code> identifies the specific hour with highest demand within morning rush hour window (6-10am)</li>
-<li><code>.isin([5, 6])</code> filters for weekend days (Saturday=5, Sunday=6) to compare weekend vs weekday patterns</li>
-<li><code>.map(dict(zip(...)))</code> creates a mapping dictionary that converts numeric day-of-week values (0-6) into readable day names ('Monday'-'Sunday') for professional business reporting. The <code>zip(range(7), day_names)</code> pairs each number with its corresponding day name, <code>dict()</code> converts these pairs into a lookup dictionary, and <code>.map()</code> applies this translation to transform the numeric column into human-readable labels</li>
-</ul>
-<p><strong>Key insights from the data:</strong>
-The hourly pattern reveals dramatic commuter behavior with sharp peaks at 8am (362.8) and 5pm (468.8), yet the weekend/weekday difference is surprisingly small (-4.0 bikes/hour, only 2%). This suggests the system successfully serves both weekday commuters with concentrated rush-hour demand and weekend recreational riders with more distributed usage throughout the day - essentially maintaining similar total volume through different usage patterns.</p>
-<p><strong>Business value:</strong>
-Your Capital Bikes client can use these temporal patterns to optimize bike redistribution schedules (moving bikes to high-demand stations before morning/evening peaks), adjust staffing levels based on hourly demand curves, and recognize that weekend operations require similar capacity but different distribution strategies compared to weekday commuter-focused positioning.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=88f18dca"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-6:-Monthly-Seasonal-Patterns">Challenge 6: Monthly Seasonal Patterns<a class="anchor-link" href="#Challenge-6:-Monthly-Seasonal-Patterns">¶</a></h3><p>Analyze how demand varies across months and identify seasonal trends for annual planning.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=0cff9762">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=5f31775f"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        ><code>.dt.hour</code>, <code>.dt.dayofweek</code>, and
+                        <code>.dt.month</code> extract time components from
+                        datetime objects for temporal analysis</li
+                      >
+                      <li
+                        ><code>.iloc[6:10].idxmax()</code> identifies the
+                        specific hour with highest demand within morning rush
+                        hour window (6-10am)</li
+                      >
+                      <li
+                        ><code>.isin([5, 6])</code> filters for weekend days
+                        (Saturday=5, Sunday=6) to compare weekend vs weekday
+                        patterns</li
+                      >
+                      <li
+                        ><code>.map(dict(zip(...)))</code> creates a mapping
+                        dictionary that converts numeric day-of-week values
+                        (0-6) into readable day names ('Monday'-'Sunday') for
+                        professional business reporting. The
+                        <code>zip(range(7), day_names)</code> pairs each number
+                        with its corresponding day name,
+                        <code>dict()</code> converts these pairs into a lookup
+                        dictionary, and <code>.map()</code> applies this
+                        translation to transform the numeric column into
+                        human-readable labels</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Key insights from the data:</strong> The hourly
+                      pattern reveals dramatic commuter behavior with sharp
+                      peaks at 8am (362.8) and 5pm (468.8), yet the
+                      weekend/weekday difference is surprisingly small (-4.0
+                      bikes/hour, only 2%). This suggests the system
+                      successfully serves both weekday commuters with
+                      concentrated rush-hour demand and weekend recreational
+                      riders with more distributed usage throughout the day -
+                      essentially maintaining similar total volume through
+                      different usage patterns.</p
+                    >
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client can use these temporal patterns to optimize bike
+                      redistribution schedules (moving bikes to high-demand
+                      stations before morning/evening peaks), adjust staffing
+                      levels based on hourly demand curves, and recognize that
+                      weekend operations require similar capacity but different
+                      distribution strategies compared to weekday
+                      commuter-focused positioning.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=88f18dca"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-6:-Monthly-Seasonal-Patterns"
+                      >Challenge 6: Monthly Seasonal Patterns<a
+                        class="anchor-link"
+                        href="#Challenge-6:-Monthly-Seasonal-Patterns"
+                      ></a></h3
+                    ><p
+                      >Analyze how demand varies across months and identify
+                      seasonal trends for annual planning.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=0cff9762"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Monthly Demand Analysis ==="</span><span class="p">)</span>
 <span class="n">monthly_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">_____</span><span class="p">)[</span><span class="n">_____</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">,</span> <span class="n">_____</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">monthly_stats</span><span class="p">)</span>
@@ -989,35 +1660,73 @@ Your Capital Bikes client can use these temporal patterns to optimize bike redis
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Annual Planning Insights ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak month: </span><span class="si">{</span><span class="n">month_names</span><span class="p">[</span><span class="n">peak_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">monthly_avg</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">peak_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lowest month: </span><span class="si">{</span><span class="n">month_names</span><span class="p">[</span><span class="n">low_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">monthly_avg</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">low_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour)"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=24835fee"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Build comprehensive annual planning intelligence from monthly patterns:</p>
-<ul>
-<li>Calculate seasonal capacity requirements: <code>(peak_month_demand / avg_demand) * 100</code> for scaling factors</li>
-<li>Analyze demand growth trends: compare year-over-year monthly patterns using <code>df['datetime'].dt.year</code></li>
-<li>Examine weather correlation by month: how do temperature and humidity patterns align with demand cycles?</li>
-<li>Consider operational calendar: align maintenance schedules with low-demand months</li>
-<li>Calculate revenue implications: <code>monthly_demand * avg_revenue_per_ride</code> for financial planning</li>
-<li>Identify transition periods: months with highest variability often signal seasonal shifts requiring operational adjustments</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a85db49f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Monthly demand analysis</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=24835fee"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Build comprehensive annual planning intelligence from
+                        monthly patterns:</p
+                      >
+                      <ul>
+                        <li
+                          >Calculate seasonal capacity requirements:
+                          <code>(peak_month_demand / avg_demand) * 100</code>
+                          for scaling factors</li
+                        >
+                        <li
+                          >Analyze demand growth trends: compare year-over-year
+                          monthly patterns using
+                          <code>df['datetime'].dt.year</code></li
+                        >
+                        <li
+                          >Examine weather correlation by month: how do
+                          temperature and humidity patterns align with demand
+                          cycles?</li
+                        >
+                        <li
+                          >Consider operational calendar: align maintenance
+                          schedules with low-demand months</li
+                        >
+                        <li
+                          >Calculate revenue implications:
+                          <code>monthly_demand * avg_revenue_per_ride</code> for
+                          financial planning</li
+                        >
+                        <li
+                          >Identify transition periods: months with highest
+                          variability often signal seasonal shifts requiring
+                          operational adjustments</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a85db49f"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Monthly demand analysis</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Monthly Demand Analysis ==="</span><span class="p">)</span>
 <span class="n">monthly_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'month'</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">monthly_stats</span><span class="p">)</span>
@@ -1032,31 +1741,53 @@ Your Capital Bikes client can use these temporal patterns to optimize bike redis
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Annual Planning Insights ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Peak month: </span><span class="si">{</span><span class="n">month_names</span><span class="p">[</span><span class="n">peak_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">monthly_avg</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">peak_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lowest month: </span><span class="si">{</span><span class="n">month_names</span><span class="p">[</span><span class="n">low_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">monthly_avg</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">low_month</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> bikes/hour)"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=079b7ad3"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5ab18e5c"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-7:-Comprehensive-Statistical-Summary-and-Business-Insights">Step 7: Comprehensive Statistical Summary and Business Insights<a class="anchor-link" href="#Step-7:-Comprehensive-Statistical-Summary-and-Business-Insights">¶</a></h2><p>Let's create a professional statistical report that synthesizes all our analyses into actionable business intelligence:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=c2b14bcd">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import required libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=079b7ad3"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=5ab18e5c"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-7:-Comprehensive-Statistical-Summary-and-Business-Insights"
+                      >Step 7: Comprehensive Statistical Summary and Business
+                      Insights<a
+                        class="anchor-link"
+                        href="#Step-7:-Comprehensive-Statistical-Summary-and-Business-Insights"
+                      ></a></h2
+                    ><p
+                      >Let's create a professional statistical report that
+                      synthesizes all our analyses into actionable business
+                      intelligence:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=c2b14bcd"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import required libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -1169,41 +1900,88 @@ Your Capital Bikes client can use these temporal patterns to optimize bike redis
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Report generated using pandas statistical analysis methods"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=afce32b8"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this does:</strong></p>
-<ul>
-<li>Synthesizes multiple statistical analyses into a cohesive executive summary with clearly labeled sections</li>
-<li>Uses <code>.quantile(0.95)</code> to identify capacity planning thresholds that cover 95% of demand scenarios</li>
-<li>Calculates weather sensitivity differences to quantify user segment behavioral patterns</li>
-<li>Employs <code>.iterrows()</code> for formatted iteration through grouped data for professional reporting</li>
-<li>Combines descriptive statistics with business interpretations to translate technical findings into strategic recommendations</li>
-</ul>
-<p><strong>Business value:</strong>
-Your Capital Bikes client receives a complete statistical intelligence report that summarizes all key findings, quantifies operational requirements (peak capacity is 2-3x average), identifies revenue optimization opportunities (dynamic pricing during peak hours), and provides evidence-based recommendations for seasonal planning, weather contingency, and user segment targeting.</p>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=28f7b936"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-8:-Create-Your-Own-Statistical-Insight">Challenge 8: Create Your Own Statistical Insight<a class="anchor-link" href="#Challenge-8:-Create-Your-Own-Statistical-Insight">¶</a></h3><p>Using the statistical techniques you've learned, investigate one additional pattern or relationship in the data that could provide business value.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=95fee964">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=afce32b8"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this does:</strong></p>
+                    <ul>
+                      <li
+                        >Synthesizes multiple statistical analyses into a
+                        cohesive executive summary with clearly labeled
+                        sections</li
+                      >
+                      <li
+                        >Uses <code>.quantile(0.95)</code> to identify capacity
+                        planning thresholds that cover 95% of demand
+                        scenarios</li
+                      >
+                      <li
+                        >Calculates weather sensitivity differences to quantify
+                        user segment behavioral patterns</li
+                      >
+                      <li
+                        >Employs <code>.iterrows()</code> for formatted
+                        iteration through grouped data for professional
+                        reporting</li
+                      >
+                      <li
+                        >Combines descriptive statistics with business
+                        interpretations to translate technical findings into
+                        strategic recommendations</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Your Capital Bikes
+                      client receives a complete statistical intelligence report
+                      that summarizes all key findings, quantifies operational
+                      requirements (peak capacity is 2-3x average), identifies
+                      revenue optimization opportunities (dynamic pricing during
+                      peak hours), and provides evidence-based recommendations
+                      for seasonal planning, weather contingency, and user
+                      segment targeting.</p
+                    >
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=28f7b936"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-8:-Create-Your-Own-Statistical-Insight"
+                      >Challenge 8: Create Your Own Statistical Insight<a
+                        class="anchor-link"
+                        href="#Challenge-8:-Create-Your-Own-Statistical-Insight"
+                      ></a></h3
+                    ><p
+                      >Using the statistical techniques you've learned,
+                      investigate one additional pattern or relationship in the
+                      data that could provide business value.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=95fee964"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== CUSTOM STATISTICAL ANALYSIS ==="</span><span class="p">)</span>
 <span class="c1"># Example: Analyze the relationship between temperature and user types</span>
 <span class="c1"># Or investigate windspeed impact on different weather conditions</span>
@@ -1218,35 +1996,72 @@ Your Capital Bikes client receives a complete statistical intelligence report th
 <span class="c1"># Option 2: Temperature-humidity interaction</span>
 <span class="c1"># Create categories and analyze their combined effect</span>
 <span class="c1"># Your statistical investigation here...</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=0d9bd7b3"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Design original statistical analysis that delivers unique business value:</p>
-<ul>
-<li>Choose a compelling business question: "How do holidays affect different user segments?" or "What weather combinations optimize revenue?"</li>
-<li>Combine multiple techniques: use groupby, correlations, and descriptive statistics together for comprehensive insights</li>
-<li>Create interaction analyses: examine how multiple variables work together (e.g., temperature + humidity effects)</li>
-<li>Calculate business metrics: convert statistical findings into revenue impact, capacity requirements, or operational costs</li>
-<li>Provide actionable recommendations: ensure your analysis leads to specific business decisions</li>
-<li>Validate findings: check that your results align with domain expertise and logical expectations</li></ul></details>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=d6d65312"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Custom statistical analysis example: Holiday impact</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=0d9bd7b3"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Design original statistical analysis that delivers
+                        unique business value:</p
+                      >
+                      <ul>
+                        <li
+                          >Choose a compelling business question: "How do
+                          holidays affect different user segments?" or "What
+                          weather combinations optimize revenue?"</li
+                        >
+                        <li
+                          >Combine multiple techniques: use groupby,
+                          correlations, and descriptive statistics together for
+                          comprehensive insights</li
+                        >
+                        <li
+                          >Create interaction analyses: examine how multiple
+                          variables work together (e.g., temperature + humidity
+                          effects)</li
+                        >
+                        <li
+                          >Calculate business metrics: convert statistical
+                          findings into revenue impact, capacity requirements,
+                          or operational costs</li
+                        >
+                        <li
+                          >Provide actionable recommendations: ensure your
+                          analysis leads to specific business decisions</li
+                        >
+                        <li
+                          >Validate findings: check that your results align with
+                          domain expertise and logical expectations</li
+                        ></ul
+                      ></details
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=d6d65312"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Custom statistical analysis example: Holiday impact</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== CUSTOM STATISTICAL ANALYSIS ==="</span><span class="p">)</span>
 
 <span class="c1"># Option 1: Holiday impact analysis</span>
@@ -1269,50 +2084,126 @@ Your Capital Bikes client receives a complete statistical intelligence report th
 <span class="c1"># Analyze combined effects</span>
 <span class="n">interaction_analysis</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'temp_category'</span><span class="p">,</span> <span class="s1">'humidity_category'</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">'count'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">interaction_analysis</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=4653205b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=63be8174"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary:-Professional-Statistical-Analysis-and-Pattern-Discovery-Techniques">Summary: Professional Statistical Analysis and Pattern Discovery Techniques<a class="anchor-link" href="#Summary:-Professional-Statistical-Analysis-and-Pattern-Discovery-Techniques">¶</a></h2><p><strong>What We've Accomplished</strong>:</p>
-<ul>
-<li>Implemented descriptive statistics analysis using <code>.describe()</code> to calculate central tendency and variability measures</li>
-<li>Applied <code>.groupby()</code> analysis for seasonal, temporal, and weather pattern comparisons</li>
-<li>Executed correlation analysis with <code>.corr()</code> to quantify relationships between weather variables and bike demand</li>
-<li>Created categorical analysis frameworks using <code>pd.cut()</code> to analyze temperature and humidity thresholds</li>
-<li>Built professional statistical reports with executive summaries and operational insights</li>
-</ul>
-<p><strong>Key Technical Skills Mastered</strong>:</p>
-<ul>
-<li>Central tendency measurement with <code>.mean()</code> and <code>.median()</code> for demand characterization</li>
-<li>Variability measurement with <code>.std()</code>, <code>.min()</code>, and <code>.max()</code> for capacity planning</li>
-<li>Multi-dimensional aggregation using <code>.groupby()</code> with <code>.agg()</code> for seasonal and temporal analysis</li>
-<li>Correlation matrix creation and interpretation with <code>.corr()</code> for relationship strength assessment</li>
-<li>Time-based feature extraction using <code>.dt.hour</code>, <code>.dt.dayofweek</code>, and <code>.dt.month</code> for temporal patterns</li>
-<li>Categorical variable creation with <code>pd.cut()</code> for threshold analysis</li>
-<li>Boolean filtering with conditional statements for category-specific analysis</li>
-<li>Statistical ranking with <code>.sort_values()</code>, <code>.idxmax()</code>, and <code>.idxmin()</code> for peak identification</li>
-</ul>
-<p><strong>Next Steps</strong>: Next, we'll advance to professional data visualization and chart creation techniques, mastering matplotlib frameworks that transform your statistical discoveries into compelling visual narratives and stakeholder-ready analytical presentations for maximum business impact.</p>
-<p>Your bike-sharing client now possesses rigorous statistical intelligence backed by mathematical analysis that reveals actionable demand patterns, operational optimization opportunities, and user behavior insights - demonstrating the quantitative analytical expertise that separates professional transportation consultants from basic data analysts!</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-
-        </div>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=4653205b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=63be8174"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Summary:-Professional-Statistical-Analysis-and-Pattern-Discovery-Techniques"
+                      >Summary: Professional Statistical Analysis and Pattern
+                      Discovery Techniques<a
+                        class="anchor-link"
+                        href="#Summary:-Professional-Statistical-Analysis-and-Pattern-Discovery-Techniques"
+                      ></a></h2
+                    ><p><strong>What We've Accomplished</strong>:</p>
+                    <ul>
+                      <li
+                        >Implemented descriptive statistics analysis using
+                        <code>.describe()</code> to calculate central tendency
+                        and variability measures</li
+                      >
+                      <li
+                        >Applied <code>.groupby()</code> analysis for seasonal,
+                        temporal, and weather pattern comparisons</li
+                      >
+                      <li
+                        >Executed correlation analysis with
+                        <code>.corr()</code> to quantify relationships between
+                        weather variables and bike demand</li
+                      >
+                      <li
+                        >Created categorical analysis frameworks using
+                        <code>pd.cut()</code> to analyze temperature and
+                        humidity thresholds</li
+                      >
+                      <li
+                        >Built professional statistical reports with executive
+                        summaries and operational insights</li
+                      >
+                    </ul>
+                    <p><strong>Key Technical Skills Mastered</strong>:</p>
+                    <ul>
+                      <li
+                        >Central tendency measurement with
+                        <code>.mean()</code> and <code>.median()</code> for
+                        demand characterization</li
+                      >
+                      <li
+                        >Variability measurement with <code>.std()</code>,
+                        <code>.min()</code>, and <code>.max()</code> for
+                        capacity planning</li
+                      >
+                      <li
+                        >Multi-dimensional aggregation using
+                        <code>.groupby()</code> with <code>.agg()</code> for
+                        seasonal and temporal analysis</li
+                      >
+                      <li
+                        >Correlation matrix creation and interpretation with
+                        <code>.corr()</code> for relationship strength
+                        assessment</li
+                      >
+                      <li
+                        >Time-based feature extraction using
+                        <code>.dt.hour</code>, <code>.dt.dayofweek</code>, and
+                        <code>.dt.month</code> for temporal patterns</li
+                      >
+                      <li
+                        >Categorical variable creation with
+                        <code>pd.cut()</code> for threshold analysis</li
+                      >
+                      <li
+                        >Boolean filtering with conditional statements for
+                        category-specific analysis</li
+                      >
+                      <li
+                        >Statistical ranking with <code>.sort_values()</code>,
+                        <code>.idxmax()</code>, and <code>.idxmin()</code> for
+                        peak identification</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Next Steps</strong>: Next, we'll advance to
+                      professional data visualization and chart creation
+                      techniques, mastering matplotlib frameworks that transform
+                      your statistical discoveries into compelling visual
+                      narratives and stakeholder-ready analytical presentations
+                      for maximum business impact.</p
+                    >
+                    <p
+                      >Your bike-sharing client now possesses rigorous
+                      statistical intelligence backed by mathematical analysis
+                      that reveals actionable demand patterns, operational
+                      optimization opportunities, and user behavior insights -
+                      demonstrating the quantitative analytical expertise that
+                      separates professional transportation consultants from
+                      basic data analysts!</p
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-</body>
+  </body>
 </html>

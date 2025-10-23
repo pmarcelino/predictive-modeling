@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lecture 05: Programming Example - Predictive Modeling MOOC</title>
-    
-<style>
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Helvetica", "Arial", sans-serif;
         line-height: 1.6;
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
         background-color: #f8f9fa;
-    }
+      }
 
-    .container {
+      .container {
         background-color: white;
         border-radius: 8px;
         padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    .nav-header {
+      .nav-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 20px 30px;
@@ -33,21 +34,21 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 15px;
-    }
+      }
 
-    .nav-header h1 {
+      .nav-header h1 {
         margin: 0;
         font-size: 1.5rem;
         font-weight: 600;
-    }
+      }
 
-    .nav-buttons {
+      .nav-buttons {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-    }
+      }
 
-    .btn {
+      .btn {
         display: inline-block;
         padding: 10px 20px;
         text-decoration: none;
@@ -55,150 +56,235 @@
         border-radius: 6px;
         transition: all 0.3s ease;
         font-size: 0.9rem;
-    }
+      }
 
-    .btn-colab {
+      .btn-colab {
         background-color: #f9ab00;
         color: #1a1a1a;
         border: 2px solid #f9ab00;
-    }
+      }
 
-    .btn-colab:hover {
+      .btn-colab:hover {
         background-color: #ff9900;
         border-color: #ff9900;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(249, 171, 0, 0.3);
-    }
+      }
 
-    .btn-github {
+      .btn-github {
         background-color: transparent;
         color: white;
         border: 2px solid white;
-    }
+      }
 
-    .btn-github:hover {
+      .btn-github:hover {
         background-color: white;
         color: #667eea;
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-    }
+      }
 
-    .jupyter-content {
+      .jupyter-content {
         margin-top: 20px;
-    }
+      }
 
-    /* Notebook cell styling */
-    div.cell {
+      /* Notebook cell styling */
+      div.cell {
         margin-bottom: 1.5rem;
-    }
+      }
 
-    div.input_area {
+      div.input_area {
         border-left: 3px solid #667eea;
         background-color: #f8f9fa;
         padding: 10px;
         border-radius: 4px;
-    }
+      }
 
-    div.output_area {
+      div.output_area {
         padding: 10px;
         border-left: 3px solid #28a745;
         background-color: #f8f9fa;
         border-radius: 4px;
         margin-top: 10px;
-    }
+      }
 
-    /* Code highlighting */
-    .highlight {
+      /* Code highlighting */
+      .highlight {
         background-color: #f8f9fa;
         border-radius: 4px;
-    }
+      }
 
-    /* Responsive design */
-    @media (max-width: 768px) {
+      /* Responsive design */
+      @media (max-width: 768px) {
         body {
-            padding: 10px;
+          padding: 10px;
         }
 
         .container {
-            padding: 15px;
+          padding: 15px;
         }
 
         .nav-header {
-            padding: 15px;
-            margin: -15px -15px 15px -15px;
+          padding: 15px;
+          margin: -15px -15px 15px -15px;
         }
 
         .nav-header h1 {
-            font-size: 1.2rem;
+          font-size: 1.2rem;
         }
 
         .nav-buttons {
-            width: 100%;
-            justify-content: center;
+          width: 100%;
+          justify-content: center;
         }
-    }
-</style>
-
-</head>
-<body>
+      }
+    </style>
+  </head>
+  <body>
     <div class="container">
-        <div class="nav-header">
-            <h1>Lecture 05: Programming Example</h1>
-            <div class="nav-buttons">
-                <a href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-05-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-colab">
-                    ▶ Open in Colab
-                </a>
-                <a href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-05-programming-example.ipynb" target="_blank" rel="noopener" class="btn btn-github">
-                    📂 View on GitHub
-                </a>
-            </div>
+      <div class="nav-header">
+        <h1>Lecture 05: Programming Example</h1>
+        <div class="nav-buttons">
+          <a
+            href="https://colab.research.google.com/github/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-05-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-colab"
+          >
+            ▶ Open in Colab
+          </a>
+          <a
+            href="https://github.com/pmarcelino/predictive-modeling/blob/main/04-implementation/module-02/lecture-05-programming-example.ipynb"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-github"
+          >
+            📂 View on GitHub
+          </a>
         </div>
-        <div class="jupyter-content">
-
-<main>
-<div class="border-box-sizing" id="notebook" tabindex="-1">
-<div class="container" id="notebook-container">
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b59393ca"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lecture-5:-Programming-Example---Advanced-Feature-Engineering-for-Transportation-Data">Lecture 5: Programming Example - Advanced Feature Engineering for Transportation Data<a class="anchor-link" href="#Lecture-5:-Programming-Example---Advanced-Feature-Engineering-for-Transportation-Data">¶</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a561a7ae"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction:-Transforming-Clean-Data-into-ML-Ready-Features">Introduction: Transforming Clean Data into ML-Ready Features<a class="anchor-link" href="#Introduction:-Transforming-Clean-Data-into-ML-Ready-Features">¶</a></h2><p>Today you'll learn about advanced preprocessing and feature engineering techniques that transform your clean bike-sharing data into optimized inputs for machine learning models. We'll apply categorical encoding first, then implement scaling strategies, and finally create time-based features that capture transportation demand patterns.</p>
-<p>Every feature we create serves a specific purpose: enabling machine learning algorithms to better understand and predict transportation demand patterns.</p>
-<blockquote>
-<p><strong>🚀 Interactive Learning Alert</strong></p>
-<p>This is a hands-on data cleaning tutorial with detective work and problem-solving. For the best experience:</p>
-<ul>
-<li><strong>Click "Open in Colab"</strong> at the bottom to run code interactively</li>
-<li><strong>Execute each code cell</strong> by pressing <strong>Shift + Enter</strong></li>
-<li><strong>Complete the challenges</strong> to practice your data cleaning skills</li>
-<li><strong>Think like a consultant</strong> - every decision impacts client trust</li>
-</ul>
-</blockquote>
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=370135d4"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Categorical-Feature-Engineering-with-One-Hot-Encoding">Step 1: Categorical Feature Engineering with One-Hot Encoding<a class="anchor-link" href="#Step-1:-Categorical-Feature-Engineering-with-One-Hot-Encoding">¶</a></h2><p>Let's start by transforming categorical variables into machine learning-compatible formats, starting with the most fundamental technique: one-hot encoding for nominal categories.</p>
-<p>We'll use pandas' <code>get_dummies()</code> function to convert categorical weather conditions into binary columns that machine learning algorithms can process. This function creates a separate binary column for each unique category, where 1 indicates the presence of that category and 0 indicates its absence.</p>
-<p>Let's transform weather conditions into one-hot encoded features:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=527a89f7">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+      </div>
+      <div class="jupyter-content">
+        <main>
+          <div class="border-box-sizing" id="notebook" tabindex="-1">
+            <div class="container" id="notebook-container">
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=b59393ca"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h1
+                      id="Lecture-5:-Programming-Example---Advanced-Feature-Engineering-for-Transportation-Data"
+                      >Lecture 5: Programming Example - Advanced Feature
+                      Engineering for Transportation Data<a
+                        class="anchor-link"
+                        href="#Lecture-5:-Programming-Example---Advanced-Feature-Engineering-for-Transportation-Data"
+                      ></a
+                    ></h1>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a561a7ae"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Introduction:-Transforming-Clean-Data-into-ML-Ready-Features"
+                      >Introduction: Transforming Clean Data into ML-Ready
+                      Features<a
+                        class="anchor-link"
+                        href="#Introduction:-Transforming-Clean-Data-into-ML-Ready-Features"
+                      ></a></h2
+                    ><p
+                      >Today you'll learn about advanced preprocessing and
+                      feature engineering techniques that transform your clean
+                      bike-sharing data into optimized inputs for machine
+                      learning models. We'll apply categorical encoding first,
+                      then implement scaling strategies, and finally create
+                      time-based features that capture transportation demand
+                      patterns.</p
+                    >
+                    <p
+                      >Every feature we create serves a specific purpose:
+                      enabling machine learning algorithms to better understand
+                      and predict transportation demand patterns.</p
+                    >
+                    <blockquote>
+                      <p><strong>🚀 Interactive Learning Alert</strong></p>
+                      <p
+                        >This is a hands-on data cleaning tutorial with
+                        detective work and problem-solving. For the best
+                        experience:</p
+                      >
+                      <ul>
+                        <li
+                          ><strong>Click "Open in Colab"</strong> at the bottom
+                          to run code interactively</li
+                        >
+                        <li
+                          ><strong>Execute each code cell</strong> by pressing
+                          <strong>Shift + Enter</strong></li
+                        >
+                        <li
+                          ><strong>Complete the challenges</strong> to practice
+                          your data cleaning skills</li
+                        >
+                        <li
+                          ><strong>Think like a consultant</strong> - every
+                          decision impacts client trust</li
+                        >
+                      </ul>
+                    </blockquote>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=370135d4"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-1:-Categorical-Feature-Engineering-with-One-Hot-Encoding"
+                      >Step 1: Categorical Feature Engineering with One-Hot
+                      Encoding<a
+                        class="anchor-link"
+                        href="#Step-1:-Categorical-Feature-Engineering-with-One-Hot-Encoding"
+                      ></a></h2
+                    ><p
+                      >Let's start by transforming categorical variables into
+                      machine learning-compatible formats, starting with the
+                      most fundamental technique: one-hot encoding for nominal
+                      categories.</p
+                    >
+                    <p
+                      >We'll use pandas' <code>get_dummies()</code> function to
+                      convert categorical weather conditions into binary columns
+                      that machine learning algorithms can process. This
+                      function creates a separate binary column for each unique
+                      category, where 1 indicates the presence of that category
+                      and 0 indicates its absence.</p
+                    >
+                    <p
+                      >Let's transform weather conditions into one-hot encoded
+                      features:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=527a89f7"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -224,38 +310,70 @@
 <span class="c1"># Add encoded columns to main dataframe</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">weather_encoded</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Original 1 column → </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">weather_encoded</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> binary columns"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=804310e1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>Converts text weather labels into numerical format algorithms can process</li>
-<li>Creates 4 binary columns (one per weather type)</li>
-<li>Preserves all category information without implying false orderings</li>
-</ul>
-<p><strong>Business value:</strong>
-Enables the model to learn that "Clear" weather drives high recreational demand while "Light Rain" reduces casual ridership but maintains commuter patterns.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a74c3e6e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-1:-Create-Day-Type-Categories-with-One-Hot-Encoding">Challenge 1: Create Day Type Categories with One-Hot Encoding<a class="anchor-link" href="#Challenge-1:-Create-Day-Type-Categories-with-One-Hot-Encoding">¶</a></h3><p>Create a <code>day_type</code> feature that categorizes days as 'weekday', 'weekend', or 'holiday', then apply one-hot encoding.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=2e5d68e9">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create day_type categories and apply one-hot encoding</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=804310e1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >Converts text weather labels into numerical format
+                        algorithms can process</li
+                      >
+                      <li>Creates 4 binary columns (one per weather type)</li>
+                      <li
+                        >Preserves all category information without implying
+                        false orderings</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Enables the model to
+                      learn that "Clear" weather drives high recreational demand
+                      while "Light Rain" reduces casual ridership but maintains
+                      commuter patterns.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a74c3e6e"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3
+                      id="Challenge-1:-Create-Day-Type-Categories-with-One-Hot-Encoding"
+                      >Challenge 1: Create Day Type Categories with One-Hot
+                      Encoding<a
+                        class="anchor-link"
+                        href="#Challenge-1:-Create-Day-Type-Categories-with-One-Hot-Encoding"
+                      ></a></h3
+                    ><p
+                      >Create a <code>day_type</code> feature that categorizes
+                      days as 'weekday', 'weekend', or 'holiday', then apply
+                      one-hot encoding.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=2e5d68e9"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create day_type categories and apply one-hot encoding</span>
 
 <span class="c1"># Step 1: Extract day of week from datetime (0=Monday, 6=Sunday)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">_____</span>  <span class="c1"># Fill in: dayofweek</span>
@@ -272,27 +390,55 @@ Enables the model to learn that "Clear" weather drives high recreational demand 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Day type distribution:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_type'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Created </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">day_type_encoded</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> binary day type features"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=9e268377"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Think about this in three steps: First, extract day of week using <code>.dt.dayofweek</code> (returns 0-6 where 0=Monday, 6=Sunday). Second, create a default 'weekday' label, then override for weekends and holidays. Third, apply <code>pd.get_dummies()</code> just like we did for weather conditions. Watch out: <code>.dt.dayofweek</code> uses 0=Monday, so weekends are 5 and 6 (not 6 and 7). Also, order matters when setting categories - set holidays AFTER weekends if you want holidays to take priority. Remember <code>.isin([5, 6])</code> for checking multiple values - using <code>== 5 or == 6</code> won't work in pandas. Your client needs different strategies for weekdays (commute-focused) vs weekends (recreation) vs holidays (special events).</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=f625487b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Step 1: Extract day of week from datetime (0=Monday, 6=Sunday)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=9e268377"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Think about this in three steps: First, extract day of
+                        week using <code>.dt.dayofweek</code> (returns 0-6 where
+                        0=Monday, 6=Sunday). Second, create a default 'weekday'
+                        label, then override for weekends and holidays. Third,
+                        apply <code>pd.get_dummies()</code> just like we did for
+                        weather conditions. Watch out:
+                        <code>.dt.dayofweek</code> uses 0=Monday, so weekends
+                        are 5 and 6 (not 6 and 7). Also, order matters when
+                        setting categories - set holidays AFTER weekends if you
+                        want holidays to take priority. Remember
+                        <code>.isin([5, 6])</code> for checking multiple values
+                        - using <code>== 5 or == 6</code> won't work in pandas.
+                        Your client needs different strategies for weekdays
+                        (commute-focused) vs weekends (recreation) vs holidays
+                        (special events).</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=f625487b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Step 1: Extract day of week from datetime (0=Monday, 6=Sunday)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
 
 <span class="c1"># Step 2: Create day_type categories</span>
@@ -307,33 +453,61 @@ Enables the model to learn that "Clear" weather drives high recreational demand 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Day type distribution:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_type'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Created </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">day_type_encoded</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> binary day type features"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=ed80c2f2"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5e19daa3"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Binary-Encoding-for-Business-Specific-Conditions">Step 2: Binary Encoding for Business-Specific Conditions<a class="anchor-link" href="#Step-2:-Binary-Encoding-for-Business-Specific-Conditions">¶</a></h2><p>Beyond standard categorical encoding, transportation consultants create focused binary indicators (0 or 1) that flag business-critical conditions. These features encode domain expertise directly into your data.</p>
-<p>We'll create boolean conditions using pandas' <code>.isin()</code> method, then convert True/False values to 1/0 integers with <code>.astype(int)</code> for machine learning compatibility.</p>
-<p>Let's build business-relevant binary features:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=3ea737e1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=ed80c2f2"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=5e19daa3"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Step-2:-Binary-Encoding-for-Business-Specific-Conditions"
+                      >Step 2: Binary Encoding for Business-Specific
+                      Conditions<a
+                        class="anchor-link"
+                        href="#Step-2:-Binary-Encoding-for-Business-Specific-Conditions"
+                      ></a></h2
+                    ><p
+                      >Beyond standard categorical encoding, transportation
+                      consultants create focused binary indicators (0 or 1) that
+                      flag business-critical conditions. These features encode
+                      domain expertise directly into your data.</p
+                    >
+                    <p
+                      >We'll create boolean conditions using pandas'
+                      <code>.isin()</code> method, then convert True/False
+                      values to 1/0 integers with <code>.astype(int)</code> for
+                      machine learning compatibility.</p
+                    >
+                    <p>Let's build business-relevant binary features:</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=3ea737e1"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -365,38 +539,70 @@ Enables the model to learn that "Clear" weather drives high recreational demand 
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sample of binary features:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">'datetime'</span><span class="p">,</span> <span class="s1">'is_rush_hour'</span><span class="p">,</span> <span class="s1">'is_weekend'</span><span class="p">,</span> <span class="s1">'is_good_weather'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c8a1d8aa"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>Creates focused indicators for operationally critical conditions</li>
-<li>Encodes transportation domain expertise into features</li>
-<li>Provides clear yes/no signals that models can easily learn from</li>
-</ul>
-<p><strong>Business value:</strong>
-These flags help models learn distinct patterns like "weekend + good weather = high recreational demand" or "rush hour + weekday = commuter surge."</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=d0c22f07"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-2:-Create-Season-Binary-Indicators">Challenge 2: Create Season Binary Indicators<a class="anchor-link" href="#Challenge-2:-Create-Season-Binary-Indicators">¶</a></h3><p>Create binary indicators for each season to help the model learn seasonal demand patterns.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=34ad2a83">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create binary indicators for each season</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c8a1d8aa"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >Creates focused indicators for operationally critical
+                        conditions</li
+                      >
+                      <li
+                        >Encodes transportation domain expertise into
+                        features</li
+                      >
+                      <li
+                        >Provides clear yes/no signals that models can easily
+                        learn from</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> These flags help models
+                      learn distinct patterns like "weekend + good weather =
+                      high recreational demand" or "rush hour + weekday =
+                      commuter surge."</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=d0c22f07"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-2:-Create-Season-Binary-Indicators"
+                      >Challenge 2: Create Season Binary Indicators<a
+                        class="anchor-link"
+                        href="#Challenge-2:-Create-Season-Binary-Indicators"
+                      ></a></h3
+                    ><p
+                      >Create binary indicators for each season to help the
+                      model learn seasonal demand patterns.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=34ad2a83"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create binary indicators for each season</span>
 
 <span class="c1"># Step 1: Extract month from datetime</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">_____</span>  <span class="c1"># Fill in: month</span>
@@ -418,27 +624,53 @@ These flags help models learn distinct patterns like "weekend + good weather = h
 <span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'spring'</span><span class="p">,</span> <span class="s1">'summer'</span><span class="p">,</span> <span class="s1">'fall'</span><span class="p">,</span> <span class="s1">'winter'</span><span class="p">]:</span>
     <span class="n">pct</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">'is_</span><span class="si">{</span><span class="n">season</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">season</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of observations"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=6b3a4c93"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Extract month numbers using <code>.dt.month</code> (returns 1-12, not month names). For each season, use <code>.isin()</code> to check if the month is in that season's list, then <code>.astype(int)</code> to convert True/False to 1/0. Watch out: winter spans the year boundary, so you need <code>[12, 1, 2]</code> not consecutive numbers. Remember to use <code>.astype(int)</code> because boolean True/False won't work directly in ML algorithms. Bike-sharing demand changes dramatically by season - summer weekend afternoons need 3x more bikes than winter weekday evenings, so these season indicators help your model learn those patterns.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a8bfbe6e"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Step 1: Extract month from datetime</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=6b3a4c93"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Extract month numbers using
+                        <code>.dt.month</code> (returns 1-12, not month names).
+                        For each season, use <code>.isin()</code> to check if
+                        the month is in that season's list, then
+                        <code>.astype(int)</code> to convert True/False to 1/0.
+                        Watch out: winter spans the year boundary, so you need
+                        <code>[12, 1, 2]</code> not consecutive numbers.
+                        Remember to use <code>.astype(int)</code> because
+                        boolean True/False won't work directly in ML algorithms.
+                        Bike-sharing demand changes dramatically by season -
+                        summer weekend afternoons need 3x more bikes than winter
+                        weekday evenings, so these season indicators help your
+                        model learn those patterns.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a8bfbe6e"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Step 1: Extract month from datetime</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
 
 <span class="c1"># Step 2: Create binary indicators for each season</span>
@@ -458,39 +690,85 @@ These flags help models learn distinct patterns like "weekend + good weather = h
 <span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'spring'</span><span class="p">,</span> <span class="s1">'summer'</span><span class="p">,</span> <span class="s1">'fall'</span><span class="p">,</span> <span class="s1">'winter'</span><span class="p">]:</span>
     <span class="n">pct</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">'is_</span><span class="si">{</span><span class="n">season</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">season</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of observations"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=afd173b7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=a7f4e450"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3:-Feature-Scaling-with-StandardScaler">Step 3: Feature Scaling with StandardScaler<a class="anchor-link" href="#Step-3:-Feature-Scaling-with-StandardScaler">¶</a></h2><p>Now that we've created categorical features in numerical form, we need to address a critical issue: our features exist on wildly different scales. Temperature ranges from 0-40°C, humidity spans 0-100%, and bike counts vary from 1 to 1000+. Without scaling, machine learning algorithms will incorrectly prioritize features with larger numbers.</p>
-<p>We'll apply <code>StandardScaler</code> to normalize our features - transforming them to have mean=0 and standard deviation=1. This Z-score normalization ensures all features contribute equally regardless of their original measurement scales.</p>
-<p><code>StandardScaler</code> uses a consistent three-step workflow:</p>
-<ol>
-<li><strong>Create the scaler</strong>: <code>scaler = StandardScaler()</code></li>
-<li><strong>Fit to data</strong>: <code>scaler.fit_transform(df[columns])</code> - calculates mean/std from data AND transforms it</li>
-<li><strong>Result</strong>: All features now have mean ≈ 0, std ≈ 1</li>
-</ol>
-<p>Let's apply <code>StandardScaler</code> to weather variables:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=85bc8a66">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=afd173b7"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=a7f4e450"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-3:-Feature-Scaling-with-StandardScaler"
+                      >Step 3: Feature Scaling with StandardScaler<a
+                        class="anchor-link"
+                        href="#Step-3:-Feature-Scaling-with-StandardScaler"
+                      ></a></h2
+                    ><p
+                      >Now that we've created categorical features in numerical
+                      form, we need to address a critical issue: our features
+                      exist on wildly different scales. Temperature ranges from
+                      0-40°C, humidity spans 0-100%, and bike counts vary from 1
+                      to 1000+. Without scaling, machine learning algorithms
+                      will incorrectly prioritize features with larger
+                      numbers.</p
+                    >
+                    <p
+                      >We'll apply <code>StandardScaler</code> to normalize our
+                      features - transforming them to have mean=0 and standard
+                      deviation=1. This Z-score normalization ensures all
+                      features contribute equally regardless of their original
+                      measurement scales.</p
+                    >
+                    <p
+                      ><code>StandardScaler</code> uses a consistent three-step
+                      workflow:</p
+                    >
+                    <ol>
+                      <li
+                        ><strong>Create the scaler</strong>:
+                        <code>scaler = StandardScaler()</code></li
+                      >
+                      <li
+                        ><strong>Fit to data</strong>:
+                        <code>scaler.fit_transform(df[columns])</code> -
+                        calculates mean/std from data AND transforms it</li
+                      >
+                      <li
+                        ><strong>Result</strong>: All features now have mean ≈
+                        0, std ≈ 1</li
+                      >
+                    </ol>
+                    <p
+                      >Let's apply <code>StandardScaler</code> to weather
+                      variables:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=85bc8a66"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -514,38 +792,70 @@ These flags help models learn distinct patterns like "weekend + good weather = h
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Scaled feature statistics:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">weather_features</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Notice: mean ≈ 0, std ≈ 1 for all features"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=099e3cc7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>All weather features now exist on the same statistical scale</li>
-<li>Features with originally larger ranges (like humidity 0-100) no longer dominate</li>
-<li>Algorithms can fairly compare the importance of temperature vs. humidity vs. windspeed</li>
-</ul>
-<p><strong>Business value:</strong>
-Ensures your model doesn't overweight humidity simply because it's measured in larger numbers (0-100%) compared to temperature (0-40°C).</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=3190acab"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-3:-Verify-Scaling-Preserved-Relationships">Challenge 3: Verify Scaling Preserved Relationships<a class="anchor-link" href="#Challenge-3:-Verify-Scaling-Preserved-Relationships">¶</a></h3><p>Check that StandardScaler transformed the scales without breaking the relationships between variables.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=8694804b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - verify scaling results</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=099e3cc7"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >All weather features now exist on the same statistical
+                        scale</li
+                      >
+                      <li
+                        >Features with originally larger ranges (like humidity
+                        0-100) no longer dominate</li
+                      >
+                      <li
+                        >Algorithms can fairly compare the importance of
+                        temperature vs. humidity vs. windspeed</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Ensures your model
+                      doesn't overweight humidity simply because it's measured
+                      in larger numbers (0-100%) compared to temperature
+                      (0-40°C).</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=3190acab"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-3:-Verify-Scaling-Preserved-Relationships"
+                      >Challenge 3: Verify Scaling Preserved Relationships<a
+                        class="anchor-link"
+                        href="#Challenge-3:-Verify-Scaling-Preserved-Relationships"
+                      ></a></h3
+                    ><p
+                      >Check that StandardScaler transformed the scales without
+                      breaking the relationships between variables.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=8694804b"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - verify scaling results</span>
 
 <span class="c1"># Check that correlations are preserved (scaling shouldn't change relationships)</span>
 <span class="k">if</span> <span class="s1">'temp'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">'count'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -563,27 +873,51 @@ Ensures your model doesn't overweight humidity simply because it's measured in l
     <span class="c1"># Check if properly standardized (mean close to 0, std close to 1)</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mean_val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">std_val</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ✓ </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2"> properly standardized"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=088c402a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Scaling validation has two key checks: First, verify relationships are preserved by calculating correlations - they should be identical to the original. Second, check that mean ≈ 0 and std ≈ 1 using <code>.mean()</code> and <code>.std()</code>. Don't expect exact 0.000 and 1.000 - slight floating-point variations are normal (check if abs(mean) &lt; 0.01). Think of scaling like translating a book: the story (relationships) stays the same, only the language (scale) changes. If correlations change significantly, your scaling corrupted the data!</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=2c3b9498"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Check that correlations are preserved (scaling shouldn't change relationships)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=088c402a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Scaling validation has two key checks: First, verify
+                        relationships are preserved by calculating correlations
+                        - they should be identical to the original. Second,
+                        check that mean ≈ 0 and std ≈ 1 using
+                        <code>.mean()</code> and <code>.std()</code>. Don't
+                        expect exact 0.000 and 1.000 - slight floating-point
+                        variations are normal (check if abs(mean) &lt; 0.01).
+                        Think of scaling like translating a book: the story
+                        (relationships) stays the same, only the language
+                        (scale) changes. If correlations change significantly,
+                        your scaling corrupted the data!</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=2c3b9498"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Check that correlations are preserved (scaling shouldn't change relationships)</span>
 <span class="k">if</span> <span class="s1">'temp'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">'count'</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
     <span class="n">correlation</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'count'</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Temperature-Count correlation after scaling: </span><span class="si">{</span><span class="n">correlation</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -599,38 +933,82 @@ Ensures your model doesn't overweight humidity simply because it's measured in l
     <span class="c1"># Check if properly standardized (mean close to 0, std close to 1)</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mean_val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">std_val</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ✓ </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s2"> properly standardized"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=3bc8db4b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=d309a56b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-4:-Range-Normalization-with-MinMaxScaler">Step 4: Range Normalization with MinMaxScaler<a class="anchor-link" href="#Step-4:-Range-Normalization-with-MinMaxScaler">¶</a></h2><p><code>StandardScaler</code> is excellent for normally-distributed features, but some features naturally have fixed bounds. For these, <code>MinMaxScaler</code> provides an alternative scaling strategy that compresses values into a defined range, typically 0 to 1.</p>
-<p><code>MinMaxScaler</code> transforms features using a linear mapping: the minimum value becomes 0, the maximum becomes 1, and all other values scale proportionally between these bounds. The process follows three steps:</p>
-<ol>
-<li><strong>Initialize</strong>: <code>scaler = MinMaxScaler(feature_range=(0, 1))</code></li>
-<li><strong>Transform</strong>: <code>scaler.fit_transform(df[columns])</code> - calculates min/max values and applies the transformation</li>
-<li><strong>Output</strong>: Features compressed to 0-1 range while preserving relative distances</li>
-</ol>
-<p>Let's apply <code>MinMaxScaler</code> to temporal features:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=a293af45">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=3bc8db4b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=d309a56b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-4:-Range-Normalization-with-MinMaxScaler"
+                      >Step 4: Range Normalization with MinMaxScaler<a
+                        class="anchor-link"
+                        href="#Step-4:-Range-Normalization-with-MinMaxScaler"
+                      ></a></h2
+                    ><p
+                      ><code>StandardScaler</code> is excellent for
+                      normally-distributed features, but some features naturally
+                      have fixed bounds. For these,
+                      <code>MinMaxScaler</code> provides an alternative scaling
+                      strategy that compresses values into a defined range,
+                      typically 0 to 1.</p
+                    >
+                    <p
+                      ><code>MinMaxScaler</code> transforms features using a
+                      linear mapping: the minimum value becomes 0, the maximum
+                      becomes 1, and all other values scale proportionally
+                      between these bounds. The process follows three steps:</p
+                    >
+                    <ol>
+                      <li
+                        ><strong>Initialize</strong>:
+                        <code
+                          >scaler = MinMaxScaler(feature_range=(0, 1))</code
+                        ></li
+                      >
+                      <li
+                        ><strong>Transform</strong>:
+                        <code>scaler.fit_transform(df[columns])</code> -
+                        calculates min/max values and applies the
+                        transformation</li
+                      >
+                      <li
+                        ><strong>Output</strong>: Features compressed to 0-1
+                        range while preserving relative distances</li
+                      >
+                    </ol>
+                    <p
+                      >Let's apply <code>MinMaxScaler</code> to temporal
+                      features:</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=a293af45"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -659,38 +1037,67 @@ Ensures your model doesn't overweight humidity simply because it's measured in l
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Scaled temporal feature ranges:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">temporal_features</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'min'</span><span class="p">,</span> <span class="s1">'max'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Notice: All features now range from 0 to 1"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=9d65f959"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>Temporal features compressed to consistent 0-1 range</li>
-<li>Boundary properties preserved (midnight still maps to 0, values stay bounded)</li>
-<li>Compatible scale with other normalized features</li>
-</ul>
-<p><strong>Business value:</strong>
-Ensures hour-of-day (0-23) contributes proportionally to demand predictions alongside day-of-week (0-6), preventing arbitrary scale differences from biasing the model.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c9788b69"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-4:-Compare-Scaling-Methods">Challenge 4: Compare Scaling Methods<a class="anchor-link" href="#Challenge-4:-Compare-Scaling-Methods">¶</a></h3><p>Create a comparison showing how StandardScaler and MinMaxScaler transform the same data differently.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=80f7a27a">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - compare scaling methods on temperature data</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=9d65f959"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >Temporal features compressed to consistent 0-1
+                        range</li
+                      >
+                      <li
+                        >Boundary properties preserved (midnight still maps to
+                        0, values stay bounded)</li
+                      >
+                      <li>Compatible scale with other normalized features</li>
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Ensures hour-of-day
+                      (0-23) contributes proportionally to demand predictions
+                      alongside day-of-week (0-6), preventing arbitrary scale
+                      differences from biasing the model.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c9788b69"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-4:-Compare-Scaling-Methods"
+                      >Challenge 4: Compare Scaling Methods<a
+                        class="anchor-link"
+                        href="#Challenge-4:-Compare-Scaling-Methods"
+                      ></a></h3
+                    ><p
+                      >Create a comparison showing how StandardScaler and
+                      MinMaxScaler transform the same data differently.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=80f7a27a"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - compare scaling methods on temperature data</span>
 
 <span class="c1"># Get fresh temperature data (before scaling)</span>
 <span class="n">df_fresh</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
@@ -718,27 +1125,51 @@ Ensures hour-of-day (0-23) contributes proportionally to demand predictions alon
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Key differences:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"StandardScaler range: </span><span class="si">{</span><span class="n">temp_standard</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">temp_standard</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MinMaxScaler range: </span><span class="si">{</span><span class="n">temp_minmax</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">temp_minmax</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=0c9394cb"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Load fresh unscaled data, then apply both StandardScaler and MinMaxScaler to the same values to see their different behaviors. Remember <code>.reshape(-1, 1)</code> when scaling a single column because sklearn scalers expect 2D arrays, then use <code>.flatten()</code> to convert back to 1D after scaling. Choose StandardScaler for unbounded features like temperature (approximately normal distribution) and MinMaxScaler for bounded features like hour-of-day (uniform distribution). Wrong choice won't break models but may slow learning!</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=504354e7"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Get fresh temperature data (before scaling)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=0c9394cb"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Load fresh unscaled data, then apply both
+                        StandardScaler and MinMaxScaler to the same values to
+                        see their different behaviors. Remember
+                        <code>.reshape(-1, 1)</code> when scaling a single
+                        column because sklearn scalers expect 2D arrays, then
+                        use <code>.flatten()</code> to convert back to 1D after
+                        scaling. Choose StandardScaler for unbounded features
+                        like temperature (approximately normal distribution) and
+                        MinMaxScaler for bounded features like hour-of-day
+                        (uniform distribution). Wrong choice won't break models
+                        but may slow learning!</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=504354e7"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Get fresh temperature data (before scaling)</span>
 <span class="n">df_fresh</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/pmarcelino/predictive-modeling/main/datasets/dataset.csv"</span><span class="p">)</span>
 <span class="n">original_temp</span> <span class="o">=</span> <span class="n">df_fresh</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
@@ -764,32 +1195,55 @@ Ensures hour-of-day (0-23) contributes proportionally to demand predictions alon
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Key differences:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"StandardScaler range: </span><span class="si">{</span><span class="n">temp_standard</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">temp_standard</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MinMaxScaler range: </span><span class="si">{</span><span class="n">temp_minmax</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">temp_minmax</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=7ccb2b99"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=8de7feb5"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-5:-Cyclical-Encoding-for-Continuous-Time">Step 5: Cyclical Encoding for Continuous Time<a class="anchor-link" href="#Step-5:-Cyclical-Encoding-for-Continuous-Time">¶</a></h2><p>Now that you've mastered categorical encoding and scaling, we turn to the most critical dimension in transportation data: time. Raw time values like hour=23 and hour=0 appear numerically distant, but they represent adjacent hours on a clock. Time-based feature engineering solves this problem through cyclical encoding.</p>
-<p>Let's implement cyclical encoding for hours:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=38d66b7b">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=7ccb2b99"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=8de7feb5"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-5:-Cyclical-Encoding-for-Continuous-Time"
+                      >Step 5: Cyclical Encoding for Continuous Time<a
+                        class="anchor-link"
+                        href="#Step-5:-Cyclical-Encoding-for-Continuous-Time"
+                      ></a></h2
+                    ><p
+                      >Now that you've mastered categorical encoding and
+                      scaling, we turn to the most critical dimension in
+                      transportation data: time. Raw time values like hour=23
+                      and hour=0 appear numerically distant, but they represent
+                      adjacent hours on a clock. Time-based feature engineering
+                      solves this problem through cyclical encoding.</p
+                    >
+                    <p>Let's implement cyclical encoding for hours:</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=38d66b7b"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -815,38 +1269,72 @@ Ensures hour-of-day (0-23) contributes proportionally to demand predictions alon
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Hour 23: sin=</span><span class="si">{</span><span class="n">hour_23</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">hour_23</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hour 0:  sin=</span><span class="si">{</span><span class="n">hour_0</span><span class="p">[</span><span class="s1">'hour_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">hour_0</span><span class="p">[</span><span class="s1">'hour_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Notice how close these values are despite hours being 23 apart numerically!"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=351f45b0"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>Hours now represented as circular coordinates instead of linear numbers</li>
-<li>Machine learning algorithms can recognize that 11 PM and midnight are adjacent</li>
-<li>Continuous temporal patterns preserved without artificial breaks</li>
-</ul>
-<p><strong>Business value:</strong>
-Enables models to learn that late-night demand (11 PM) transitions smoothly into early-morning demand (midnight-1 AM), rather than treating them as disconnected time periods.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=31952c34"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-5:-Create-Cyclical-Encoding-for-Day-of-Week">Challenge 5: Create Cyclical Encoding for Day of Week<a class="anchor-link" href="#Challenge-5:-Create-Cyclical-Encoding-for-Day-of-Week">¶</a></h3><p>Apply cyclical encoding to the 7-day week cycle to capture how Monday transitions into Tuesday, and Sunday loops back to Monday.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=79ec71c0">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create cyclical encoding for day of week (7-day cycle)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=351f45b0"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >Hours now represented as circular coordinates instead
+                        of linear numbers</li
+                      >
+                      <li
+                        >Machine learning algorithms can recognize that 11 PM
+                        and midnight are adjacent</li
+                      >
+                      <li
+                        >Continuous temporal patterns preserved without
+                        artificial breaks</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Enables models to learn
+                      that late-night demand (11 PM) transitions smoothly into
+                      early-morning demand (midnight-1 AM), rather than treating
+                      them as disconnected time periods.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=31952c34"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3
+                      id="Challenge-5:-Create-Cyclical-Encoding-for-Day-of-Week"
+                      >Challenge 5: Create Cyclical Encoding for Day of Week<a
+                        class="anchor-link"
+                        href="#Challenge-5:-Create-Cyclical-Encoding-for-Day-of-Week"
+                      ></a></h3
+                    ><p
+                      >Apply cyclical encoding to the 7-day week cycle to
+                      capture how Monday transitions into Tuesday, and Sunday
+                      loops back to Monday.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=79ec71c0"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create cyclical encoding for day of week (7-day cycle)</span>
 
 <span class="c1"># Create sine and cosine features for 7-day cycle</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'dow_sin'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">_____</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">/</span> <span class="n">_____</span><span class="p">)</span>  <span class="c1"># Fill in: sin, 7</span>
@@ -862,27 +1350,51 @@ Enables models to learn that late-night demand (11 PM) transitions smoothly into
 <span class="n">monday</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][[</span><span class="s1">'dow_sin'</span><span class="p">,</span> <span class="s1">'dow_cos'</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sunday: sin=</span><span class="si">{</span><span class="n">sunday</span><span class="p">[</span><span class="s1">'dow_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">sunday</span><span class="p">[</span><span class="s1">'dow_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Monday: sin=</span><span class="si">{</span><span class="n">monday</span><span class="p">[</span><span class="s1">'dow_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">monday</span><span class="p">[</span><span class="s1">'dow_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=5a3049f8"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Follow the exact same pattern as hour encoding, just change the cycle length to 7 days instead of 24 hours. Apply both <code>np.sin()</code> and <code>np.cos()</code> with the formula: <code>2 * np.pi * day_of_week / 7</code>. You need BOTH sine and cosine to uniquely identify each day position - using only one won't work. Bike-sharing demand on Sunday evening (preparing for work week) should be more similar to Monday morning than to Saturday evening (weekend recreation), and cyclical encoding captures this weekly rhythm.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=81e0d6fa"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Extract day_of_week feature first</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=5a3049f8"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Follow the exact same pattern as hour encoding, just
+                        change the cycle length to 7 days instead of 24 hours.
+                        Apply both <code>np.sin()</code> and
+                        <code>np.cos()</code> with the formula:
+                        <code>2 * np.pi * day_of_week / 7</code>. You need BOTH
+                        sine and cosine to uniquely identify each day position -
+                        using only one won't work. Bike-sharing demand on Sunday
+                        evening (preparing for work week) should be more similar
+                        to Monday morning than to Saturday evening (weekend
+                        recreation), and cyclical encoding captures this weekly
+                        rhythm.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=81e0d6fa"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Extract day_of_week feature first</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'datetime'</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>
 
 <span class="c1"># Create sine and cosine features for 7-day cycle</span>
@@ -899,34 +1411,70 @@ Enables models to learn that late-night demand (11 PM) transitions smoothly into
 <span class="n">monday</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'day_of_week'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][[</span><span class="s1">'dow_sin'</span><span class="p">,</span> <span class="s1">'dow_cos'</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sunday: sin=</span><span class="si">{</span><span class="n">sunday</span><span class="p">[</span><span class="s1">'dow_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">sunday</span><span class="p">[</span><span class="s1">'dow_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Monday: sin=</span><span class="si">{</span><span class="n">monday</span><span class="p">[</span><span class="s1">'dow_sin'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, cos=</span><span class="si">{</span><span class="n">monday</span><span class="p">[</span><span class="s1">'dow_cos'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=9223a4d8"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=be7e05e6"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-6:-Lag-Features-for-Sequential-Patterns">Step 6: Lag Features for Sequential Patterns<a class="anchor-link" href="#Step-6:-Lag-Features-for-Sequential-Patterns">¶</a></h2><p>You've learned how cyclical encoding helps models understand that midnight follows 11 PM. Now we'll introduce lag features, which explicitly provide historical context by using past values as predictors for current observations.</p>
-<p>Lag features use pandas' <code>.shift()</code> method to access historical values as predictors. The <code>.shift(n)</code> function moves each value down by <code>n</code> positions, so <code>shift(1)</code> gives you the previous hour's value, <code>shift(24)</code> gives you the same hour yesterday, and so on.</p>
-<p><strong>Critical requirement:</strong> Always sort your data by datetime before creating lag features. Without proper sorting, <code>.shift()</code> will create meaningless relationships between unrelated time periods.</p>
-<p>Let's create lag features at multiple time scales:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=ea8d0aa1">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=9223a4d8"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=be7e05e6"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-6:-Lag-Features-for-Sequential-Patterns"
+                      >Step 6: Lag Features for Sequential Patterns<a
+                        class="anchor-link"
+                        href="#Step-6:-Lag-Features-for-Sequential-Patterns"
+                      ></a></h2
+                    ><p
+                      >You've learned how cyclical encoding helps models
+                      understand that midnight follows 11 PM. Now we'll
+                      introduce lag features, which explicitly provide
+                      historical context by using past values as predictors for
+                      current observations.</p
+                    >
+                    <p
+                      >Lag features use pandas' <code>.shift()</code> method to
+                      access historical values as predictors. The
+                      <code>.shift(n)</code> function moves each value down by
+                      <code>n</code> positions, so <code>shift(1)</code> gives
+                      you the previous hour's value,
+                      <code>shift(24)</code> gives you the same hour yesterday,
+                      and so on.</p
+                    >
+                    <p
+                      ><strong>Critical requirement:</strong> Always sort your
+                      data by datetime before creating lag features. Without
+                      proper sorting, <code>.shift()</code> will create
+                      meaningless relationships between unrelated time
+                      periods.</p
+                    >
+                    <p>Let's create lag features at multiple time scales:</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=ea8d0aa1"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -951,38 +1499,70 @@ Enables models to learn that late-night demand (11 PM) transitions smoothly into
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"1-hour lag: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count_lag_1h'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NaN values"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"24-hour lag: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count_lag_24h'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NaN values"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"168-hour lag: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count_lag_168h'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NaN values"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=861a8bda"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>Historical demand patterns explicitly available as features</li>
-<li>Three time scales capture immediate momentum, daily cycles, and weekly patterns</li>
-<li>Model can learn "if demand was high 24 hours ago, it's likely high now"</li>
-</ul>
-<p><strong>Business value:</strong>
-Lag features are among the strongest predictors for time series. If 200 bikes were rented last hour, demand probably remains high this hour - lag features encode this critical pattern.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=78d6517a"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-6:-Create-Temperature-Lag-Features">Challenge 6: Create Temperature Lag Features<a class="anchor-link" href="#Challenge-6:-Create-Temperature-Lag-Features">¶</a></h3><p>Create lag features for temperature to help the model understand temperature trends.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=df8d17cf">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create temperature lag features</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=861a8bda"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >Historical demand patterns explicitly available as
+                        features</li
+                      >
+                      <li
+                        >Three time scales capture immediate momentum, daily
+                        cycles, and weekly patterns</li
+                      >
+                      <li
+                        >Model can learn "if demand was high 24 hours ago, it's
+                        likely high now"</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> Lag features are among
+                      the strongest predictors for time series. If 200 bikes
+                      were rented last hour, demand probably remains high this
+                      hour - lag features encode this critical pattern.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=78d6517a"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3 id="Challenge-6:-Create-Temperature-Lag-Features"
+                      >Challenge 6: Create Temperature Lag Features<a
+                        class="anchor-link"
+                        href="#Challenge-6:-Create-Temperature-Lag-Features"
+                      ></a></h3
+                    ><p
+                      >Create lag features for temperature to help the model
+                      understand temperature trends.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=df8d17cf"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create temperature lag features</span>
 
 <span class="c1"># Create 1-hour and 6-hour temperature lags</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'temp_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">_____</span><span class="p">(</span><span class="n">_____</span><span class="p">)</span>   <span class="c1"># Fill in: shift, 1</span>
@@ -998,27 +1578,54 @@ Lag features are among the strongest predictors for time series. If 200 bikes we
 <span class="c1"># Identify periods with rapid temperature changes</span>
 <span class="n">rapid_change</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp_change_1h'</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>  <span class="c1"># More than 0.5°C change per hour</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Periods with rapid temperature change: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rapid_change</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=54a8fd64"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Use the same <code>.shift()</code> pattern as before: <code>df['temp'].shift(1)</code> for 1-hour lag and <code>df['temp'].shift(6)</code> for 6-hour lag. Calculate temperature change by subtracting lag from current: <code>df['temp'] - df['temp_lag_1h']</code> (this gives positive values when temperature rises). Use <code>abs()</code> when checking for rapid changes because we care about magnitude regardless of direction - both +0.6 and -0.6 are rapid changes. Rapid temperature swings affect bike demand differently than gradual changes - a sudden 5-degree warming at 2 PM might trigger recreational trips that wouldn't happen if the same temperature was reached gradually.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=738b699f"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Create 1-hour and 6-hour temperature lags</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=54a8fd64"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Use the same <code>.shift()</code> pattern as before:
+                        <code>df['temp'].shift(1)</code> for 1-hour lag and
+                        <code>df['temp'].shift(6)</code> for 6-hour lag.
+                        Calculate temperature change by subtracting lag from
+                        current:
+                        <code>df['temp'] - df['temp_lag_1h']</code> (this gives
+                        positive values when temperature rises). Use
+                        <code>abs()</code> when checking for rapid changes
+                        because we care about magnitude regardless of direction
+                        - both +0.6 and -0.6 are rapid changes. Rapid
+                        temperature swings affect bike demand differently than
+                        gradual changes - a sudden 5-degree warming at 2 PM
+                        might trigger recreational trips that wouldn't happen if
+                        the same temperature was reached gradually.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=738b699f"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Create 1-hour and 6-hour temperature lags</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'temp_lag_1h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'temp_lag_6h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 
@@ -1032,34 +1639,68 @@ Lag features are among the strongest predictors for time series. If 200 bikes we
 <span class="c1"># Identify periods with rapid temperature changes</span>
 <span class="n">rapid_change</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'temp_change_1h'</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Periods with rapid temperature change: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">rapid_change</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=4b2c3ced"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=c3a7b690"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-8:-Rolling-Window-Features-for-Trend-Detection">Step 8: Rolling Window Features for Trend Detection<a class="anchor-link" href="#Step-8:-Rolling-Window-Features-for-Trend-Detection">¶</a></h2><p>Lag features provide point-in-time historical values, but transportation demand also depends on recent trends. Is demand rising or falling? Has weather been stable or volatile? Rolling window features answer these questions by aggregating recent history.</p>
-<p>We'll use pandas' <code>.rolling()</code> method to create rolling window features. The <code>.rolling(window=n)</code> method creates a moving window that slides through your data, calculating statistics over the most recent n observations.</p>
-<p><strong>Critical:</strong> Always use <code>.shift(1)</code> before <code>.rolling()</code> to prevent data leakage. Without <code>.shift(1)</code>, the rolling average includes the current value you're trying to predict - that's cheating!</p>
-<p>Let's create rolling window features:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=2d523990">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import necessary libraries</span>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=4b2c3ced"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=c3a7b690"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2 id="Step-8:-Rolling-Window-Features-for-Trend-Detection"
+                      >Step 8: Rolling Window Features for Trend Detection<a
+                        class="anchor-link"
+                        href="#Step-8:-Rolling-Window-Features-for-Trend-Detection"
+                      ></a></h2
+                    ><p
+                      >Lag features provide point-in-time historical values, but
+                      transportation demand also depends on recent trends. Is
+                      demand rising or falling? Has weather been stable or
+                      volatile? Rolling window features answer these questions
+                      by aggregating recent history.</p
+                    >
+                    <p
+                      >We'll use pandas' <code>.rolling()</code> method to
+                      create rolling window features. The
+                      <code>.rolling(window=n)</code> method creates a moving
+                      window that slides through your data, calculating
+                      statistics over the most recent n observations.</p
+                    >
+                    <p
+                      ><strong>Critical:</strong> Always use
+                      <code>.shift(1)</code> before <code>.rolling()</code> to
+                      prevent data leakage. Without <code>.shift(1)</code>, the
+                      rolling average includes the current value you're trying
+                      to predict - that's cheating!</p
+                    >
+                    <p>Let's create rolling window features:</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=2d523990"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
@@ -1087,38 +1728,68 @@ Lag features are among the strongest predictors for time series. If 200 bikes we
 <span class="c1"># Check missing values (first few rows won't have full windows)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">3-hour rolling: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count_rolling_3h'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NaN values"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"24-hour rolling: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'count_rolling_24h'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> NaN values"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=7beff580"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What this accomplishes:</strong></p>
-<ul>
-<li>3-hour average captures immediate demand trends (accelerating or declining)</li>
-<li>24-hour average provides daily baseline context</li>
-<li>Temperature volatility indicates weather stability (affects user confidence)</li>
-</ul>
-<p><strong>Business value:</strong>
-If 3-hour average is 150 bikes/hour but 24-hour average is 100, demand is surging above normal - signal operations to prioritize bike rebalancing!</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=b669c190"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Challenge-8:-Create-Weather-Stability-Rolling-Features">Challenge 8: Create Weather Stability Rolling Features<a class="anchor-link" href="#Challenge-8:-Create-Weather-Stability-Rolling-Features">¶</a></h3><p>Create rolling features that measure weather stability, which affects user willingness to plan bike trips.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered" id="cell-id=ba7e0124">
-<div class="input">
-<div class="prompt input_prompt">In [ ]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Your code here - create weather stability rolling features</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=7beff580"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <p><strong>What this accomplishes:</strong></p>
+                    <ul>
+                      <li
+                        >3-hour average captures immediate demand trends
+                        (accelerating or declining)</li
+                      >
+                      <li>24-hour average provides daily baseline context</li>
+                      <li
+                        >Temperature volatility indicates weather stability
+                        (affects user confidence)</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Business value:</strong> If 3-hour average is 150
+                      bikes/hour but 24-hour average is 100, demand is surging
+                      above normal - signal operations to prioritize bike
+                      rebalancing!</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=b669c190"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h3
+                      id="Challenge-8:-Create-Weather-Stability-Rolling-Features"
+                      >Challenge 8: Create Weather Stability Rolling Features<a
+                        class="anchor-link"
+                        href="#Challenge-8:-Create-Weather-Stability-Rolling-Features"
+                      ></a></h3
+                    ><p
+                      >Create rolling features that measure weather stability,
+                      which affects user willingness to plan bike trips.</p
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing code_cell rendered"
+                id="cell-id=ba7e0124"
+              >
+                <div class="input">
+                  <div class="prompt input_prompt">In [ ]:</div>
+                  <div class="inner_cell">
+                    <div class="input_area">
+                      <div class="highlight hl-ipython3">
+                        <pre><span></span><span class="c1"># Your code here - create weather stability rolling features</span>
 
 <span class="c1"># Humidity volatility over past 6 hours (standard deviation)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'humidity_rolling_std_6h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">_____</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="n">_____</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>  <span class="c1"># Fill in: rolling, 6</span>
@@ -1137,27 +1808,54 @@ If 3-hour average is 150 bikes/hour but 24-hour average is 100, demand is surgin
 <span class="c1"># Identify periods with unstable weather (high humidity volatility)</span>
 <span class="n">unstable</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity_rolling_std_6h'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">]</span>  <span class="c1"># High humidity variation</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Periods with unstable weather: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unstable</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=1285b71b"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>💡 <strong>Tip</strong> (click to expand)</summary>
-<p>Apply different aggregations to rolling windows: <code>.std()</code> for volatility, <code>.max()</code> for peak values, and <code>.max() - .min()</code> for range. ALWAYS include <code>.shift(1)</code> before <code>.rolling()</code> to avoid data leakage - otherwise you're including the current value in your "past" window! For range calculations, create the rolling object once, then apply both <code>.max()</code> and <code>.min()</code> to it. Watch your window sizes: 6-hour for humidity, 3-hour for windspeed, 12-hour for temperature. Stable weather (low volatility) encourages casual riders planning ahead, while chaotic weather (gusts, swings) reduces recreational demand but maintains commuter patterns.</p>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=efa9c774"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<details>
-<summary>🤫 <strong>Solution</strong> (click to expand)</summary>
-<div class="highlight"><pre><span></span><span class="c1"># Humidity volatility over past 6 hours (standard deviation)</span>
+</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=1285b71b"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >💡 <strong>Tip</strong> (click to expand)</summary
+                      >
+                      <p
+                        >Apply different aggregations to rolling windows:
+                        <code>.std()</code> for volatility,
+                        <code>.max()</code> for peak values, and
+                        <code>.max() - .min()</code> for range. ALWAYS include
+                        <code>.shift(1)</code> before <code>.rolling()</code> to
+                        avoid data leakage - otherwise you're including the
+                        current value in your "past" window! For range
+                        calculations, create the rolling object once, then apply
+                        both <code>.max()</code> and <code>.min()</code> to it.
+                        Watch your window sizes: 6-hour for humidity, 3-hour for
+                        windspeed, 12-hour for temperature. Stable weather (low
+                        volatility) encourages casual riders planning ahead,
+                        while chaotic weather (gusts, swings) reduces
+                        recreational demand but maintains commuter patterns.</p
+                      >
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=efa9c774"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <details>
+                      <summary
+                        >🤫 <strong>Solution</strong> (click to expand)</summary
+                      >
+                      <div class="highlight">
+                        <pre><span></span><span class="c1"># Humidity volatility over past 6 hours (standard deviation)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">'humidity_rolling_std_6h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'humidity'</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 
 <span class="c1"># Maximum windspeed over past 3 hours</span>
@@ -1174,50 +1872,133 @@ If 3-hour average is 150 bikes/hour but 24-hour average is 100, demand is surgin
 <span class="c1"># Identify periods with unstable weather (high humidity volatility)</span>
 <span class="n">unstable</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'humidity_rolling_std_6h'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Periods with unstable weather: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unstable</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</pre></div>
-</details>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=e47282e1"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<hr/>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered" id="cell-id=0e39ad50"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Summary:-Professional-Feature-Engineering-Pipeline-Completed">Summary: Professional Feature Engineering Pipeline Completed<a class="anchor-link" href="#Summary:-Professional-Feature-Engineering-Pipeline-Completed">¶</a></h2><p><strong>What We've Accomplished</strong>:</p>
-<ul>
-<li>Implemented comprehensive categorical encoding transformations using one-hot encoding for nominal variables and binary indicators for business-critical conditions</li>
-<li>Applied advanced feature scaling methodologies through StandardScaler for statistical normalization and MinMaxScaler for range-bounded temporal variables</li>
-<li>Developed cyclical encoding frameworks for continuous time variables ensuring proper representation of circular temporal patterns in hours and days</li>
-<li>Engineered lag feature architectures capturing sequential dependencies across multiple time scales from immediate momentum to weekly cycles</li>
-<li>Constructed rolling window aggregation features for trend detection and volatility measurement in demand and weather stability patterns</li>
-<li>Established systematic feature validation protocols ensuring scaling operations preserved underlying data relationships and statistical properties</li>
-</ul>
-<p><strong>Key Technical Skills Mastered</strong>:</p>
-<ul>
-<li>One-hot encoding implementation for converting categorical weather and day-type variables into machine-readable binary column structures</li>
-<li>Binary indicator creation for operationally significant conditions including rush hours, weekends, seasons, and favorable weather patterns</li>
-<li>Z-score standardization techniques through StandardScaler achieving mean-centered unit-variance feature distributions for algorithm compatibility</li>
-<li>Range normalization methodologies via MinMaxScaler compressing bounded temporal features into consistent zero-to-one intervals</li>
-<li>Trigonometric cyclical transformation using sine and cosine functions for preserving circular continuity in time-based variables</li>
-<li>Historical value propagation through shift operations creating lag features that encode sequential patterns and temporal dependencies</li>
-<li>Moving window statistical computation implementing rolling averages, volatility measures, and trend indicators with proper data leakage prevention</li>
-</ul>
-<p><strong>Next Steps</strong>: Next, we'll advance to exploratory data analysis and visualization techniques, examining engineered feature distributions, validating temporal pattern capture effectiveness, and generating actionable business insights that inform machine learning model architecture selection and hyperparameter optimization strategies.</p>
-<p>Your bike-sharing client now possesses production-grade feature engineering pipelines transforming raw operational datasets into optimized machine learning inputs - demonstrating the systematic preprocessing methodologies and advanced feature construction techniques that consulting firms require for high-performance predictive modeling and strategic transportation demand forecasting applications.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-
-        </div>
+</pre>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=e47282e1"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="cell border-box-sizing text_cell rendered"
+                id="cell-id=0e39ad50"
+                ><div class="prompt input_prompt"> </div
+                ><div class="inner_cell">
+                  <div class="text_cell_render border-box-sizing rendered_html">
+                    <h2
+                      id="Summary:-Professional-Feature-Engineering-Pipeline-Completed"
+                      >Summary: Professional Feature Engineering Pipeline
+                      Completed<a
+                        class="anchor-link"
+                        href="#Summary:-Professional-Feature-Engineering-Pipeline-Completed"
+                      ></a></h2
+                    ><p><strong>What We've Accomplished</strong>:</p>
+                    <ul>
+                      <li
+                        >Implemented comprehensive categorical encoding
+                        transformations using one-hot encoding for nominal
+                        variables and binary indicators for business-critical
+                        conditions</li
+                      >
+                      <li
+                        >Applied advanced feature scaling methodologies through
+                        StandardScaler for statistical normalization and
+                        MinMaxScaler for range-bounded temporal variables</li
+                      >
+                      <li
+                        >Developed cyclical encoding frameworks for continuous
+                        time variables ensuring proper representation of
+                        circular temporal patterns in hours and days</li
+                      >
+                      <li
+                        >Engineered lag feature architectures capturing
+                        sequential dependencies across multiple time scales from
+                        immediate momentum to weekly cycles</li
+                      >
+                      <li
+                        >Constructed rolling window aggregation features for
+                        trend detection and volatility measurement in demand and
+                        weather stability patterns</li
+                      >
+                      <li
+                        >Established systematic feature validation protocols
+                        ensuring scaling operations preserved underlying data
+                        relationships and statistical properties</li
+                      >
+                    </ul>
+                    <p><strong>Key Technical Skills Mastered</strong>:</p>
+                    <ul>
+                      <li
+                        >One-hot encoding implementation for converting
+                        categorical weather and day-type variables into
+                        machine-readable binary column structures</li
+                      >
+                      <li
+                        >Binary indicator creation for operationally significant
+                        conditions including rush hours, weekends, seasons, and
+                        favorable weather patterns</li
+                      >
+                      <li
+                        >Z-score standardization techniques through
+                        StandardScaler achieving mean-centered unit-variance
+                        feature distributions for algorithm compatibility</li
+                      >
+                      <li
+                        >Range normalization methodologies via MinMaxScaler
+                        compressing bounded temporal features into consistent
+                        zero-to-one intervals</li
+                      >
+                      <li
+                        >Trigonometric cyclical transformation using sine and
+                        cosine functions for preserving circular continuity in
+                        time-based variables</li
+                      >
+                      <li
+                        >Historical value propagation through shift operations
+                        creating lag features that encode sequential patterns
+                        and temporal dependencies</li
+                      >
+                      <li
+                        >Moving window statistical computation implementing
+                        rolling averages, volatility measures, and trend
+                        indicators with proper data leakage prevention</li
+                      >
+                    </ul>
+                    <p
+                      ><strong>Next Steps</strong>: Next, we'll advance to
+                      exploratory data analysis and visualization techniques,
+                      examining engineered feature distributions, validating
+                      temporal pattern capture effectiveness, and generating
+                      actionable business insights that inform machine learning
+                      model architecture selection and hyperparameter
+                      optimization strategies.</p
+                    >
+                    <p
+                      >Your bike-sharing client now possesses production-grade
+                      feature engineering pipelines transforming raw operational
+                      datasets into optimized machine learning inputs -
+                      demonstrating the systematic preprocessing methodologies
+                      and advanced feature construction techniques that
+                      consulting firms require for high-performance predictive
+                      modeling and strategic transportation demand forecasting
+                      applications.</p
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-</body>
+  </body>
 </html>
