@@ -1,0 +1,820 @@
+{
+  "quiz": [
+    {
+      "question": "What is the primary purpose of the pandas library in Python data analysis?",
+      "options": [
+        "To create machine learning models",
+        "To load, clean, and manipulate data efficiently",
+        "To visualize data in 3D charts",
+        "To manage web server connections"
+      ],
+      "correct_answer": "To load, clean, and manipulate data efficiently",
+      "explanation_correct": "Pandas is specifically designed as a data manipulation powerhouse that provides tools to load data from files, clean messy real-world data, and transform raw operational data into actionable insights. It acts as the Swiss Army knife for data work, enabling efficient data operations before any modeling or visualization takes place.",
+      "explanation_wrong": {
+        "To create machine learning models": "While pandas is used in the machine learning workflow, it is not designed to create models. Model creation is handled by libraries like scikit-learn. Pandas focuses on the data preparation stage that comes before modeling.",
+        "To visualize data in 3D charts": "Pandas can create basic visualizations, but its primary purpose is data manipulation and preparation, not advanced visualization. Libraries like matplotlib and plotly are specialized for visualization tasks.",
+        "To manage web server connections": "Pandas is not designed for web server management or network connections. It focuses exclusively on data manipulation tasks like loading CSV files, cleaning data, and performing transformations on tabular datasets."
+      }
+    },
+    {
+      "question": "What are the two fundamental data structures provided by pandas?",
+      "options": [
+        "Lists and Dictionaries",
+        "Arrays and Matrices",
+        "Series and DataFrame",
+        "Vectors and Tables"
+      ],
+      "correct_answer": "Series and DataFrame",
+      "explanation_correct": "Pandas provides Series (one-dimensional labeled arrays, like a single column) and DataFrame (two-dimensional labeled data structures, like a complete spreadsheet with rows and columns). These are the core structures for organizing and manipulating data in pandas, with Series representing single variables and DataFrames representing complete datasets.",
+      "explanation_wrong": {
+        "Lists and Dictionaries": "While lists and dictionaries are fundamental Python data structures, they are not pandas-specific structures. Pandas builds upon Python's basic types to create more powerful structures (Series and DataFrame) specifically designed for data analysis.",
+        "Arrays and Matrices": "Arrays and matrices are NumPy data structures, not pandas structures. While pandas uses NumPy internally, it provides its own specialized structures (Series and DataFrame) that add labels, more flexible indexing, and additional functionality beyond basic arrays.",
+        "Vectors and Tables": "These are generic terms used in statistics and mathematics, but not the specific names of pandas data structures. Pandas uses the terms Series and DataFrame to describe its one-dimensional and two-dimensional structures respectively."
+      }
+    },
+    {
+      "question": "In data quality assessment, what does 'completeness' refer to?",
+      "options": [
+        "Whether all expected values are present in the dataset",
+        "Whether data follows uniform formats and scales",
+        "Whether values fall within logical ranges",
+        "Whether each observation is recorded only once"
+      ],
+      "correct_answer": "Whether all expected values are present in the dataset",
+      "explanation_correct": "Completeness is a data quality dimension that assesses whether all expected values are present in the dataset. Missing values create blind spots in analysis, especially when the missingness is not random. For example, if bike-sharing sensors fail during storms, you lose exactly the data needed to understand weather impacts on demand.",
+      "explanation_wrong": {
+        "Whether data follows uniform formats and scales": "This describes 'consistency', not completeness. Consistency refers to whether data follows uniform formats, units, and scales (e.g., not mixing Celsius and Fahrenheit in the same column).",
+        "Whether values fall within logical ranges": "This describes 'validity', not completeness. Validity refers to whether values fall within logical or physically possible ranges (e.g., humidity should be between 0-100%).",
+        "Whether each observation is recorded only once": "This describes 'uniqueness', not completeness. Uniqueness refers to whether each observation is recorded only once without duplicates."
+      }
+    },
+    {
+      "question": "What is the recommended approach for handling duplicate timestamps in time series data?",
+      "options": [
+        "Delete all duplicate rows immediately",
+        "Keep the first occurrence and discard others",
+        "Aggregate duplicates using appropriate functions (SUM for targets, MEAN for numeric predictors)",
+        "Replace duplicates with null values"
+      ],
+      "correct_answer": "Aggregate duplicates using appropriate functions (SUM for targets, MEAN for numeric predictors)",
+      "explanation_correct": "The proper approach is to aggregate duplicates into a single consolidated record using appropriate aggregation functions: SUM for targets like bike counts (because rentals accumulate), MEAN for numeric predictors like temperature (to represent average conditions), and FIRST for categorical variables. This preserves information from all duplicate fragments rather than arbitrarily discarding data.",
+      "explanation_wrong": {
+        "Delete all duplicate rows immediately": "Simply deleting duplicates wastes potentially valuable data. Duplicates often represent partial fragments of the same hour that should be combined, not discarded. Deletion should only occur after attempting to consolidate the information.",
+        "Keep the first occurrence and discard others": "Keeping only the first occurrence arbitrarily discards information from other duplicate records. This approach assumes the first record is complete and correct, which may not be true if duplicates represent partial data fragments.",
+        "Replace duplicates with null values": "Replacing duplicates with null values creates missing data where none existed originally. This strategy makes the data quality problem worse rather than better, as you now have gaps to handle instead of duplicate information to consolidate."
+      }
+    },
+    {
+      "question": "Why is temporal continuity checking critical for time series forecasting?",
+      "options": [
+        "To calculate the total number of observations",
+        "To ensure the timeline has no gaps or duplicates that could break seasonal analysis",
+        "To sort the data chronologically",
+        "To convert timestamps to different time zones"
+      ],
+      "correct_answer": "To ensure the timeline has no gaps or duplicates that could break seasonal analysis",
+      "explanation_correct": "Temporal continuity checking verifies that the timeline is complete and consistent without gaps, duplicates, or misaligned sequences. Missing hours create false patterns, duplicates skew averages, and misaligned sequences break seasonal analysis. Before tackling outliers or missing values, we must verify the timeline's integrity to ensure reliable foundations for time series modeling.",
+      "explanation_wrong": {
+        "To calculate the total number of observations": "While temporal continuity checking does reveal the number of observations, this is not its primary purpose. The main goal is to identify structural problems (gaps, duplicates, misalignments) that could compromise time series analysis, not simply to count records.",
+        "To sort the data chronologically": "Sorting is a data preparation step that can be done separately from continuity checking. Temporal continuity checking specifically looks for missing time periods and duplicate timestamps, which are structural integrity issues beyond simple ordering.",
+        "To convert timestamps to different time zones": "Time zone conversion is a separate data transformation task unrelated to continuity checking. Continuity checking focuses on identifying gaps and duplicates in the temporal sequence, not on adjusting timestamp representations."
+      }
+    },
+    {
+      "question": "What is one-hot encoding used for?",
+      "options": [
+        "Converting numerical values to categories",
+        "Creating binary columns for each category of nominal variables",
+        "Normalizing data to 0-1 range",
+        "Removing outliers from the dataset"
+      ],
+      "correct_answer": "Creating binary columns for each category of nominal variables",
+      "explanation_correct": "One-hot encoding creates binary (0/1) columns for each category of a nominal (unordered) categorical variable. For example, encoding weather conditions (Clear, Misty, Light Rain, Heavy Rain) creates four binary columns where each row has exactly one '1' and the rest '0s', preserving the original information in a numerical format that machine learning algorithms can process.",
+      "explanation_wrong": {
+        "Converting numerical values to categories": "One-hot encoding works in the opposite direction - it converts categorical values into numerical representations (binary columns), not numerical values into categories. Converting numbers to categories is called discretization or binning.",
+        "Normalizing data to 0-1 range": "Normalization (scaling data to 0-1 range) is performed by techniques like MinMaxScaler, not one-hot encoding. One-hot encoding specifically handles categorical variables by creating binary indicator columns, while normalization adjusts the scale of continuous numerical variables.",
+        "Removing outliers from the dataset": "Outlier removal is a data cleaning task unrelated to one-hot encoding. One-hot encoding is a feature engineering technique for categorical variables, while outlier detection and removal addresses data quality issues in numerical variables."
+      }
+    },
+    {
+      "question": "What is the main difference between StandardScaler and MinMaxScaler?",
+      "options": [
+        "StandardScaler normalizes to mean=0 and std=1, while MinMaxScaler rescales to a fixed range (typically 0-1)",
+        "StandardScaler only works with categorical data",
+        "MinMaxScaler is faster to compute",
+        "StandardScaler removes outliers automatically"
+      ],
+      "correct_answer": "StandardScaler normalizes to mean=0 and std=1, while MinMaxScaler rescales to a fixed range (typically 0-1)",
+      "explanation_correct": "StandardScaler (Z-score normalization) standardizes features to have mean 0 and standard deviation 1, preserving the distribution shape while making features comparable on a statistical scale. MinMaxScaler rescales values to a defined range (usually 0-1), ensuring all values fit within predictable bounds. These serve different purposes: StandardScaler for statistical normalization, MinMaxScaler for bounded range normalization.",
+      "explanation_wrong": {
+        "StandardScaler only works with categorical data": "StandardScaler is specifically designed for numerical data, not categorical data. It calculates mean and standard deviation, which are statistical measures that only make sense for numerical values. Categorical data requires encoding techniques like one-hot encoding, not scaling.",
+        "MinMaxScaler is faster to compute": "Both scalers have similar computational complexity and speed. The choice between them should be based on the data characteristics and algorithm requirements, not computational efficiency. StandardScaler might be slightly slower due to calculating both mean and standard deviation, but the difference is negligible in practice.",
+        "StandardScaler removes outliers automatically": "StandardScaler does not remove outliers - it transforms all values including outliers. In fact, extreme outliers can affect StandardScaler's mean and standard deviation calculations. If outlier removal is needed, it must be done separately before or after scaling."
+      }
+    },
+    {
+      "question": "Why is cyclical encoding important for temporal features like hour of day?",
+      "options": [
+        "To make the data easier to visualize",
+        "To ensure adjacent time points (like 23:00 and 00:00) remain close in the feature space",
+        "To compress the data size",
+        "To remove seasonal patterns"
+      ],
+      "correct_answer": "To ensure adjacent time points (like 23:00 and 00:00) remain close in the feature space",
+      "explanation_correct": "Cyclical encoding using sine and cosine transformations ensures that naturally adjacent time points remain mathematically close. Without cyclical encoding, hour 23 and hour 0 appear far apart numerically (23 vs 0), even though they're only one hour apart on a 24-hour clock. Cyclical encoding preserves this circular relationship, enabling models to learn that late-night and early-morning hours share similar patterns.",
+      "explanation_wrong": {
+        "To make the data easier to visualize": "While cyclical features can be visualized on circular plots, visualization is not the primary purpose. The main goal is to preserve the circular nature of time for machine learning algorithms, ensuring that the mathematical representation matches the real-world temporal relationships.",
+        "To compress the data size": "Cyclical encoding actually increases data size slightly (one hour column becomes two columns: hour_sin and hour_cos). The purpose is not compression but rather proper representation of circular temporal relationships that algorithms can learn from effectively.",
+        "To remove seasonal patterns": "Cyclical encoding does not remove seasonal patterns - it preserves them in a mathematically appropriate way. The encoding helps models recognize that adjacent hours are similar, which is essential for learning hourly patterns. Removing seasonality would require different techniques like detrending or differencing."
+      }
+    },
+    {
+      "question": "What is the purpose of lag features in time series forecasting?",
+      "options": [
+        "To remove trends from the data",
+        "To use values from previous time steps as predictors for current observations",
+        "To calculate moving averages",
+        "To identify outliers"
+      ],
+      "correct_answer": "To use values from previous time steps as predictors for current observations",
+      "explanation_correct": "Lag features introduce historical patterns into the model by using past values as predictors. For example, demand_lag_1h uses the previous hour's demand to predict current demand, and demand_lag_24h uses the same hour yesterday. This captures sequential dependencies and recurring cycles essential for time series forecasting, helping models learn that current demand often relates to recent historical demand.",
+      "explanation_wrong": {
+        "To remove trends from the data": "Removing trends is accomplished through differencing or detrending techniques, not lag features. Lag features actually help models learn trends by providing historical context, rather than removing them. Trend removal is a data transformation step separate from feature engineering.",
+        "To calculate moving averages": "While lag features can be used to calculate moving averages (temporal aggregation features), this is not their primary purpose. Lag features directly use past values as predictors, whereas moving averages smooth data by averaging over windows. These are related but distinct feature engineering techniques.",
+        "To identify outliers": "Outlier identification uses statistical methods (Z-scores, IQR, isolation forests) to detect unusual values, not lag features. Lag features are predictive features that help models understand temporal dependencies, while outlier detection is a data quality assessment task performed during the cleaning phase."
+      }
+    },
+    {
+      "question": "What is the central tendency measure that represents the middle value when data is ordered?",
+      "options": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Standard deviation"
+      ],
+      "correct_answer": "Median",
+      "explanation_correct": "The median represents the middle value when all observations are arranged in numerical order - half of observations fall below it and half above it. Unlike the mean, the median remains unaffected by extreme values, providing a more robust measure of typical conditions in datasets with outliers or skewed distributions.",
+      "explanation_wrong": {
+        "Mean": "The mean is the arithmetic average calculated by summing all values and dividing by the count. While the mean is a measure of central tendency, it represents the 'center of gravity' rather than the middle position. The mean can be heavily influenced by extreme values, unlike the median.",
+        "Mode": "The mode represents the most frequently occurring value in a dataset, not the middle value. For continuous variables, modal analysis typically involves grouping values into ranges and identifying the most common range. Mode is useful for identifying typical values but doesn't indicate the middle position.",
+        "Standard deviation": "Standard deviation is a measure of variability or spread, not central tendency. It quantifies how much values deviate from the mean on average. Standard deviation tells you about data dispersion, while central tendency measures (mean, median, mode) tell you about typical or central values."
+      }
+    },
+    {
+      "question": "What does the coefficient of variation (CV) measure?",
+      "options": [
+        "The absolute variability in the data",
+        "The relative variability (standard deviation divided by mean)",
+        "The correlation between two variables",
+        "The percentage of missing data"
+      ],
+      "correct_answer": "The relative variability (standard deviation divided by mean)",
+      "explanation_correct": "The coefficient of variation (CV = standard deviation / mean) provides a relative measure of variability that enables comparisons across different scales. It answers 'Is this system's variation large or small relative to its typical demand level?' For example, a CV of 0.95 (95%) means the standard deviation is nearly equal to the mean, indicating extreme unpredictability requiring highly flexible operations.",
+      "explanation_wrong": {
+        "The absolute variability in the data": "Absolute variability is measured by standard deviation or variance, not the coefficient of variation. CV provides relative variability by scaling the standard deviation by the mean, making it unitless and comparable across different measurement scales or datasets.",
+        "The correlation between two variables": "Correlation between variables is measured by correlation coefficients (like Pearson's r), not the coefficient of variation. Correlation quantifies linear relationships between two variables, while CV measures the relative spread within a single variable.",
+        "The percentage of missing data": "The percentage of missing data is calculated by dividing the count of missing values by the total count, not through coefficient of variation. CV is a measure of dispersion for available data, unrelated to data completeness or missingness patterns."
+      }
+    },
+    {
+      "question": "What does a correlation coefficient (r) of +0.78 between temperature and bike demand indicate?",
+      "options": [
+        "Temperature causes 78% of bike demand",
+        "There is a strong positive relationship where higher temperatures associate with higher demand",
+        "78% of the data points are identical",
+        "Temperature is unrelated to bike demand"
+      ],
+      "correct_answer": "There is a strong positive relationship where higher temperatures associate with higher demand",
+      "explanation_correct": "A correlation of +0.78 indicates a strong positive relationship where both variables tend to increase together. As temperature rises, bike demand consistently rises as well. However, this is a statistical association, not proof of causation. Correlation above 0.70 typically indicates strong relationships worth investigating for business applications.",
+      "explanation_wrong": {
+        "Temperature causes 78% of bike demand": "Correlation does not establish causation, and the percentage is not about causation strength. The correlation coefficient measures association strength, not causal impact percentage. Additionally, r² (0.78² = 0.61) would indicate the proportion of variance explained, not the correlation coefficient itself.",
+        "78% of the data points are identical": "Correlation measures the strength of linear relationship between two variables, not the percentage of identical data points. Even with perfect correlation (r=1.0), the actual values of the two variables would be different - they would just move together in perfect proportion.",
+        "Temperature is unrelated to bike demand": "An r of +0.78 indicates a strong positive relationship, the opposite of being unrelated. Values near 0 would indicate no relationship, while 0.78 shows a substantial statistical association between temperature and demand."
+      }
+    },
+    {
+      "question": "What is the key difference between correlation and causation?",
+      "options": [
+        "Correlation is always stronger than causation",
+        "Correlation measures statistical association while causation proves that one variable directly causes changes in another",
+        "Correlation applies only to categorical variables",
+        "Causation is easier to establish than correlation"
+      ],
+      "correct_answer": "Correlation measures statistical association while causation proves that one variable directly causes changes in another",
+      "explanation_correct": "Correlation identifies statistical associations between variables but does not establish causal relationships. High correlation between temperature and bike demand doesn't prove that temperature directly causes demand changes - the relationship might reflect indirect effects, seasonal patterns, or confounding factors. Establishing causation requires understanding the underlying mechanisms through domain expertise, controlled experiments, or advanced causal inference techniques.",
+      "explanation_wrong": {
+        "Correlation is always stronger than causation": "Correlation and causation are different concepts, not comparable in terms of 'strength'. Correlation measures the degree of statistical association (quantified by coefficients like r), while causation describes a cause-effect relationship. A strong correlation can exist without any causation, and causation can exist with weak correlation.",
+        "Correlation applies only to categorical variables": "Correlation typically measures relationships between continuous numerical variables, not categorical variables. Categorical relationships are analyzed using chi-square tests or other categorical analysis methods. Continuous variables like temperature and bike demand are the primary use case for correlation analysis.",
+        "Causation is easier to establish than correlation": "The opposite is true - correlation is much easier to establish than causation. Correlation requires only calculating statistical associations from observational data, while establishing causation demands controlled experiments, temporal precedence verification, elimination of confounding factors, and understanding of causal mechanisms."
+      }
+    },
+    {
+      "question": "In data visualization, which visual encoding is most accurate for comparing values?",
+      "options": [
+        "Color hue",
+        "Area (like pie charts)",
+        "Position along a common scale (like bar charts)",
+        "Shape"
+      ],
+      "correct_answer": "Position along a common scale (like bar charts)",
+      "explanation_correct": "Position along a common scale is the most accurate way the human visual system compares quantities. When values are encoded as heights or positions (as in bar charts, line charts, or scatter plots), viewers can make precise magnitude comparisons. This is why bar charts are preferred over pie charts for comparing values - comparing bar heights is more accurate than comparing slice areas.",
+      "explanation_wrong": {
+        "Color hue": "Color is effective for distinguishing categories or highlighting elements but not for precise quantitative comparisons. While we can easily tell 'blue' from 'red', we struggle to judge whether 'dark blue' represents 20% more or 40% more than 'medium blue'. Color is ranked much lower than position in the visual perception hierarchy for quantitative comparison.",
+        "Area (like pie charts)": "Area comparison is one of the least accurate visual encodings for quantitative comparison. The human visual system struggles to accurately compare areas of circles or pie slices. This is why statisticians often discourage pie charts for precise comparisons - bar charts using position encoding are far more accurate.",
+        "Shape": "Shape is used for categorical distinction (circle vs. square vs. triangle) but provides no quantitative information. While shapes help distinguish different groups in visualizations, they cannot encode quantitative values for comparison. Shape is useful for nominal categories, not for comparing magnitudes."
+      }
+    },
+    {
+      "question": "When is a histogram most appropriate?",
+      "options": [
+        "To show relationships between two continuous variables",
+        "To compare categories across groups",
+        "To display the frequency distribution of a continuous variable",
+        "To show time series trends"
+      ],
+      "correct_answer": "To display the frequency distribution of a continuous variable",
+      "explanation_correct": "Histograms display the frequency distribution of continuous data by dividing values into bins and showing how many observations fall within each range. For bike-sharing demand, a histogram reveals operational patterns: if 45% of hours experience 200-400 rides, this frequency information enables tiered operational strategies with appropriate staffing for different demand conditions.",
+      "explanation_wrong": {
+        "To show relationships between two continuous variables": "Relationships between two continuous variables are best shown using scatter plots, which position data points according to values on both axes. Histograms show the distribution of a single variable, not relationships between multiple variables.",
+        "To compare categories across groups": "Comparing categories is best done with bar charts, which use separate bars for each category. While you can create histograms for different groups side-by-side, bar charts are the standard choice for categorical comparisons with discrete groups.",
+        "To show time series trends": "Time series trends are best visualized with line plots, which emphasize continuity and change over ordered time sequences. Histograms discard temporal order and focus solely on how frequently different values occur, regardless of when they occurred."
+      }
+    },
+    {
+      "question": "What type of visualization is best for showing temporal patterns over time?",
+      "options": [
+        "Pie chart",
+        "Histogram",
+        "Line plot",
+        "Box plot"
+      ],
+      "correct_answer": "Line plot",
+      "explanation_correct": "Line plots connect data points with line segments to emphasize continuity and change over ordered sequences, typically time. The line connections preserve natural temporal flow and help viewers follow demand evolution from hour to hour or day to day. This makes line plots ideal for revealing temporal patterns, seasonal cycles, and trends essential for operational planning in time-dependent systems.",
+      "explanation_wrong": {
+        "Pie chart": "Pie charts show part-to-whole relationships for categorical data at a single point in time, not temporal patterns. They cannot effectively display how values change over time because they lack a time axis and cannot show sequential relationships between time periods.",
+        "Histogram": "Histograms show the frequency distribution of values but discard temporal information. They tell you how often different demand levels occurred but not when they occurred or how demand evolved over time. Time series analysis requires preserving temporal order, which histograms eliminate.",
+        "Box plot": "Box plots show distribution summary statistics (quartiles, median, outliers) but do not preserve temporal order. While you can create box plots for different time periods, they summarize distributions rather than showing the continuous evolution of values over time that line plots provide."
+      }
+    },
+    {
+      "question": "What does R² (coefficient of determination) measure in regression analysis?",
+      "options": [
+        "The correlation between two variables",
+        "The proportion of variance in the target variable explained by the model",
+        "The average prediction error",
+        "The number of features in the model"
+      ],
+      "correct_answer": "The proportion of variance in the target variable explained by the model",
+      "explanation_correct": "R² quantifies the proportion of demand variation explained by the model, ranging from 0 to 1. An R² of 0.61 means the model explains 61% of demand variation, with 39% remaining unexplained. This percentage-based interpretation makes R² ideal for communicating model performance to executives: 'Our model captures 61% of demand patterns' is immediately meaningful without statistical background.",
+      "explanation_wrong": {
+        "The correlation between two variables": "The correlation coefficient (r) measures the linear relationship between two variables, while R² measures model performance for regression. R² is related to correlation (it equals r² for simple linear regression with one predictor) but represents explained variance in the target variable, not the correlation itself.",
+        "The average prediction error": "Average prediction error is measured by metrics like MAE (Mean Absolute Error) or RMSE (Root Mean Squared Error), not R². While R² is related to prediction error (it uses sum of squared residuals), it specifically measures the proportion of variance explained, not the average error magnitude.",
+        "The number of features in the model": "R² does not measure the number of features. While adding more features generally increases R² (sometimes leading to overfitting), R² quantifies explained variance, not feature count. Adjusted R² can account for the number of features, but standard R² is solely about explanatory power."
+      }
+    },
+    {
+      "question": "What is the primary assumption of linear regression?",
+      "options": [
+        "All variables must be categorical",
+        "Relationships can be expressed as linear equations with fixed coefficients",
+        "The data must be normally distributed",
+        "Variables must be independent of time"
+      ],
+      "correct_answer": "Relationships can be expressed as linear equations with fixed coefficients",
+      "explanation_correct": "Linear regression assumes relationships can be expressed through mathematical equations with fixed coefficients applied uniformly: y = b₀ + b₁x₁ + b₂x₂ + ... This means each feature's effect on the target is constant regardless of other feature values. For example, temperature might add 9.2 bikes/hour everywhere, regardless of humidity, season, or other context.",
+      "explanation_wrong": {
+        "All variables must be categorical": "Linear regression works with continuous numerical variables, not categorical variables. Categorical variables must be encoded (e.g., one-hot encoding) into numerical form before use in linear regression. The primary assumption is about linear relationships, not variable types.",
+        "The data must be normally distributed": "While normality of residuals (errors) is one assumption of linear regression for statistical inference, the primary defining assumption is linearity of relationships. The predictors themselves don't need to be normally distributed, and the model can still produce predictions even if normality assumptions are violated.",
+        "Variables must be independent of time": "Linear regression can handle time-dependent variables through appropriate feature engineering (lag features, temporal features). The primary assumption is about linear relationships between variables, not independence from time. Time series regression is a valid application of linear models with proper feature design."
+      }
+    },
+    {
+      "question": "What is the main purpose of train-test splitting in machine learning?",
+      "options": [
+        "To reduce data size for faster training",
+        "To evaluate model performance on unseen data that simulates future predictions",
+        "To remove outliers from the dataset",
+        "To balance the dataset across categories"
+      ],
+      "correct_answer": "To evaluate model performance on unseen data that simulates future predictions",
+      "explanation_correct": "Train-test splitting divides data into training (70-80%) and testing (20-30%) sets before any training occurs. The training set is used to fit the model, while the testing set is held aside completely to evaluate how well the model performs on data it has never seen. This simulates real-world deployment where models must predict future observations, enabling honest assessment of generalization ability.",
+      "explanation_wrong": {
+        "To reduce data size for faster training": "Train-test splitting uses most of the data (70-80%) for training, so it doesn't reduce training data size. While the test set is excluded from training, the purpose is validation, not computational efficiency. If data size is a concern, sampling techniques are used separately from train-test splitting.",
+        "To remove outliers from the dataset": "Outlier removal is a data cleaning step performed before train-test splitting, not the purpose of splitting itself. Both training and testing sets may contain outliers, and handling them is a separate data quality consideration independent of creating evaluation datasets.",
+        "To balance the dataset across categories": "Class balancing is relevant for classification problems and is a separate technique from train-test splitting. While stratified splitting can maintain category proportions across train/test sets, the primary purpose of splitting is to create independent evaluation data, not to balance categories."
+      }
+    },
+    {
+      "question": "Why is chronological splitting important for time series forecasting?",
+      "options": [
+        "It makes the dataset smaller",
+        "It preserves temporal order, using past data to predict future data, avoiding data leakage",
+        "It removes seasonal patterns",
+        "It ensures equal-sized training and testing sets"
+      ],
+      "correct_answer": "It preserves temporal order, using past data to predict future data, avoiding data leakage",
+      "explanation_correct": "Chronological splitting preserves temporal order by using the earliest portion (70-80%) for training and the most recent portion (20-30%) for testing. This mirrors real-world deployment where we train on all available history and predict tomorrow, next week, or next month. Random splitting would violate temporal order, potentially training on 'future' data to predict 'past' data, creating unrealistic evaluation scenarios.",
+      "explanation_wrong": {
+        "It makes the dataset smaller": "Chronological splitting doesn't reduce dataset size - it uses all available data, just divided differently than random splitting. The same percentage of data goes to training and testing regardless of whether the split is chronological or random.",
+        "It removes seasonal patterns": "Chronological splitting preserves seasonal patterns in their natural temporal context, rather than removing them. The goal is to maintain the time series structure so the model can learn and be evaluated on realistic temporal dependencies, including seasonality.",
+        "It ensures equal-sized training and testing sets": "Chronological splitting typically uses 70-80% for training and 20-30% for testing, creating unequal sets just like random splitting. The split proportion is independent of whether the split is chronological or random - both methods can use any train/test ratio."
+      }
+    },
+    {
+      "question": "What is cross-validation?",
+      "options": [
+        "A technique to remove outliers",
+        "A method to create multiple train-test splits systematically and average performance metrics",
+        "A way to encode categorical variables",
+        "A feature selection algorithm"
+      ],
+      "correct_answer": "A method to create multiple train-test splits systematically and average performance metrics",
+      "explanation_correct": "Cross-validation creates multiple train-test splits systematically and averages their performance metrics to obtain more reliable estimates than a single split. Instead of one evaluation giving one number, cross-validation provides multiple evaluations, and their average provides a more robust estimate of model performance. The standard deviation across evaluations reveals performance consistency.",
+      "explanation_wrong": {
+        "A technique to remove outliers": "Outlier removal is a data cleaning technique performed before model training, unrelated to cross-validation. Cross-validation is an evaluation methodology that assesses model performance across multiple data splits, not a data preprocessing or cleaning method.",
+        "A way to encode categorical variables": "Categorical encoding (one-hot encoding, ordinal encoding, etc.) is a feature engineering technique that converts categories to numbers, completely separate from cross-validation. Cross-validation evaluates models, while encoding prepares features for those models.",
+        "A feature selection algorithm": "Feature selection identifies which features to include in models using techniques like recursive elimination or importance scoring. Cross-validation is an evaluation framework that can be used during feature selection but is not itself a feature selection method."
+      }
+    },
+    {
+      "question": "What is the key difference between standard K-Fold and TimeSeriesSplit cross-validation?",
+      "options": [
+        "K-Fold uses more folds",
+        "TimeSeriesSplit preserves chronological order with expanding training windows, while K-Fold creates random folds",
+        "K-Fold is more accurate",
+        "TimeSeriesSplit only works with daily data"
+      ],
+      "correct_answer": "TimeSeriesSplit preserves chronological order with expanding training windows, while K-Fold creates random folds",
+      "explanation_correct": "TimeSeriesSplit creates chronological folds where each fold's training set includes all previous data and the test set contains the next time period, respecting temporal order in every fold. Standard K-Fold creates random folds that can put future observations in training and past observations in testing, violating temporal dependencies and creating unrealistic evaluation for time series.",
+      "explanation_wrong": {
+        "K-Fold uses more folds": "Both methods can use any number of folds (splits). The choice of fold count (typically 5 or 10) is independent of whether you use K-Fold or TimeSeriesSplit. The key difference is how folds are created (random vs. chronological), not how many are created.",
+        "K-Fold is more accurate": "Accuracy depends on whether the evaluation matches the deployment scenario. For time series data, TimeSeriesSplit provides more accurate (realistic) evaluation by respecting temporal order. K-Fold can give misleadingly optimistic results for time series by allowing temporal leakage.",
+        "TimeSeriesSplit only works with daily data": "TimeSeriesSplit works with any time series frequency - hourly, daily, weekly, monthly, or any other regular interval. The method respects temporal order regardless of the specific time unit, making it applicable to any time series forecasting problem."
+      }
+    },
+    {
+      "question": "What is a decision tree in machine learning?",
+      "options": [
+        "A linear equation with multiple terms",
+        "An algorithm that makes predictions by learning if-then decision rules from training data",
+        "A visualization technique for data exploration",
+        "A method to calculate correlation"
+      ],
+      "correct_answer": "An algorithm that makes predictions by learning if-then decision rules from training data",
+      "explanation_correct": "A decision tree makes predictions by learning a series of if-then decision rules from training data. Unlike linear regression which creates single equations, decision trees create hierarchical rules that partition data into distinct regions: 'If temp > 20°C AND humidity ≤ 50%, predict 200 bikes; else if temp > 20°C AND humidity > 70%, predict 120 bikes.' This enables capturing complex, non-linear patterns through conditional logic.",
+      "explanation_wrong": {
+        "A linear equation with multiple terms": "Linear equations (like y = b₀ + b₁x₁ + b₂x₂) are created by linear regression, not decision trees. Decision trees use hierarchical if-then rules rather than mathematical equations, enabling them to capture non-linear patterns that linear equations cannot represent.",
+        "A visualization technique for data exploration": "While decision trees can be visualized (and visualization aids interpretation), they are primarily machine learning algorithms for prediction, not visualization tools. Decision trees build predictive models; the visualization is a byproduct that helps understand the model's logic.",
+        "A method to calculate correlation": "Correlation analysis measures statistical relationships between variables using coefficients like Pearson's r. Decision trees are supervised learning algorithms that build predictive models, not statistical measures of association. Trees can discover relationships through splitting, but they don't calculate correlation coefficients."
+      }
+    },
+    {
+      "question": "How do decision trees differ from linear regression in modeling approach?",
+      "options": [
+        "Decision trees can only handle categorical variables",
+        "Decision trees create conditional rules where one feature's effect depends on others, while linear regression assumes uniform effects",
+        "Linear regression is always more accurate",
+        "Decision trees require less data"
+      ],
+      "correct_answer": "Decision trees create conditional rules where one feature's effect depends on others, while linear regression assumes uniform effects",
+      "explanation_correct": "Decision trees create conditional rules where one feature's effect depends on other features' values: 'If temp > 22°C AND humidity < 50%, predict 200 bikes; but if temp > 22°C AND humidity > 70%, predict 120 bikes.' Linear regression assumes each coefficient applies uniformly: 'Every 1°C increase adds 9.2 bikes regardless of humidity.' This difference enables trees to capture interaction effects and non-linear patterns that linear models cannot represent.",
+      "explanation_wrong": {
+        "Decision trees can only handle categorical variables": "Decision trees excel at handling both categorical and numerical variables. They can split on numerical features (e.g., 'temp > 20') as easily as categorical features (e.g., 'season in {winter, spring}'). This flexibility with mixed data types is actually an advantage of decision trees.",
+        "Linear regression is always more accurate": "Neither algorithm is always more accurate - performance depends on the data's underlying structure. When relationships are approximately linear and simple, linear regression may perform as well or better. When relationships are non-linear or involve complex interactions, decision trees often provide superior accuracy.",
+        "Decision trees require less data": "Decision trees typically require more data than linear regression to reliably learn hierarchical patterns without overfitting. Linear regression can work with smaller datasets (hundreds of observations) when relationships are approximately linear, while trees need larger datasets (thousands of observations) to avoid memorizing noise."
+      }
+    },
+    {
+      "question": "What is overfitting in decision trees?",
+      "options": [
+        "When the tree is too small to capture patterns",
+        "When the tree learns training data too specifically, capturing noise rather than generalizable patterns",
+        "When the tree splits on the wrong features",
+        "When the tree runs out of memory"
+      ],
+      "correct_answer": "When the tree learns training data too specifically, capturing noise rather than generalizable patterns",
+      "explanation_correct": "Overfitting occurs when a model learns training data too specifically, capturing noise and random variations rather than underlying patterns that generalize to new observations. Decision trees can achieve near-perfect training accuracy by growing deep enough to memorize every observation, creating highly specific rules like 'If temp=22.3°C AND humidity=67% AND hour=8 AND weekday=Tuesday, predict 43 bikes.' This rule perfectly predicts one training observation but fails for similar new conditions.",
+      "explanation_wrong": {
+        "When the tree is too small to capture patterns": "This describes underfitting, not overfitting. Underfitting occurs when a model is too simple to capture the underlying patterns (high bias), while overfitting occurs when a model is too complex and memorizes training data (high variance). Shallow trees underfit; very deep trees overfit.",
+        "When the tree splits on the wrong features": "Splitting on suboptimal features would reduce model performance but isn't specifically overfitting. Overfitting is about excessive adaptation to training data regardless of which features are used. A tree can overfit even when using the most important features if it creates overly specific rules.",
+        "When the tree runs out of memory": "Memory exhaustion is a computational constraint unrelated to overfitting, which is a statistical learning problem. Trees can overfit with plenty of available memory if allowed to grow too deep. Overfitting is about model complexity and generalization ability, not hardware resources."
+      }
+    },
+    {
+      "question": "What is Random Forest?",
+      "options": [
+        "A single decision tree trained on random data",
+        "An ensemble of multiple decision trees trained on different bootstrap samples with random feature selection",
+        "A linear regression with random coefficients",
+        "A data sampling technique"
+      ],
+      "correct_answer": "An ensemble of multiple decision trees trained on different bootstrap samples with random feature selection",
+      "explanation_correct": "Random Forest combines multiple decision trees (typically 100-500) trained on different bootstrap samples (random samples with replacement) of the original dataset. Additionally, at each node, the algorithm randomly selects a subset of features (typically √n features) for splitting. These two diversity mechanisms ensure different trees make independent predictions, and averaging them reduces variance while maintaining pattern-capture ability.",
+      "explanation_wrong": {
+        "A single decision tree trained on random data": "Random Forest is an ensemble (collection) of many trees, not a single tree. The 'forest' refers to multiple trees working together. While each tree trains on a random bootstrap sample, the key to Random Forest's performance is combining predictions from many diverse trees, not using a single tree.",
+        "A linear regression with random coefficients": "Random Forest is based on decision trees, not linear regression. It uses hierarchical if-then rules rather than linear equations. Linear models and tree-based models are fundamentally different approaches - Random Forest makes no use of linear regression methodology.",
+        "A data sampling technique": "While Random Forest uses bootstrap sampling as part of its training process, it is a complete machine learning algorithm for making predictions, not just a sampling technique. Bootstrap sampling is one component that creates diversity among trees, but Random Forest encompasses the entire ensemble learning framework."
+      }
+    },
+    {
+      "question": "How does Random Forest reduce overfitting compared to single decision trees?",
+      "options": [
+        "By using less data",
+        "By averaging predictions from multiple diverse trees trained on different samples",
+        "By removing all splits from trees",
+        "By converting trees to linear models"
+      ],
+      "correct_answer": "By averaging predictions from multiple diverse trees trained on different samples",
+      "explanation_correct": "Random Forest reduces overfitting through variance reduction: averaging many high-variance models (individual trees) dramatically reduces overall variance while maintaining pattern-capture ability. Bootstrap sampling and feature randomness create diverse trees that make independent predictions. When averaged, individual errors partially cancel out, capturing collective knowledge while reducing mistake impacts - the 'wisdom of crowds' principle.",
+      "explanation_wrong": {
+        "By using less data": "Random Forest uses all available data through bootstrap sampling, where each tree sees a different random sample (with replacement) from the full dataset. Using less data would reduce model quality. The key is using the same data differently across trees to create diversity, not using less data.",
+        "By removing all splits from trees": "Removing splits would eliminate the trees' ability to capture patterns, creating severely underfit models. Random Forest relies on decision trees making splits to learn patterns. The overfitting reduction comes from averaging many trees' predictions, not from limiting tree structure.",
+        "By converting trees to linear models": "Random Forest maintains decision tree structure throughout - it never converts to linear models. The ensemble combines tree predictions (which remain hierarchical rules), not linear equations. Random Forest specifically leverages trees' ability to capture non-linear patterns that linear models cannot."
+      }
+    },
+    {
+      "question": "What does feature importance in Random Forest indicate?",
+      "options": [
+        "The number of times a feature appears in the dataset",
+        "The relative contribution of each feature to predictive performance based on mean decrease in impurity",
+        "The correlation between features",
+        "The order features should be removed"
+      ],
+      "correct_answer": "The relative contribution of each feature to predictive performance based on mean decrease in impurity",
+      "explanation_correct": "Feature importance quantifies each feature's relative contribution to predictions using mean decrease in impurity (MDI). For each tree, the algorithm tracks which features are used for splitting and how much each split reduces MSE (mean squared error). These reductions are summed per feature across all splits and trees, then averaged and normalized to percentages. Features with high importance appear frequently and produce large MSE reductions when splitting.",
+      "explanation_wrong": {
+        "The number of times a feature appears in the dataset": "The number of times a feature appears is simply the dataset size (every row has values for all features). Feature importance measures how useful the feature is for prediction, not how often it appears in the data. Importance is based on information gain during splitting, not frequency of occurrence.",
+        "The correlation between features": "Correlation between features is measured separately using correlation coefficients. Feature importance quantifies each feature's contribution to predictions, not relationships between features. While correlated features may share importance, the metric itself measures predictive value, not inter-feature correlations.",
+        "The order features should be removed": "Feature importance shows predictive contribution, not removal priority. While low-importance features might be candidates for removal, other factors matter: redundancy with other features, data collection costs, interpretability needs. Importance guides feature selection but doesn't dictate a strict removal order."
+      }
+    },
+    {
+      "question": "What is Mean Absolute Error (MAE)?",
+      "options": [
+        "The squared average of prediction errors",
+        "The average absolute difference between actual and predicted values",
+        "The correlation between predictions and actual values",
+        "The percentage of correct predictions"
+      ],
+      "correct_answer": "The average absolute difference between actual and predicted values",
+      "explanation_correct": "MAE calculates the average absolute difference between actual and predicted values: MAE = (1/n) × Σ|actual - predicted|. For bike-sharing, MAE of 90 bikes/hour means predictions are typically off by 90 bikes. This direct interpretability in original units makes MAE ideal for operational communication - executives immediately understand 'predictions typically off by 90 bikes' without statistical background.",
+      "explanation_wrong": {
+        "The squared average of prediction errors": "Squared average of prediction errors describes MSE (Mean Squared Error), not MAE. MSE squares each error before averaging (MSE = Σ(actual - predicted)²/n), while MAE takes absolute values (MAE = Σ|actual - predicted|/n). MSE penalizes large errors more heavily due to squaring.",
+        "The correlation between predictions and actual values": "Correlation measures the linear relationship between two variables, unrelated to prediction error magnitude. While correlation can indicate how well predictions track actual values directionally, it doesn't measure accuracy in the original units. MAE quantifies average error magnitude, while correlation measures relationship strength.",
+        "The percentage of correct predictions": "Percentage of correct predictions (accuracy) applies to classification problems with discrete classes, not regression with continuous values. For regression, we measure how close predictions are to actual values (using metrics like MAE, RMSE), not whether they match exactly. Perfect accuracy is unrealistic for continuous predictions."
+      }
+    },
+    {
+      "question": "What is the main advantage of RMSE over MSE?",
+      "options": [
+        "RMSE is faster to compute",
+        "RMSE restores interpretable units (e.g., bikes/hour) by taking the square root of MSE",
+        "RMSE removes all outliers",
+        "RMSE always produces smaller values"
+      ],
+      "correct_answer": "RMSE restores interpretable units (e.g., bikes/hour) by taking the square root of MSE",
+      "explanation_correct": "RMSE (Root Mean Squared Error) applies square root transformation to MSE, converting from 'squared bikes' back to 'bikes per hour' while maintaining MSE's mathematical properties. RMSE = √MSE combines MSE's mathematical advantages (emphasis on large errors) with interpretable units. Reporting 'RMSE reduced from 150 to 135 bikes/hour' communicates both magnitude and penalty for large errors in units stakeholders understand.",
+      "explanation_wrong": {
+        "RMSE is faster to compute": "RMSE requires computing MSE first, then taking a square root, making it slightly slower than MSE alone (though negligibly so). The advantage is interpretability, not computational efficiency. Both metrics have similar computational complexity, with RMSE requiring one additional square root operation.",
+        "RMSE removes all outliers": "RMSE does not remove outliers - it's a performance metric, not a data cleaning method. Like MSE, RMSE is affected by outliers (large errors contribute substantially due to squaring). Outlier removal must be done separately during data cleaning before model evaluation.",
+        "RMSE always produces smaller values": "RMSE produces smaller values than MSE (since it's the square root) but larger values than MAE (due to the squaring penalty). The relationship is: RMSE ≥ MAE for any dataset, with equality only when all errors are identical. RMSE's value magnitude isn't its advantage - interpretable units are."
+      }
+    },
+    {
+      "question": "Why is RMSE generally larger than MAE for the same predictions?",
+      "options": [
+        "Because RMSE is calculated incorrectly",
+        "Because RMSE penalizes large errors more heavily through squaring",
+        "Because RMSE uses different data",
+        "Because MAE removes outliers automatically"
+      ],
+      "correct_answer": "Because RMSE penalizes large errors more heavily through squaring",
+      "explanation_correct": "RMSE ≥ MAE always, with RMSE > MAE when large errors are present. The squaring in RMSE's calculation (RMSE = √[(Σ(actual-predicted)²)/n]) amplifies large errors before averaging, while MAE treats all errors equally (MAE = Σ|actual-predicted|/n). A 50-bike error contributes 25× more to RMSE than a 10-bike error (50²/10² = 2500/100 = 25), but only 5× more to MAE (50/10 = 5).",
+      "explanation_wrong": {
+        "Because RMSE is calculated incorrectly": "RMSE is calculated correctly using the established formula: square errors, average them, take square root. The relationship RMSE ≥ MAE is mathematically guaranteed and intentional, not a calculation error. This property reflects RMSE's design to emphasize large errors through squaring.",
+        "Because RMSE uses different data": "Both RMSE and MAE are calculated on the same actual and predicted values. They differ in how they aggregate errors (squared vs. absolute), not in the data used. Using identical predictions and actual values, RMSE will always be greater than or equal to MAE due to the mathematical properties of squaring.",
+        "Because MAE removes outliers automatically": "MAE does not remove outliers - both metrics are calculated on all available data points. Neither metric involves outlier removal. MAE is less sensitive to outliers than RMSE (treating all errors equally), but it includes outliers in the calculation. The difference is mathematical treatment, not data filtering."
+      }
+    },
+    {
+      "question": "What does an R² of 0.61 mean?",
+      "options": [
+        "The model is 61% accurate",
+        "The model explains 61% of the variance in the target variable",
+        "61% of predictions are correct",
+        "The model has 61% error rate"
+      ],
+      "correct_answer": "The model explains 61% of the variance in the target variable",
+      "explanation_correct": "R² = 0.61 means the model explains 61% of demand variation, with 39% remaining unexplained. This represents a 61% improvement over the naive baseline of always predicting the mean. The formula R² = 1 - (SS_res/SS_tot) compares the model's errors (SS_res) to a baseline model that always predicts the mean (SS_tot). Values range from 0 (no better than mean) to 1 (perfect predictions).",
+      "explanation_wrong": {
+        "The model is 61% accurate": "'Accuracy' as a percentage typically refers to classification (61% of classes predicted correctly), not regression with continuous values. R² measures explained variance, not a simple percentage correct. For continuous predictions, we don't measure what percentage are 'correct' but rather how much variation we've explained.",
+        "61% of predictions are correct": "This interpretation applies to classification accuracy, not regression R². For continuous values, predictions are rarely exactly 'correct' - we measure how close they are. R² quantifies how much better the model is than always predicting the mean, not what percentage of predictions match exactly.",
+        "The model has 61% error rate": "Error rate (61%) would mean very poor performance, but R² = 0.61 indicates reasonably good performance. R² represents explained variance (higher is better), not error rate (lower is better). An R² of 0.61 means 61% of variation is explained, which is positive performance, not 61% errors."
+      }
+    },
+    {
+      "question": "What is the primary purpose of systematic algorithm comparison?",
+      "options": [
+        "To use as many algorithms as possible",
+        "To identify optimal models based on empirical evidence using consistent evaluation methodologies",
+        "To make the analysis more complex",
+        "To increase computation time"
+      ],
+      "correct_answer": "To identify optimal models based on empirical evidence using consistent evaluation methodologies",
+      "explanation_correct": "Systematic algorithm comparison uses consistent evaluation methodologies (same data, same splits, same metrics) across all models to enable fair, evidence-based algorithm selection. This ensures performance differences reflect algorithmic capabilities rather than data advantages or evaluation inconsistencies. Multiple metrics (MAE, RMSE, R²) capture different performance dimensions, revealing nuanced trade-offs for informed decisions.",
+      "explanation_wrong": {
+        "To use as many algorithms as possible": "The goal is not algorithm quantity but finding the best algorithm for your specific problem. Systematic comparison helps identify which algorithm performs best, not to use all available algorithms. Testing too many algorithms without clear criteria can lead to overfitting to the test set and wasted computational resources.",
+        "To make the analysis more complex": "Systematic comparison actually simplifies decision-making by providing clear, comparable evidence about algorithm performance. Complexity is a byproduct when needed, not the goal. The purpose is to enable confident, data-driven model selection based on empirical performance rather than intuition or guesswork.",
+        "To increase computation time": "While comparison requires computing multiple models, the goal is better decisions, not longer computation. Systematic comparison prevents wasting time on suboptimal algorithms by identifying the best performer early. The computational cost is an investment in finding the optimal solution, not an end in itself."
+      }
+    },
+    {
+      "question": "When comparing Linear Regression and Random Forest, which statement is most accurate?",
+      "options": [
+        "Linear Regression is always better for transportation data",
+        "Random Forest typically provides better accuracy but with some loss of interpretability",
+        "Random Forest cannot handle numerical features",
+        "Linear Regression and Random Forest produce identical results"
+      ],
+      "correct_answer": "Random Forest typically provides better accuracy but with some loss of interpretability",
+      "explanation_correct": "Random Forest typically achieves higher accuracy by capturing non-linear patterns and feature interactions that linear models cannot represent. However, this comes at the cost of some interpretability: linear models provide transparent coefficients ('temperature increases demand by 9.2 bikes/°C everywhere'), while Random Forest creates complex conditional rules distributed across hundreds of trees. For high-stakes applications where prediction accuracy determines revenue, Random Forest's superior performance often justifies modest interpretability trade-offs.",
+      "explanation_wrong": {
+        "Linear Regression is always better for transportation data": "Neither algorithm is universally better for all transportation data. Performance depends on the underlying data structure: if relationships are approximately linear, Linear Regression may suffice. When relationships are non-linear or involve complex interactions, Random Forest typically outperforms. The optimal choice depends on the specific problem and evaluation metrics.",
+        "Random Forest cannot handle numerical features": "Random Forest excels at handling both numerical and categorical features. Trees can split on numerical features (e.g., 'temp > 20') as easily as categorical ones. This flexibility with mixed data types is actually an advantage of tree-based methods over some other algorithms that require extensive preprocessing.",
+        "Linear Regression and Random Forest produce identical results": "These algorithms use fundamentally different approaches (linear equations vs. hierarchical decision rules) and produce different predictions. Random Forest typically achieves better accuracy on complex datasets by capturing non-linear patterns, while Linear Regression may perform comparably on simpler datasets with approximately linear relationships."
+      }
+    },
+    {
+      "question": "What is the proper sequence for the machine learning workflow?",
+      "options": [
+        "Model training → Data cleaning → Evaluation",
+        "Data cleaning → Feature engineering → Model training → Evaluation",
+        "Evaluation → Data cleaning → Model training",
+        "Model training → Evaluation → Data cleaning"
+      ],
+      "correct_answer": "Data cleaning → Feature engineering → Model training → Evaluation",
+      "explanation_correct": "The proper workflow follows a logical sequence: (1) Data cleaning ensures quality foundations, (2) Feature engineering creates optimized predictors, (3) Model training learns patterns from prepared data, (4) Evaluation assesses performance on unseen data. Each stage builds on previous work, and skipping or reordering steps compromises model quality and evaluation validity.",
+      "explanation_wrong": {
+        "Model training → Data cleaning → Evaluation": "Training on uncleaned data means learning from errors, outliers, and missing values, producing unreliable models. Cleaning must precede training to ensure models learn genuine patterns rather than data quality artifacts. Evaluation also depends on proper preparation, so cleaning must come first.",
+        "Evaluation → Data cleaning → Model training": "Evaluation requires trained models to evaluate, making this sequence impossible. You cannot assess model performance before the model exists. Cleaning and training must precede evaluation, which is the final stage that determines whether the developed model meets business requirements.",
+        "Model training → Evaluation → Data cleaning": "This sequence trains on dirty data, evaluates flawed models, then cleans the data when it's too late to benefit the models already trained. Data cleaning must occur before training to ensure models learn from quality data. Retroactive cleaning cannot fix models already trained on problematic data."
+      }
+    },
+    {
+      "question": "What is the purpose of using multiple evaluation metrics (MAE, RMSE, R²) instead of just one?",
+      "options": [
+        "To make the analysis look more sophisticated",
+        "To capture different aspects of model performance (interpretability, penalty for large errors, explained variance)",
+        "To increase computation time",
+        "Because one metric is not sufficient for any model"
+      ],
+      "correct_answer": "To capture different aspects of model performance (interpretability, penalty for large errors, explained variance)",
+      "explanation_correct": "Multiple metrics reveal complementary performance aspects: MAE provides interpretable average error magnitude in original units, RMSE emphasizes accuracy for large errors through squaring, and R² contextualizes performance relative to baseline. Together, they provide comprehensive assessment - MAE for operations communication, RMSE for model comparison with error sensitivity, R² for executive performance context.",
+      "explanation_wrong": {
+        "To make the analysis look more sophisticated": "Multiple metrics serve functional purposes, not superficial sophistication. Each metric answers different business questions: 'What's typical error?' (MAE), 'How bad are the worst errors?' (RMSE), 'How much better than guessing mean?' (R²). This multiplicity reflects genuine analytical needs, not cosmetic complexity.",
+        "To increase computation time": "While computing multiple metrics takes slightly more time, this is negligible compared to model training time. The purpose is comprehensive performance assessment from different perspectives, not computational overhead. The marginal cost is easily justified by the additional insights gained.",
+        "Because one metric is not sufficient for any model": "Single metrics can be sufficient for simple applications with clear priorities (e.g., just MAE if only average error matters). However, business applications often benefit from multiple perspectives: operational teams need MAE, data scientists compare with RMSE, executives understand R². The multiplicity reflects diverse stakeholder needs rather than universal insufficiency."
+      }
+    },
+    {
+      "question": "In the context of bike-sharing, what does 'temporal feature engineering' primarily address?",
+      "options": [
+        "Converting timestamps to different time zones",
+        "Creating features like hour, day of week, and season that capture time-based demand patterns",
+        "Removing time-related information from the dataset",
+        "Calculating the duration between trips"
+      ],
+      "correct_answer": "Creating features like hour, day of week, and season that capture time-based demand patterns",
+      "explanation_correct": "Temporal feature engineering transforms raw timestamps into meaningful features that capture time-based patterns driving transportation demand: hour (rush hour peaks), day of week (weekday vs. weekend patterns), season (annual cycles), and cyclical encodings (preserving circular time relationships). These features enable models to learn that 8 AM weekdays have different demand patterns than 2 PM Sundays, essential for accurate forecasting.",
+      "explanation_wrong": {
+        "Converting timestamps to different time zones": "Time zone conversion is a data transformation for consistency when working with data from multiple regions, not feature engineering. Temporal feature engineering creates new predictive features from time information, while time zone conversion simply adjusts timestamp representations to a common reference.",
+        "Removing time-related information from the dataset": "Temporal feature engineering adds time-based features rather than removing them. Time is one of the most critical dimensions for transportation demand, so removing it would eliminate essential predictive information. The goal is to extract and enhance temporal patterns, not eliminate them.",
+        "Calculating the duration between trips": "Trip duration is a different feature related to individual trip characteristics, not the temporal patterns of aggregate demand. Temporal feature engineering for demand forecasting focuses on when demand occurs (time of day, day of week, season), not how long individual trips last."
+      }
+    },
+    {
+      "question": "What is bootstrap sampling in Random Forest?",
+      "options": [
+        "Selecting all data points in order",
+        "Random sampling with replacement where some observations may appear multiple times",
+        "Removing outliers before training",
+        "Splitting data into train and test sets"
+      ],
+      "correct_answer": "Random sampling with replacement where some observations may appear multiple times",
+      "explanation_correct": "Bootstrap sampling creates diverse training sets by randomly sampling with replacement from the original dataset. Each tree in the Random Forest trains on a different bootstrap sample where some observations appear multiple times and others don't appear at all. This sampling strategy ensures each tree learns from a slightly different data perspective, contributing to the ensemble's diversity and variance reduction.",
+      "explanation_wrong": {
+        "Selecting all data points in order": "Bootstrap sampling is random, not sequential. Selecting all points in order would give every tree identical data, eliminating the diversity that makes Random Forest effective. Random sampling with replacement ensures each tree sees a unique subset, creating the varied perspectives that enable variance reduction through averaging.",
+        "Removing outliers before training": "Bootstrap sampling is about creating diverse training sets through random sampling, not outlier removal. Outlier handling is a separate data cleaning step performed before any model training. Bootstrap samples include outliers (possibly multiple times) from the original dataset, as they're randomly selected with replacement.",
+        "Splitting data into train and test sets": "Train-test splitting creates separate datasets for training and evaluation, performed once before any model training. Bootstrap sampling is performed for each tree in the Random Forest, creating many different training samples from the original training set. These are distinct processes with different purposes: one for evaluation, one for ensemble diversity."
+      }
+    },
+    {
+      "question": "What happens if you evaluate a model only on its training data without using a test set?",
+      "options": [
+        "You get an honest estimate of future performance",
+        "The performance metrics will be optimistically biased and may not reflect true predictive ability",
+        "The model will train faster",
+        "The model becomes more accurate"
+      ],
+      "correct_answer": "The performance metrics will be optimistically biased and may not reflect true predictive ability",
+      "explanation_correct": "Evaluating on training data creates circular logic - testing on the same data used for training makes it impossible to distinguish learning from memorization. Performance metrics will be optimistically biased because the model has 'seen' these observations during training. An overfit model can achieve perfect training accuracy by memorizing examples while failing completely on new data, making training-only evaluation misleading.",
+      "explanation_wrong": {
+        "You get an honest estimate of future performance": "Training data evaluation provides dishonest estimates because the model has already seen and learned from this data. For honest performance estimates that simulate future predictions, you must evaluate on completely unseen test data that the model never encountered during training.",
+        "The model will train faster": "Evaluation method (training vs. test data) doesn't affect training speed - training time is determined by algorithm, data size, and computational resources. Whether you evaluate on training or test data afterward has no impact on how long training takes.",
+        "The model becomes more accurate": "The model's true accuracy is unchanged by evaluation method - only your measurement of that accuracy changes. Evaluating on training data gives misleadingly high accuracy estimates for overfit models, but doesn't improve the model's actual ability to predict new observations."
+      }
+    },
+    {
+      "question": "What does it mean when RMSE is significantly larger than MAE for the same predictions?",
+      "options": [
+        "The metrics were calculated incorrectly",
+        "Large prediction errors are present, which RMSE penalizes more heavily through squaring",
+        "The model is performing very well",
+        "The data has no outliers"
+      ],
+      "correct_answer": "Large prediction errors are present, which RMSE penalizes more heavily through squaring",
+      "explanation_correct": "RMSE > MAE indicates the presence of large prediction errors. Since RMSE squares errors before averaging (amplifying large errors) while MAE treats all errors equally, a substantial gap between them reveals that some predictions are far from actual values. For example, if RMSE = 135 and MAE = 90, the RMSE/MAE ratio of 1.5 suggests notable large errors that RMSE is penalizing disproportionately.",
+      "explanation_wrong": {
+        "The metrics were calculated incorrectly": "RMSE being larger than MAE is mathematically guaranteed (RMSE ≥ MAE always) and is not a calculation error. The size of the gap provides information about error distribution: larger gaps indicate more large errors, smaller gaps indicate more uniform error sizes. This relationship is a feature of the metrics' definitions, not a mistake.",
+        "The model is performing very well": "A large RMSE-MAE gap doesn't indicate good performance - it indicates the presence of large errors. While both metrics should be evaluated in absolute terms (comparing to baselines, business requirements), a wide gap specifically signals that some predictions are substantially wrong, which is a weakness rather than a strength.",
+        "The data has no outliers": "The opposite is true - a large RMSE-MAE gap often indicates outliers or large errors in the predictions. If all errors were similar in magnitude, RMSE and MAE would be close to each other. The gap widens when large errors are present, as RMSE's squaring operation amplifies them disproportionately."
+      }
+    },
+    {
+      "question": "What is the primary benefit of feature importance analysis in Random Forest?",
+      "options": [
+        "To increase model accuracy",
+        "To identify which factors drive predictions, enabling data-driven resource allocation and strategic planning",
+        "To reduce training time",
+        "To remove features from the dataset"
+      ],
+      "correct_answer": "To identify which factors drive predictions, enabling data-driven resource allocation and strategic planning",
+      "explanation_correct": "Feature importance reveals which factors actually drive predictions, translating statistical models into business strategy. For example, if 'hour' dominates with 49% importance, Capital City Bikes should prioritize temporal optimization (rush hour fleet positioning) over weather-reactive strategies. This enables data-driven decisions about which features justify data collection costs, monitoring systems, and operational focus.",
+      "explanation_wrong": {
+        "To increase model accuracy": "Feature importance analysis identifies which features matter but doesn't directly increase accuracy. You might use importance to inform feature selection (removing low-importance features), which could improve model efficiency and sometimes generalization, but the primary value is understanding, not automatic accuracy improvement.",
+        "To reduce training time": "Feature importance is calculated after training is complete, so it doesn't reduce training time. While you might use importance to select fewer features for future models (potentially reducing training time), the primary purpose is understanding which features drive predictions, not computational efficiency.",
+        "To remove features from the dataset": "Feature importance helps inform feature selection decisions but doesn't automatically remove features. Low importance doesn't always mean features should be removed - they might provide value in specific scenarios, work synergistically with other features, or serve regulatory requirements. Importance guides decisions but doesn't dictate removals."
+      }
+    },
+    {
+      "question": "In data quality assessment, what is the '3-step decision tree' workflow for handling suspicious values?",
+      "options": [
+        "Detect → Remove → Report",
+        "Event or Error? → Can fix with rule? → Impute or Drop?",
+        "Clean → Transform → Model",
+        "Identify → Analyze → Visualize"
+      ],
+      "correct_answer": "Event or Error? → Can fix with rule? → Impute or Drop?",
+      "explanation_correct": "The unified cleaning workflow applies a systematic 3-step decision tree: (1) Is this an event or error? Events are kept and flagged (e.g., snowstorm); errors proceed to step 2. (2) Can I fix it with a rule? (e.g., cap humidity to 100) Fix and flag; if not, proceed to step 3. (3) Impute or drop? Predictors can be imputed, targets should be dropped. This ensures every suspicious value receives appropriate treatment based on its nature and impact.",
+      "explanation_wrong": {
+        "Detect → Remove → Report": "This oversimplified workflow removes all suspicious values without distinguishing legitimate events from errors, or considering whether errors can be fixed or should be imputed. The proper workflow is more nuanced, recognizing that not all unusual values should be removed - some represent real phenomena that must be preserved.",
+        "Clean → Transform → Model": "This describes the high-level machine learning workflow stages, not the specific decision process for handling individual suspicious values during data cleaning. The 3-step decision tree operates within the 'Clean' stage, providing detailed guidance on how to treat each problematic value encountered.",
+        "Identify → Analyze → Visualize": "This describes an exploratory data analysis workflow for understanding data patterns, not a systematic decision framework for handling specific suspicious values. The 3-step decision tree focuses on treatment decisions (keep, fix, impute, or drop), not on analysis and visualization activities."
+      }
+    },
+    {
+      "question": "Why is it important to flag all data cleaning interventions?",
+      "options": [
+        "To make the dataset larger",
+        "To ensure every change is visible, auditable, and explainable for model comparison and risk communication",
+        "To slow down the analysis process",
+        "To remove more data"
+      ],
+      "correct_answer": "To ensure every change is visible, auditable, and explainable for model comparison and risk communication",
+      "explanation_correct": "Flagging ensures every cleaning intervention is visible, auditable, and explainable. Flags enable comparing model performance with and without imputed values, communicating risks to clients ('July demand is less reliable: 20% of weather values were imputed'), and maintaining a complete record of what changed and why. This transparency is essential for professional consulting and stakeholder trust.",
+      "explanation_wrong": {
+        "To make the dataset larger": "Flags are additional columns that document changes, making the dataset slightly larger, but this is not their purpose. The benefit is transparency and traceability, not size increase. The minimal size overhead is easily justified by the documentation value flags provide for quality assurance and stakeholder communication.",
+        "To slow down the analysis process": "While creating flags requires minimal additional work, the purpose is quality assurance and transparency, not to slow analysis. Flags actually accelerate later stages by providing immediate context about data quality - analysts can quickly identify which observations were imputed, collapsed from duplicates, or flagged as outliers without investigating raw data.",
+        "To remove more data": "Flags don't remove data - they document changes and mark observations requiring special attention. The goal is preservation of information with transparency about data quality, not deletion. Flags enable including potentially problematic data while clearly identifying it, allowing informed decisions about whether to include or exclude flagged observations in analysis."
+      }
+    },
+    {
+      "question": "What is the main purpose of chronological train-test splitting in time series forecasting?",
+      "options": [
+        "To make the training set larger than the test set",
+        "To preserve temporal order and avoid data leakage by using past to predict future",
+        "To ensure equal distribution of categories",
+        "To randomize the data"
+      ],
+      "correct_answer": "To preserve temporal order and avoid data leakage by using past to predict future",
+      "explanation_correct": "Chronological splitting preserves temporal order by using early data (70-80%) for training and recent data (20-30%) for testing. This mirrors real deployment: training on all available history to predict tomorrow, next week, or next month. Random splitting would violate temporal dependencies, potentially training on 'future' to predict 'past', creating unrealistic evaluation and data leakage problems.",
+      "explanation_wrong": {
+        "To make the training set larger than the test set": "While chronological splits often use 70-80% for training, the larger training set is not the purpose but rather a consequence of the standard split ratio. Both chronological and random splits can use any train-test ratio - the distinguishing feature is temporal ordering, not size proportions.",
+        "To ensure equal distribution of categories": "Equal category distribution (stratification) applies to classification problems with categorical targets. Time series forecasting with continuous targets requires chronological splitting to respect temporal order, not category balancing. Stratification and chronological splitting serve different purposes for different problem types.",
+        "To randomize the data": "Chronological splitting specifically avoids randomization to preserve temporal order. Randomization would scatter past and future observations randomly, violating the fundamental time series requirement that we predict future from past. The entire purpose is maintaining temporal structure, opposite to randomization."
+      }
+    },
+    {
+      "question": "What does a model's 'generalization ability' refer to?",
+      "options": [
+        "The model's ability to handle categorical variables",
+        "The model's performance on unseen data that it wasn't trained on",
+        "The model's training speed",
+        "The model's complexity"
+      ],
+      "correct_answer": "The model's performance on unseen data that it wasn't trained on",
+      "explanation_correct": "Generalization ability is the model's performance on unseen data beyond its training set. A model with good generalization learned underlying patterns that apply to new observations, not just memorized training examples. This is measured through test set evaluation - comparing training performance to test performance reveals whether the model learned general patterns (good generalization) or memorized training data (poor generalization/overfitting).",
+      "explanation_wrong": {
+        "The model's ability to handle categorical variables": "Handling categorical variables is a data preprocessing capability (through encoding techniques like one-hot encoding), not generalization ability. Generalization refers to predictive performance on new data, regardless of whether that data contains categorical or numerical variables.",
+        "The model's training speed": "Training speed is a computational efficiency concern about how long model fitting takes, unrelated to generalization. A model can train quickly but generalize poorly (if overfit), or train slowly but generalize excellently (if learning robust patterns). These are independent characteristics.",
+        "The model's complexity": "Model complexity (number of parameters, tree depth, etc.) affects generalization capacity but isn't generalization itself. Simple models may underfit (poor generalization due to insufficient complexity), while complex models may overfit (poor generalization due to memorization). Generalization is about test performance, complexity is about model structure."
+      }
+    },
+    {
+      "question": "What is the relationship between model complexity and overfitting?",
+      "options": [
+        "More complex models never overfit",
+        "Simple models always overfit",
+        "Excessively complex models are more prone to overfitting by memorizing training data",
+        "Model complexity has no effect on overfitting"
+      ],
+      "correct_answer": "Excessively complex models are more prone to overfitting by memorizing training data",
+      "explanation_correct": "Excessively complex models (deep trees, many parameters) can achieve near-perfect training accuracy by memorizing observations rather than learning generalizable patterns. For example, an unlimited-depth decision tree can create specific rules for every training observation, achieving 100% training accuracy but failing on new data. The bias-variance tradeoff requires balancing model complexity: too simple (underfitting), too complex (overfitting), with optimal complexity in between.",
+      "explanation_wrong": {
+        "More complex models never overfit": "Complex models are actually more prone to overfitting, not immune to it. Deep neural networks with millions of parameters, unlimited-depth decision trees, and high-degree polynomial regressions can all memorize training data if not properly regularized or limited. Complexity without constraints enables memorization.",
+        "Simple models always overfit": "Simple models typically underfit rather than overfit. Linear regression with few features, shallow decision trees, and low-degree polynomials struggle to capture complex patterns but are resistant to overfitting because their limited complexity prevents memorization. They suffer from high bias, not high variance.",
+        "Model complexity has no effect on overfitting": "Model complexity is a primary driver of overfitting risk. The bias-variance tradeoff fundamentally links model complexity to generalization: increasing complexity reduces bias (enables learning complex patterns) but increases variance (risk of memorization). Managing this tradeoff through complexity control is central to machine learning."
+      }
+    },
+    {
+      "question": "In bike-sharing demand forecasting, why might temperature and season have correlated feature importances in Random Forest?",
+      "options": [
+        "Because they measure the same thing",
+        "Because they are correlated variables (summer has high temps), so Random Forest may distribute importance between them unpredictably",
+        "Because they are encoded incorrectly",
+        "Because Random Forest cannot handle multiple features"
+      ],
+      "correct_answer": "Because they are correlated variables (summer has high temps), so Random Forest may distribute importance between them unpredictably",
+      "explanation_correct": "Temperature and season are correlated - summer has high temperatures, winter has low temperatures. When features are highly correlated, Random Forest may distribute importance between them unpredictably because either can serve similar roles in splitting. The pair's combined importance is meaningful, but individual scores are less stable. This is an important interpretation guideline for understanding feature importance with correlated predictors.",
+      "explanation_wrong": {
+        "Because they measure the same thing": "Temperature and season are related but distinct concepts. Temperature is a continuous measurement of thermal conditions, while season is a categorical time-of-year indicator. They're correlated (summer tends to be warmer) but capture different aspects - season also reflects daylight hours, vacation patterns, and school schedules beyond temperature alone.",
+        "Because they are encoded incorrectly": "Correlation between temperature and season is natural and expected, not an encoding error. Temperature should be numerical (degrees), season should be categorical (1-4) or cyclically encoded. Proper encoding doesn't eliminate natural correlations between meteorological and temporal variables - it preserves them appropriately.",
+        "Because Random Forest cannot handle multiple features": "Random Forest excels at handling many features simultaneously - forests typically work with dozens or hundreds of features. The importance distribution for correlated features is a statistical property of how tree-based algorithms use correlated predictors, not a limitation in handling multiple features."
+      }
+    },
+    {
+      "question": "What makes Random Forest a 'black box' model compared to Linear Regression?",
+      "options": [
+        "Random Forest cannot make predictions",
+        "Random Forest's predictions come from complex combinations of rules across hundreds of trees, making interpretation less transparent than linear coefficients",
+        "Random Forest is always less accurate",
+        "Random Forest only works with binary data"
+      ],
+      "correct_answer": "Random Forest's predictions come from complex combinations of rules across hundreds of trees, making interpretation less transparent than linear coefficients",
+      "explanation_correct": "Linear Regression provides transparent global interpretability through coefficients: 'temperature increases demand by 9.2 bikes/°C everywhere.' Random Forest creates hundreds of trees with different decision rules, and predictions are averaged across all trees. While you can extract feature importance, understanding the specific logic for any prediction requires examining paths through multiple trees - less transparent than single equation interpretability.",
+      "explanation_wrong": {
+        "Random Forest cannot make predictions": "Random Forest excels at making predictions, often more accurately than linear models. The 'black box' concern is about interpretation difficulty, not prediction capability. Random Forest produces predictions by averaging individual tree predictions, but this complex aggregation process is harder to explain than linear equation logic.",
+        "Random Forest is always less accurate": "Random Forest typically achieves higher accuracy than linear models on complex datasets by capturing non-linear patterns and interactions. The trade-off is interpretability (transparency) for accuracy (performance), not accuracy reduction. 'Black box' refers to explanation difficulty, not prediction quality.",
+        "Random Forest only works with binary data": "Random Forest works with both continuous and categorical features of any type, and produces continuous predictions for regression or class probabilities for classification. The algorithm is highly flexible with data types - its 'black box' nature stems from complex multi-tree decision logic, not data type restrictions."
+      }
+    },
+    {
+      "question": "What is the purpose of the max_features parameter in Random Forest?",
+      "options": [
+        "To limit the total number of features in the dataset",
+        "To randomly select a subset of features at each split to create ensemble diversity",
+        "To remove unimportant features automatically",
+        "To speed up prediction time"
+      ],
+      "correct_answer": "To randomly select a subset of features at each split to create ensemble diversity",
+      "explanation_correct": "The max_features parameter controls how many features are randomly selected at each split in each tree. For example, max_features='sqrt' means at each node, the algorithm randomly selects √n features and chooses the best split only from this subset. This feature randomness forces different trees to use different features, creating ensemble diversity that reduces correlation between tree predictions - essential for Random Forest's variance reduction through averaging.",
+      "explanation_wrong": {
+        "To limit the total number of features in the dataset": "max_features doesn't remove features from the dataset - all features remain available. It controls how many features each split considers randomly. Over the entire forest, all features are typically used by different trees. Feature reduction (if desired) is done separately during feature selection before training.",
+        "To remove unimportant features automatically": "max_features creates diversity through random selection at each split, not systematic feature removal based on importance. All features remain available throughout training. Feature importance analysis (calculated after training) can inform feature selection, but max_features is about diversity creation, not feature elimination.",
+        "To speed up prediction time": "While considering fewer features per split might slightly reduce training time, this is not the primary purpose of max_features. Prediction time is unaffected because predictions use the already-trained trees. The goal is ensemble diversity through forcing different trees to use different features, improving generalization through variance reduction."
+      }
+    },
+    {
+      "question": "What is the '80-20 rule' commonly used in train-test splitting?",
+      "options": [
+        "80% of features should be important, 20% can be removed",
+        "Use 80% of data for training and 20% for testing",
+        "80% accuracy is acceptable, 20% error is allowed",
+        "Train for 80% of the time, test for 20%"
+      ],
+      "correct_answer": "Use 80% of data for training and 20% for testing",
+      "explanation_correct": "The 80-20 rule refers to the common practice of using 80% of available data for training the model and reserving 20% for testing. This ratio balances having enough training data for the model to learn patterns effectively (80%) while maintaining a sufficiently large test set for reliable performance evaluation (20%). The exact ratio can vary (70-30, 75-25) depending on dataset size, but 80-20 is a standard starting point.",
+      "explanation_wrong": {
+        "80% of features should be important, 20% can be removed": "This describes a feature selection heuristic, not the train-test split rule. While feature importance analysis might reveal that some features contribute little value, the 80-20 rule specifically refers to dividing observations (rows) into training and testing sets, not selecting features (columns).",
+        "80% accuracy is acceptable, 20% error is allowed": "This describes a performance target or acceptance criterion, not a data splitting strategy. The 80-20 rule is about how to divide your dataset, not about acceptable model performance levels. Performance targets depend on business requirements and vary widely across applications.",
+        "Train for 80% of the time, test for 20%": "This describes time allocation during the modeling process, not data division. The 80-20 rule refers to splitting data (observations/rows) into training and testing sets, not dividing time between training and evaluation activities. Training and testing are typically performed sequentially, not simultaneously with time allocation."
+      }
+    },
+    {
+      "question": "Why is pandas preferred over base Python lists for data analysis?",
+      "options": [
+        "Lists are more powerful than pandas DataFrames",
+        "Pandas provides labeled data structures, efficient operations, and built-in functions for data manipulation",
+        "Pandas is only for visualization",
+        "Lists are not supported in Python"
+      ],
+      "correct_answer": "Pandas provides labeled data structures, efficient operations, and built-in functions for data manipulation",
+      "explanation_correct": "Pandas offers labeled data structures (Series and DataFrames with named columns and indices), efficient vectorized operations on entire arrays at once, and extensive built-in functionality for data manipulation (grouping, merging, reshaping, handling missing values). While base Python lists work for simple tasks, pandas is specifically designed for data analysis workflows, providing the right abstractions and optimized implementations.",
+      "explanation_wrong": {
+        "Lists are more powerful than pandas DataFrames": "The opposite is true for data analysis - pandas DataFrames are more powerful than lists for analytical work. While lists are fundamental Python structures useful for many tasks, DataFrames add labels, alignment, missing data handling, aggregation operations, and many other features essential for data analysis that lists don't provide.",
+        "Pandas is only for visualization": "Pandas' primary purpose is data manipulation and analysis, not visualization. While pandas has basic plotting capabilities (using matplotlib internally), its core strength is loading, cleaning, transforming, and analyzing data. Visualization libraries like matplotlib, seaborn, and plotly are specialized for creating charts, with pandas feeding them prepared data.",
+        "Lists are not supported in Python": "Lists are fundamental Python data structures, fully supported and widely used. The question is not about support but appropriateness - while lists work for many tasks, pandas provides specialized structures and operations that make data analysis workflows more efficient, readable, and powerful than using lists alone."
+      }
+    }
+  ]
+}
